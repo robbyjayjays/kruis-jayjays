@@ -47,9 +47,18 @@ const Login = () => {
             <div className="form-container">
                 <h2>Login</h2>
                 <form>
-                    <input type="text" placeholder="Username" />
-                    <input type="password" placeholder="Password" />
-                    <button type="submit">Login</button>
+                <input
+                        type="text"
+                        placeholder="Username"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                    />
+                    <input
+                        type="password"
+                        placeholder="Password"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                    />
                 </form>
             </div>
         </div>
