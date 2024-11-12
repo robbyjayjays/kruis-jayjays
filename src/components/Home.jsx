@@ -1,11 +1,20 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 const Home = () => {
-    useEffect(() => {
-        // Display a toast when landing on this page
-        toast.success('Welcome to the Home Page!');
+// State to hold the email retrieved from localStorage
+const [email, setEmail] = useState('');
+
+useEffect(() => {
+    // Get the email from localStorage and set it in the state
+    const storedEmail = localStorage.getItem('email');
+    if (storedEmail) {
+        setEmail(storedEmail);
+    }
+
+    // Display a welcome toast when landing on the page
+    toast.success(`Welcome, ${storedEmail}!`);
     }, []);
 
     return (
