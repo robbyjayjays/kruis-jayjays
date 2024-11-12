@@ -58,6 +58,7 @@ button {
     font-weight: bold;
     cursor: pointer;
     transition: background-color 0.3s ease, transform 0.2s ease;
+    box-shadow: 0 4px 10px rgba(0, 123, 255, 0.2); /* Added shadow for depth */
 }
 
 button:hover {
@@ -68,4 +69,5 @@ button:hover {
 button:active {
     background-color: #004494; /* Even darker shade on active */
     transform: translateY(0); /* Return to original position */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Slightly reduced shadow */
 }
