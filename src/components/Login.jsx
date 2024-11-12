@@ -46,8 +46,8 @@ const Login = () => {
         <div className="login-container">
             <div className="form-container">
                 <h2>Login</h2>
-                <form>
-                <input
+                <form onSubmit={submitForm}>
+                    <input
                         type="text"
                         placeholder="Username"
                         value={email}
