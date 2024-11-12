@@ -40,7 +40,7 @@ const Login = () => {
         navigate('/Home');
       } catch (error) {
         console.error('Login error:', error);
-        toast.error('Invalid credentials. Please try again.');
+        toast.error('Invalid credentials.');
       }
     };
     return (
