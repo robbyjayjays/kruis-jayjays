@@ -3,6 +3,9 @@ import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 const Home = () => {
+    // State to hold the username (part of the email before the @)
+    const [username, setUsername] = useState('');
+
     useEffect(() => {
         // Get the email from localStorage and extract the part before the @
         const storedEmail = localStorage.getItem('email');
