@@ -1,0 +1,65 @@
+/* Basic Reset */
+body, h2, button, span {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Arial', sans-serif;
+}
+
+/* Navbar Container */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #333;
+    color: #fff;
+    padding: 10px 20px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Brand Styling */
+.navbar-brand h2 {
+    font-size: 24px;
+    font-weight: bold;
+    color: #f1f1f1;
+}
+
+/* Link Container */
+.navbar-links {
+    display: flex;
+    align-items: center;
+}
+
+/* User Info */
+.navbar-user {
+    margin-right: 15px;
+    font-size: 14px;
+    color: #ccc;
+}
+
+/* Button Styling */
+.navbar-button {
+    background-color: #555;
+    color: #f1f1f1;
+    border: none;
+    padding: 8px 15px;
+    margin-left: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+/* Logout Button Specific Style */
+.navbar-button.logout {
+    background-color: #e74c3c;
+}
+
+/* Button Hover Effect */
+.navbar-button:hover {
+    background-color: #777;
+}
+
+/* Logout Button Hover Effect */
+.navbar-button.logout:hover {
+    background-color: #c0392b;
+}
