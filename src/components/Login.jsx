@@ -33,7 +33,7 @@ const Login = () => {
         localStorage.setItem('token', data.token);
         localStorage.setItem('email', data.user.email);
   
-        toast.success('Login successful!');
+        toast.success('Login successfulLY!');
   
         // Navigate to homepage after successful login
         navigate('/Home');
