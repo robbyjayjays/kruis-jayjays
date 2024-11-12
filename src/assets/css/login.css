@@ -47,7 +47,7 @@ input:focus {
     box-shadow: 0 0 8px rgba(0, 123, 255, 0.25); /* Light glow on focus */
 }
 
-button {
+.loginbutton {
     width: 100%; /* Full width button */
     padding: 12px;
     background-color: #007BFF; /* Primary color */
@@ -61,12 +61,12 @@ button {
     box-shadow: 0 4px 10px rgba(0, 123, 255, 0.2); /* Added shadow for depth */
 }
 
-button:hover {
+.loginbutton:hover {
     background-color: #0056b3; /* Darker shade on hover */
     transform: translateY(-2px); /* Subtle lift effect */
 }
 
-button:active {
+.loginbutton:active {
     background-color: #004494; /* Even darker shade on active */
     transform: translateY(0); /* Return to original position */
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Slightly reduced shadow */
