@@ -1,29 +1,33 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import Navbar from './Navbar';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import Navbar from './Navbar';
 
 const Home = () => {
-    // State to hold the username (part of the email before the @)
     const [username, setUsername] = useState('');
+    const navigate = useNavigate();
 
     useEffect(() => {
-        // Get the email from localStorage and extract the part before the @
+        const token = localStorage.getItem('token');
         const storedEmail = localStorage.getItem('email');
-        if (storedEmail) {
-            const namePart = storedEmail.split('@')[0]; // Extracts everything before the @
+
+        if (!token) {
+            // Redirect to login if no token is found
+            navigate('/');
+        } else if (storedEmail) {
+            const namePart = storedEmail.split('@')[0];
             setUsername(namePart);
         }
 
-        // Display a welcome toast when landing on the page
         toast.success(`Welcome, ${storedEmail ? storedEmail.split('@')[0] : ''}!`);
-    }, []);
+    }, [navigate]);
 
     return (
         <div>
             <Navbar />
             <ToastContainer />
-            <h1>Homepage!</h1> {/* Display only the part before the @ */}
+            <h1>Welcome, {username}!</h1>
         </div>
     );
 };
