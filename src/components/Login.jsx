@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import '../assets/css/login.css';
 import { useNavigate } from 'react-router-dom';
-import { toast } from 'react-toastify';
+import { toast, ToastContainer } from 'react-toastify';
 
 const Login = () => {
     const [email, setEmail] = useState('');
@@ -33,7 +33,7 @@ const Login = () => {
         localStorage.setItem('token', data.token);
         localStorage.setItem('email', data.user.email);
   
-        toast.success('Login successfulLY!');
+        toast.success('Login successfully!');
   
         // Navigate to homepage after successful login
         navigate('/Home');
@@ -44,6 +44,7 @@ const Login = () => {
     };
     return (
         <div className="login-container">
+            <ToastContainer />
             <div className="form-container">
                 <h2>Login</h2>
                 <form onSubmit={submitForm}>
