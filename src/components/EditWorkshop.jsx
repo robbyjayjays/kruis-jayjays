@@ -6,7 +6,7 @@ import '../assets/css/editWorkshop.css';
 const EditWorkshop = () => {
     const { id } = useParams(); // Get the workshop ID from the route parameter
     const navigate = useNavigate();
-    const [workshop, setWorkshop] = useState({ title: '', description: '' });
+    const [workshop, setWorkshop] = useState({ title: '', description: '', workshop_date: '' });
     const [loading, setLoading] = useState(true);
     const token = localStorage.getItem('token'); // Check token in localStorage
 
@@ -58,6 +58,7 @@ const EditWorkshop = () => {
                     id,
                     title: workshop.title,
                     description: workshop.description,
+                    workshop_date: workshop.workshop_date,
                 }),
             });
 
@@ -98,6 +99,16 @@ const EditWorkshop = () => {
                     <textarea
                         name="description"
                         value={workshop.description}
+                        onChange={handleChange}
+                        required
+                    />
+                </label>
+                <label>
+                    Workshop Date:
+                    <input
+                        type="date"
+                        name="workshop_date"
+                        value={workshop.workshop_date}
                         onChange={handleChange}
                         required
                     />

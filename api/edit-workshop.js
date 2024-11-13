@@ -18,20 +18,20 @@ const pool = new Pool({
 
 export default async function handler(req, res) {
     if (req.method === 'PUT') {
-        const { id, title, description } = req.body;
+        const { id, title, description, workshop_date } = req.body;
 
-        if (!id || !title || !description) {
-            return res.status(400).json({ error: 'Workshop ID, title, and description are required' });
+        if (!id || !title || !description || !workshop_date) {
+            return res.status(400).json({ error: 'Workshop ID, title, description, and date are required' });
         }
 
         try {
-            // Update the workshop title and description
+            // Update the workshop title, description, and workshop_date
             const updateQuery = `
                 UPDATE workshops
-                SET title = $1, description = $2
-                WHERE id = $3
+                SET title = $1, description = $2, workshop_date = $3
+                WHERE id = $4
             `;
-            await pool.query(updateQuery, [title, description, id]);
+            await pool.query(updateQuery, [title, description, workshop_date, id]);
 
             res.status(200).json({ message: 'Workshop updated successfully' });
         } catch (error) {
