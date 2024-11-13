@@ -1,5 +1,6 @@
 import React from 'react';
 import '../assets/css/profile.css';
+import Navbar from './Navbar';
 
 const Profile = () => {
     // Placeholder for logic to determine if the user is a creator
@@ -7,6 +8,7 @@ const Profile = () => {
 
     return (
         <div className="profile-container">
+            <Navbar />
             <div className="profile-section">
                 <h2>Add Info to Your Account</h2>
                 <form className="profile-form">
