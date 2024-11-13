@@ -22,17 +22,16 @@ html, body {
     margin-bottom: 20px;
 }
 
-.profile-section h2 {
-    text-align: center;
-    margin-bottom: 20px;
-    color: #333;
-    font-size: 24px;
-}
-
 .profile-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
+}
+
+.profile-header h2 {
+    margin: 0; /* Remove default margin for better alignment */
+    color: #333;
+    font-size: 24px;
 }
 
 .profile-button {
