@@ -4,6 +4,7 @@ import Login from './components/Login'; // Make sure the path is correct
 import Home from './components/Home';
 import Profile from './components/Profile';
 import CreateWorkshop from './components/CreateWorkshop';
+import Workshop from './components/Workshop';
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
         <Route path="/home" element={ <Home />} />
         <Route path="/profile" element= { <Profile />} />
         <Route path="/create-workshop" element= { <CreateWorkshop />} />
+        <Route path="/workshop/:id" element= { <Workshop />} />
       </Routes>
     </Router>
   );

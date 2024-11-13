@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import Navbar from './Navbar';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import '../assets/css/home.css'; // Include styling if needed
+import '../assets/css/home.css';
 
 const Home = () => {
     const [workshops, setWorkshops] = useState([]);
@@ -11,7 +11,7 @@ const Home = () => {
 
     useEffect(() => {
         const token = localStorage.getItem('token');
-        const email = localStorage.getItem('email'); // Get email from localStorage
+        const email = localStorage.getItem('email');
 
         if (!token) {
             // Redirect to login if no token is found
@@ -39,6 +39,11 @@ const Home = () => {
         }
     }, [navigate]);
 
+    const handleWorkshopClick = (workshopId) => {
+        // Navigate to the Workshop.jsx component with the workshop ID as a route parameter
+        navigate(`/workshop/${workshopId}`);
+    };
+
     return (
         <div>
             <Navbar />
@@ -48,7 +53,11 @@ const Home = () => {
                 <div className="workshop-list">
                     {workshops.length > 0 ? (
                         workshops.map((workshop) => (
-                            <div key={workshop.id} className="workshop-box">
+                            <div
+                                key={workshop.id}
+                                className="workshop-box"
+                                onClick={() => handleWorkshopClick(workshop.id)}
+                            >
                                 <div className="workshop-title">{workshop.title}</div>
                                 <div className="workshop-description">{workshop.description}</div>
                             </div>
