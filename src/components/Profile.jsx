@@ -11,7 +11,7 @@ const Profile = () => {
     const [department, setDepartment] = useState('');
     const [province, setProvince] = useState('');
     const [functions, setFunctions] = useState([]);
-    const [isInfoOpen, setIsInfoOpen] = useState(true); // State for toggling section
+    const [isInfoOpen, setIsInfoOpen] = useState(true);
 
     useEffect(() => {
         const token = localStorage.getItem('token');
@@ -20,7 +20,6 @@ const Profile = () => {
             navigate('/'); // Redirect to login page
             return;
         }
-        // Check localStorage for creator status and set the state
         const creatorStatus = localStorage.getItem('isCreator') === 'true';
         setIsCreator(creatorStatus);
     }, [navigate]);
@@ -73,9 +72,7 @@ const Profile = () => {
                 <div className="profile-section">
                     <div className="collapsible-header" onClick={() => setIsInfoOpen(!isInfoOpen)}>
                         <h2>Add Info to Your Account</h2>
-                        <button className="toggle-button">
-                            {isInfoOpen ? 'Hide' : 'Show'}
-                        </button>
+                        <span className={`arrow-icon ${isInfoOpen ? 'open' : ''}`}></span>
                     </div>
                     {isInfoOpen && (
                         <form className="profile-form" onSubmit={handleSubmit}>
