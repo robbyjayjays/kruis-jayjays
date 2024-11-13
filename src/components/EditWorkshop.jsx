@@ -124,7 +124,7 @@ const EditWorkshop = () => {
                 <label>
                     Workshop Date:
                     <input
-                        type="text"
+                        type="date"
                         name="workshop_date"
                         value={workshop.workshop_date}
                         onChange={handleChange}
