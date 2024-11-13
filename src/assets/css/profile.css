@@ -20,22 +20,19 @@ html, body {
     border-radius: 16px;
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
     margin-bottom: 20px;
+    position: relative; /* Allows positioning of the create button */
 }
 
-.profile-header {
-    display: flex;
-    justify-content: space-between; /* Ensure h2 is on the left and button on the right */
-    align-items: center;
-    margin-bottom: 20px; /* Add space between header and content below */
-}
-
-.profile-header h2 {
-    margin: 0; /* Remove default margin for better alignment */
+.profile-section h2 {
     color: #333;
     font-size: 24px;
+    margin-bottom: 20px;
 }
 
-.profile-button {
+.create-workshop-button {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
     background-color: #007BFF;
     color: #fff;
     border: none;
@@ -48,12 +45,12 @@ html, body {
     box-shadow: 0 4px 10px rgba(0, 123, 255, 0.2);
 }
 
-.profile-button:hover {
+.create-workshop-button:hover {
     background-color: #0056b3;
     transform: translateY(-2px);
 }
 
-.profile-button:active {
+.create-workshop-button:active {
     background-color: #004494;
     transform: translateY(0);
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);

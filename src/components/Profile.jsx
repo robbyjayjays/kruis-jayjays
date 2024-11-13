@@ -146,17 +146,17 @@ const Profile = () => {
               {isCreator && (
                   <div className="profile-section">
                       <h2>Created Workshops</h2>
-                      <button
-                        className="profile-button"
-                        onClick={() => navigate('/create-workshop')}
-                        >
-                            Create Workshop
-                        </button>
                       <ul className="workshop-list">
                           <li>Workshop 1</li>
                           <li>Workshop 2</li>
                           {/* Replace with a dynamic list later */}
                       </ul>
+                      <button
+                            className="create-workshop-button"
+                            onClick={() => navigate('/create-workshop')}
+                        >
+                            Create Workshop
+                        </button>
                   </div>
               )}
 
