@@ -8,8 +8,15 @@ const EditWorkshop = () => {
     const navigate = useNavigate();
     const [workshop, setWorkshop] = useState({ title: '', description: '' });
     const [loading, setLoading] = useState(true);
+    const token = localStorage.getItem('token'); // Check token in localStorage
 
     useEffect(() => {
+        // If no token exists, redirect to login page
+        if (!token) {
+            navigate('/');
+            return;
+        }
+
         // Fetch the workshop data
         const fetchWorkshop = async () => {
             try {
@@ -31,7 +38,7 @@ const EditWorkshop = () => {
         };
 
         fetchWorkshop();
-    }, [id]);
+    }, [id, token, navigate]); // Include token in dependencies
 
     const handleChange = (e) => {
         const { name, value } = e.target;
