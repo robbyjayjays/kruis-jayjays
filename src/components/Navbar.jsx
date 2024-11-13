@@ -1,6 +1,7 @@
 import React from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import '../assets/css/navbar.css'; // Import the CSS file
+import logo from '../assets/images/jayjays.png'; // Import the logo image
 
 const Navbar = () => {
     const navigate = useNavigate();
@@ -18,8 +19,10 @@ const Navbar = () => {
 
     return (
         <nav className="navbar">
-            <div className="navbar-brand">
-                <h2>MyApp</h2>
+             <div className="logo-container">
+                <Link to="/">
+                    <img src={logo} alt="JayJays Logo" className="navbar-logo" />
+                </Link>
             </div>
             <div className="navbar-links">
                 {email && <span className="navbar-user">Logged in as: {email}</span>}

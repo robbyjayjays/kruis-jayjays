@@ -27,6 +27,12 @@ body, h2, button, span {
     margin: 0;
 }
 
+/* Logo Styling */
+.navbar-logo {
+    height: 40px; /* Adjust the height as needed */
+    width: auto;
+}
+
 /* Link Container */
 .navbar-links {
     display: flex;
