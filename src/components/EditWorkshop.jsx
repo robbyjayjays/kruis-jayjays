@@ -8,15 +8,8 @@ const EditWorkshop = () => {
     const navigate = useNavigate();
     const [workshop, setWorkshop] = useState({ title: '', description: '', workshop_date: '' });
     const [loading, setLoading] = useState(true);
-    const token = localStorage.getItem('token'); // Check token in localStorage
 
     useEffect(() => {
-        // If no token exists, redirect to login page
-        if (!token) {
-            navigate('/');
-            return;
-        }
-
         // Fetch the workshop data
         const fetchWorkshop = async () => {
             try {
@@ -38,7 +31,7 @@ const EditWorkshop = () => {
         };
 
         fetchWorkshop();
-    }, [id, token, navigate]); // Include token in dependencies
+    }, [id]);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -58,7 +51,7 @@ const EditWorkshop = () => {
                     id,
                     title: workshop.title,
                     description: workshop.description,
-                    workshop_date: workshop.workshop_date,
+                    workshop_date: workshop.workshop_date, // Send the updated date
                 }),
             });
 
