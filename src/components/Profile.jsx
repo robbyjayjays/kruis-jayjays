@@ -146,6 +146,9 @@ const Profile = () => {
               {isCreator && (
                   <div className="profile-section">
                       <h2>Created Workshops</h2>
+                      <button
+                        onClick={() => navigate('/create-workshop')}
+                    ></button>
                       <ul className="workshop-list">
                           <li>Workshop 1</li>
                           <li>Workshop 2</li>
