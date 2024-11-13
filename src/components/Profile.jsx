@@ -191,7 +191,11 @@ const Profile = () => {
                         <div className="workshop-container">
                             {workshops.length > 0 ? (
                                 workshops.map((workshop) => (
-                                    <div key={workshop.id} className="workshop-box">
+                                    <div 
+                                        key={workshop.id} 
+                                        className="workshop-box"
+                                        onClick={() => navigate(`/workshop/${workshop.id}`)}
+                                    >
                                         <div className="workshop-title">{workshop.title}</div>
                                         <div className="workshop-description">{workshop.description}</div>
                                     </div>
@@ -214,7 +218,11 @@ const Profile = () => {
                     <div className="workshop-container">
                         {subscribedWorkshops.length > 0 ? (
                             subscribedWorkshops.map((workshop) => (
-                                <div key={workshop.id} className="workshop-box">
+                                <div 
+                                    key={workshop.id} 
+                                    className="workshop-box"
+                                    onClick={() => navigate(`/workshop/${workshop.id}`)}
+                                >
                                     <div className="workshop-title">{workshop.title}</div>
                                     <div className="workshop-description">{workshop.description}</div>
                                 </div>
