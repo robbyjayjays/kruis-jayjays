@@ -24,8 +24,9 @@ html, body {
 
 .profile-header {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-between; /* Ensure h2 is on the left and button on the right */
     align-items: center;
+    margin-bottom: 20px; /* Add space between header and content below */
 }
 
 .profile-header h2 {
