@@ -18,10 +18,10 @@ const pool = new Pool({
 
 export default async function handler(req, res) {
     if (req.method === 'POST') {
-        const { email, title, description } = req.body;
+        const { email, title, description, workshop_date } = req.body;
 
-        if (!email || !title || !description) {
-            return res.status(400).json({ error: 'Email, title, and description are required' });
+        if (!email || !title || !description || !workshop_date) {
+            return res.status(400).json({ error: 'Email, title, description, and workshop date are required' });
         }
 
         try {
@@ -35,12 +35,12 @@ export default async function handler(req, res) {
 
             const userId = user.id;
 
-            // Insert the new workshop into the database
+            // Insert the new workshop into the database with the date
             const insertQuery = `
-                INSERT INTO workshops (title, description, creator_id, subscribers, created_at)
-                VALUES ($1, $2, $3, $4, NOW()) RETURNING id
+                INSERT INTO workshops (title, description, creator_id, subscribers, created_at, workshop_date)
+                VALUES ($1, $2, $3, $4, NOW(), $5) RETURNING id
             `;
-            const result = await pool.query(insertQuery, [title, description, userId, []]);
+            const result = await pool.query(insertQuery, [title, description, userId, [], workshop_date]);
 
             const newWorkshopId = result.rows[0].id;
 

@@ -7,6 +7,7 @@ import Navbar from './Navbar';
 const CreateWorkshop = () => {
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
+    const [workshopDate, setWorkshopDate] = useState('');
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
     const email = localStorage.getItem('email'); // Get the user's email from localStorage
@@ -23,8 +24,8 @@ const CreateWorkshop = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        if (!title || !description) {
-            toast.error('Please provide both title and description.');
+        if (!title || !description || !workshopDate) {
+            toast.error('Please provide title, description, and workshop date.');
             return;
         }
 
@@ -40,6 +41,7 @@ const CreateWorkshop = () => {
                     email,
                     title,
                     description,
+                    workshop_date: workshopDate, // Add the date
                 }),
             });
 
@@ -81,6 +83,16 @@ const CreateWorkshop = () => {
                         name="description"
                         value={description}
                         onChange={(e) => setDescription(e.target.value)}
+                        required
+                    />
+                </label>
+                <label>
+                    Workshop Date:
+                    <input
+                        type="date"
+                        name="workshop_date"
+                        value={workshopDate}
+                        onChange={(e) => setWorkshopDate(e.target.value)}
                         required
                     />
                 </label>
