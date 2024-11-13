@@ -94,7 +94,11 @@ const Workshop = () => {
                             Created by: {workshop.creator_firstname} {workshop.creator_lastname} ({workshop.creator_email})
                         </p>
                         <p className="workshop-date">
-                            <strong>Date of workshop:</strong> {new Date(workshop.workshop_date).toLocaleDateString()}
+                            <strong>Date of workshop:</strong> {new Date(workshop.workshop_date).toLocaleDateString('en-GB', {
+                                day: '2-digit',
+                                month: 'short',
+                                year: 'numeric'
+                            })}
                         </p>
                     </div>
                     <div className="workshop-description">
