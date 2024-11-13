@@ -146,11 +146,16 @@ const Profile = () => {
               {isCreator && (
                   <div className="profile-section">
                       <h2>Created Workshops</h2>
-                      <ul className="workshop-list">
-                          <li>Workshop 1</li>
-                          <li>Workshop 2</li>
-                          {/* Replace with a dynamic list later */}
-                      </ul>
+                      <div className="workshop-container">
+                        <div className="workshop-box">
+                            <div className="workshop-title">Test Title 1</div>
+                            <div className="workshop-description">Test Description 1</div>
+                        </div>
+                        <div className="workshop-box">
+                            <div className="workshop-title">Test Title 2</div>
+                            <div className="workshop-description">Test Description 2</div>
+                        </div>
+                    </div>
                       <button
                             className="create-workshop-button"
                             onClick={() => navigate('/create-workshop')}

@@ -56,6 +56,42 @@ html, body {
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
 
+.workshop-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); /* Adjusts based on screen size */
+    gap: 20px; /* Space between workshop boxes */
+    margin-top: 20px; /* Space between title and boxes */
+}
+
+.workshop-box {
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    background-color: #ffffff;
+}
+
+.workshop-box:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+}
+
+.workshop-title {
+    background-color: #2c3e50; /* Darker background for the title */
+    color: #ecf0f1;
+    padding: 15px;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.workshop-description {
+    padding: 15px;
+    font-size: 14px;
+    color: #333;
+    background-color: #f7f7f7; /* Light background for the description */
+}
+
 .profile-form {
     display: flex;
     flex-direction: column;
