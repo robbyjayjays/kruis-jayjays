@@ -7,6 +7,18 @@ const Profile = () => {
     const isCreator = true; // Replace with real logic
     const [firstname, setFirstname] = useState('');
     const [lastname, setLastname] = useState('');
+    const [department, setDepartment] = useState('');
+    const [province, setProvince] = useState('');
+    const [functions, setFunctions] = useState([]);
+
+    const handleFunctionChange = (e) => {
+      const value = e.target.value;
+      if (functions.includes(value)) {
+          setFunctions(functions.filter(func => func !== value));
+      } else {
+          setFunctions([...functions, value]);
+      }
+    };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -26,7 +38,7 @@ const Profile = () => {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ email, firstname, lastname }),
+                body: JSON.stringify({ email, firstname, lastname, department, province, functions }),
             });
 
             if (response.ok) {
@@ -51,13 +63,13 @@ const Profile = () => {
                   <h2>Add Info to Your Account</h2>
                   <form className="profile-form" onSubmit={handleSubmit}>
                     <label>
-                      Firstname:
-                      <input
-                          type="text"
-                          placeholder="Enter your firstname"
-                          value={firstname}
-                          onChange={(e) => setFirstname(e.target.value)}
-                      />
+                        Firstname:
+                        <input
+                            type="text"
+                            placeholder="Enter your firstname"
+                            value={firstname}
+                            onChange={(e) => setFirstname(e.target.value)}
+                        />
                     </label>
                     <label>
                         Lastname:
@@ -68,8 +80,53 @@ const Profile = () => {
                             onChange={(e) => setLastname(e.target.value)}
                         />
                     </label>
-                      <button type="submit">Save Info</button>
-                  </form>
+                    <label>
+                        In which department are you active?
+                        <select value={department} onChange={(e) => setDepartment(e.target.value)}>
+                            <option value="">Select department</option>
+                            <option value="IT">IT Department</option>
+                            <option value="Marketing">Marketing Department</option>
+                            <option value="not-active">I am not active in a department</option>
+                            {/* Add more department options here */}
+                        </select>
+                    </label>
+                    <label>
+                        In which province are you active?
+                        <select value={province} onChange={(e) => setProvince(e.target.value)}>
+                            <option value="">No choice</option>
+                            <option value="vlaams-brabant">Vlaams-Brabant</option>
+                            <option value="waals-brabant">Waals-Brabant</option>
+                            {/* Add more province options here */}
+                        </select>
+                    </label>
+                    <label>What function(s) do you have?</label>
+                    <div className="function-checkboxes">
+                        {[
+                            'Animator Hartveilig',
+                            'Arts-lesgever',
+                            'Hoofdzetel Team Eerste Hulp',
+                            'Initiator JRK',
+                            'Kleuterinitiator',
+                            'Lesgever eerste hulp bij psychische problemen',
+                            'Lesgever eerstehulpverlening',
+                            'Lesgever eerstehulpverlening jeugd',
+                            'Lesgever eerstehulpverlening jeugd begeleider',
+                            'Lesgever reanimeren en defibrilleren',
+                            'Provincieverantwoordelijke Vorming',
+                            'Simulant lesgever'
+                        ].map((func, index) => (
+                            <label key={index}>
+                                <input
+                                    type="checkbox"
+                                    value={func}
+                                    onChange={handleFunctionChange}
+                                />
+                                {func}
+                            </label>
+                        ))}
+                    </div>
+                    <button type="submit">Save Info</button>
+                </form>
               </div>
 
               {isCreator && (
