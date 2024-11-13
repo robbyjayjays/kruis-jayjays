@@ -1,15 +1,21 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import '../assets/css/profile.css';
 import Navbar from './Navbar';
 
 const Profile = () => {
     // Placeholder for logic to determine if the user is a creator
-    const isCreator = true; // Replace with real logic
+    const [isCreator, setIsCreator] = useState(false);
     const [firstname, setFirstname] = useState('');
     const [lastname, setLastname] = useState('');
     const [department, setDepartment] = useState('');
     const [province, setProvince] = useState('');
     const [functions, setFunctions] = useState([]);
+
+    useEffect(() => {
+      // Check localStorage for creator status and set the state
+      const creatorStatus = localStorage.getItem('isCreator') === 'true';
+      setIsCreator(creatorStatus);
+    }, []);
 
     const handleFunctionChange = (e) => {
       const value = e.target.value;

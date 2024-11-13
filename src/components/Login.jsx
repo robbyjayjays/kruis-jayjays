@@ -33,6 +33,7 @@ const Login = () => {
         // Store the JWT token in localStorage
         localStorage.setItem('token', data.token);
         localStorage.setItem('email', data.user.email);
+        localStorage.setItem('isCreator', data.user.creator)
   
         toast.success('Login successfully!');
   
