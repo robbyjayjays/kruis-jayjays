@@ -1,5 +1,5 @@
 import React from 'react';
-import '../assets/profile.css';
+import '../assets/css/profile.css';
 
 const Profile = () => {
     // Placeholder for logic to determine if the user is a creator
