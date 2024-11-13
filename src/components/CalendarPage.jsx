@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Calendar from 'react-calendar';
-import 'react-calendar/dist/Calendar.css';
+import FullCalendar from '@fullcalendar/react'; 
+import dayGridPlugin from '@fullcalendar/daygrid'; 
+import interactionPlugin from '@fullcalendar/interaction'; 
 import { toast } from 'react-toastify';
 import Navbar from './Navbar';
 import '../assets/css/calendar.css';
 
 const CalendarPage = () => {
     const [subscribedWorkshops, setSubscribedWorkshops] = useState([]);
-    const [date, setDate] = useState(new Date()); // Current date
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -40,63 +40,33 @@ const CalendarPage = () => {
         fetchSubscribedWorkshops();
     }, [navigate]);
 
-    // Event handler to mark dates on the calendar
-    const tileClassName = ({ date, view }) => {
-        if (view === 'month') {
-            const dateString = date.toISOString().split('T')[0]; // Format the date as yyyy-mm-dd
-            // Check if the date matches any workshop date
-            const isEventDate = subscribedWorkshops.some(workshop =>
-                new Date(workshop.workshop_date).toISOString().split('T')[0] === dateString
-            );
-            return isEventDate ? 'highlight' : null;
-        }
-    };
-
-    // Add titles of workshops to the calendar tile
-    const tileContent = ({ date, view }) => {
-        if (view === 'month') {
-            const dateString = date.toISOString().split('T')[0]; // Format the date as yyyy-mm-dd
-            const workshopsOnDay = subscribedWorkshops.filter(workshop =>
-                new Date(workshop.workshop_date).toISOString().split('T')[0] === dateString
-            );
-            return workshopsOnDay.length > 0 ? (
-                <ul>
-                    {workshopsOnDay.map((workshop, index) => (
-                        <li key={index} className="workshop-title">
-                            {workshop.title}
-                        </li>
-                    ))}
-                </ul>
-            ) : null;
-        }
-    };
+    // Format the workshops for FullCalendar
+    const calendarEvents = subscribedWorkshops.map((workshop) => ({
+        title: workshop.title,
+        date: new Date(workshop.workshop_date).toISOString().split('T')[0], // Ensure correct format (YYYY-MM-DD)
+        description: workshop.description,
+    }));
 
     return (
         <div>
             <Navbar />
             <h2>Upcoming Workshops</h2>
-            <Calendar
-                onChange={setDate}
-                value={date}
-                tileClassName={tileClassName}
-                tileContent={tileContent}  // Add the content inside the tiles
+            <FullCalendar
+                plugins={[dayGridPlugin, interactionPlugin]}
+                initialView="dayGridMonth"
+                events={calendarEvents} // Pass the formatted workshops as events
+                dateClick={(info) => {
+                    // Optionally, handle date click (e.g., show more workshop details or a form)
+                    console.log('Clicked on date: ', info.dateStr);
+                }}
+                eventClick={(info) => {
+                    // Navigate to the workshop detail page when clicking on an event
+                    const clickedWorkshop = subscribedWorkshops.find(
+                        (workshop) => workshop.title === info.event.title
+                    );
+                    navigate(`/workshop/${clickedWorkshop.id}`);
+                }}
             />
-            <div className="events">
-                <h3>Upcoming Events</h3>
-                <ul>
-                    {subscribedWorkshops.length > 0 ? (
-                        subscribedWorkshops.map((workshop) => (
-                            <li key={workshop.id}>
-                                <strong>{workshop.title}</strong>
-                                <br />
-                                {new Date(workshop.workshop_date).toLocaleDateString()}
-                            </li>
-                        ))
-                    ) : (
-                        <p>No upcoming workshops</p>
-                    )}
-                </ul>
-            </div>
         </div>
     );
 };
