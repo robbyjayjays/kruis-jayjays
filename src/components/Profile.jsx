@@ -49,7 +49,7 @@ const Profile = () => {
           <div className="profile-container">
               <div className="profile-section">
                   <h2>Add Info to Your Account</h2>
-                  <form className="profile-form">
+                  <form className="profile-form" onSubmit={handleSubmit}>
                     <label>
                       Firstname:
                       <input
