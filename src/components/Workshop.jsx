@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import '../assets/css/workshop.css';
+import { toast } from 'react-toastify';
 
 const Workshop = () => {
     const { id } = useParams(); // Get the workshop ID from the route parameter
@@ -41,29 +42,41 @@ const Workshop = () => {
     }, [id]);
 
     const handleSubscribe = async () => {
-        // Implement the subscribe/unsubscribe logic here
+        // Placeholder for subscribe/unsubscribe logic
         alert(isSubscribed ? 'Unsubscribed from the workshop' : 'Subscribed to the workshop');
         setIsSubscribed(!isSubscribed);
     };
 
     return (
-        <div>
+        <div className="workshop-container">
             {workshop ? (
-                <div>
-                    <h1>{workshop.title}</h1>
-                    <p>{workshop.description}</p>
-                    <p>
-                        Created by: {workshop.creator_firstname} {workshop.creator_lastname}
-                    </p>
-                    {!isCreator && (
-                        <button onClick={handleSubscribe}>
-                            {isSubscribed ? 'Unsubscribe' : 'Subscribe'}
-                        </button>
-                    )}
-                    {isCreator && (
-                        <button onClick={() => navigate(`/edit-workshop/${id}`)}>Edit Workshop</button>
-                    )}
-                </div>
+                <>
+                    <div className="workshop-header">
+                        <h1 className="workshop-title">{workshop.title}</h1>
+                        <p className="creator-info">
+                            Created by: {workshop.creator_firstname} {workshop.creator_lastname}
+                        </p>
+                    </div>
+                    <div className="workshop-description">
+                        <h3>Description</h3>
+                        <p>{workshop.description}</p>
+                    </div>
+                    <div className="workshop-actions">
+                        {!isCreator && (
+                            <button className="subscribe-button" onClick={handleSubscribe}>
+                                {isSubscribed ? 'Unsubscribe' : 'Subscribe'}
+                            </button>
+                        )}
+                        {isCreator && (
+                            <button
+                                className="edit-button"
+                                onClick={() => navigate(`/edit-workshop/${id}`)}
+                            >
+                                Edit Workshop
+                            </button>
+                        )}
+                    </div>
+                </>
             ) : (
                 <p>Loading workshop details...</p>
             )}
