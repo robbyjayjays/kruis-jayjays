@@ -2,6 +2,7 @@ import React from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import '../assets/css/navbar.css'; // Import the CSS file
 import logo from '../assets/images/jayjays.png'; // Import the logo image
+import { Link } from 'react-router-dom'; // Assuming you're using React Router for navigation
 
 const Navbar = () => {
     const navigate = useNavigate();
