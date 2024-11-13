@@ -52,6 +52,25 @@ const CalendarPage = () => {
         }
     };
 
+    // Add titles of workshops to the calendar tile
+    const tileContent = ({ date, view }) => {
+        if (view === 'month') {
+            const dateString = date.toISOString().split('T')[0]; // Format the date as yyyy-mm-dd
+            const workshopsOnDay = subscribedWorkshops.filter(workshop =>
+                new Date(workshop.workshop_date).toISOString().split('T')[0] === dateString
+            );
+            return workshopsOnDay.length > 0 ? (
+                <ul>
+                    {workshopsOnDay.map((workshop, index) => (
+                        <li key={index} className="workshop-title">
+                            {workshop.title}
+                        </li>
+                    ))}
+                </ul>
+            ) : null;
+        }
+    };
+
     return (
         <div>
             <Navbar />
@@ -60,6 +79,7 @@ const CalendarPage = () => {
                 onChange={setDate}
                 value={date}
                 tileClassName={tileClassName}
+                tileContent={tileContent}  // Add the content inside the tiles
             />
             <div className="events">
                 <h3>Upcoming Events</h3>
