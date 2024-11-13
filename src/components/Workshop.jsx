@@ -12,8 +12,19 @@ const Workshop = () => {
     const email = localStorage.getItem('email');
 
     useEffect(() => {
-        const fetchWorkshop = async () => {
+        const fetchWorkshopAndUserId = async () => {
             try {
+                // Fetch user ID based on the email stored in localStorage
+                const userResponse = await fetch(`/api/get-user-id?email=${email}`);
+                const userData = await userResponse.json();
+
+                if (!userResponse.ok || !userData.userId) {
+                    console.error('Error fetching user ID:', userData.error || 'No user ID found');
+                    return;
+                }
+
+                const userId = userData.userId;
+
                 const response = await fetch(`/api/get-workshop?id=${id}`);
                 const data = await response.json();
 
@@ -21,23 +32,23 @@ const Workshop = () => {
                     setWorkshop(data.workshop);
 
                     // Check if the current user is the creator
-                    if (email && data.workshop.creator_email === email) {
+                    if (userId === data.workshop.creator_id) {
                         setIsCreator(true);
                     }
 
-                    // Check if the current user email is in the subscribers list
-                    if (email && data.workshop.subscribers.some(subscriberEmail => subscriberEmail === email)) {
+                    // Check if the current user ID is in the subscribers list
+                    if (data.workshop.subscribers.includes(userId)) {
                         setIsSubscribed(true);
                     }
                 } else {
                     console.error('Error fetching workshop:', data.error);
                 }
             } catch (error) {
-                console.error('Error fetching workshop:', error);
+                console.error('Error fetching workshop or user ID:', error);
             }
         };
 
-        fetchWorkshop();
+        fetchWorkshopAndUserId();
     }, [id, email]);
 
     const handleSubscribe = async () => {
