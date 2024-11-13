@@ -1,48 +1,37 @@
 .workshop-container {
     max-width: 800px;
-    margin: 40px auto;
-    background-color: #ffffff;
-    border-radius: 10px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    margin: 0 auto;
     padding: 20px;
+    background-color: #ffffff;
+    border-radius: 16px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
     font-family: 'Arial', sans-serif;
 }
 
 .workshop-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     margin-bottom: 20px;
 }
 
-.workshop-title {
+h1 {
     font-size: 28px;
     color: #2c3e50;
+    margin-bottom: 10px;
+}
+
+p {
+    font-size: 16px;
+    color: #555;
+    line-height: 1.5;
+    margin-bottom: 15px;
 }
 
 .creator-info {
     font-size: 14px;
     color: #777;
-    margin-top: 5px;
-}
-
-.workshop-description {
-    margin-top: 20px;
-}
-
-.workshop-description h3 {
-    font-size: 20px;
-    color: #2c3e50;
-    margin-bottom: 10px;
-}
-
-.workshop-description p {
-    font-size: 16px;
-    color: #555;
-    line-height: 1.5;
-}
-
-.workshop-actions {
-    margin-top: 20px;
-    display: flex;
-    gap: 10px;
+    margin-bottom: 20px;
 }
 
 button {
@@ -54,6 +43,8 @@ button {
     cursor: pointer;
     font-size: 14px;
     transition: background-color 0.3s, transform 0.2s;
+    margin-right: 10px;
+    box-shadow: 0 4px 8px rgba(0, 123, 255, 0.2);
 }
 
 button:hover {
@@ -67,14 +58,20 @@ button:active {
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
 
-.edit-button {
+button.edit-button {
     background-color: #28a745;
 }
 
-.edit-button:hover {
+button.edit-button:hover {
     background-color: #218838;
 }
 
-.edit-button:active {
+button.edit-button:active {
     background-color: #1e7e34;
+}
+
+.status-message {
+    margin-top: 20px;
+    font-size: 14px;
+    color: #333;
 }
