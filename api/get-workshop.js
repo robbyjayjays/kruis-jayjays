@@ -25,10 +25,10 @@ export default async function handler(req, res) {
         }
 
         try {
-            // Query to get the workshop details by ID, including creator info
+            // Get the workshop details along with the creator's information
             const workshopResult = await pool.query(
-                `SELECT w.id, w.title, w.description, w.creator_id, w.subscribers, w.created_at, 
-                        u.firstname AS creator_firstname, u.lastname AS creator_lastname
+                `SELECT w.id, w.title, w.description, w.creator_id, w.subscribers, w.created_at,
+                        u.email AS creator_email, u.firstname AS creator_firstname, u.lastname AS creator_lastname
                  FROM workshops w
                  JOIN users u ON w.creator_id = u.id
                  WHERE w.id = $1`,

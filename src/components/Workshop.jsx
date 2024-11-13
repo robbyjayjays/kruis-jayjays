@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import '../assets/css/workshop.css';
-import { toast } from 'react-toastify';
 
 const Workshop = () => {
     const { id } = useParams(); // Get the workshop ID from the route parameter
@@ -22,11 +21,11 @@ const Workshop = () => {
                     setWorkshop(data.workshop);
 
                     // Check if the current user is the creator
-                    if (data.workshop.creator_id === parseInt(localStorage.getItem('userId'), 10)) {
+                    if (email && data.workshop.creator_email === email) {
                         setIsCreator(true);
                     }
 
-                    // Check if the current user is subscribed
+                    // Check if the current user is in the subscribers list
                     if (data.workshop.subscribers.includes(parseInt(localStorage.getItem('userId'), 10))) {
                         setIsSubscribed(true);
                     }
@@ -54,7 +53,7 @@ const Workshop = () => {
                     <div className="workshop-header">
                         <h1 className="workshop-title">{workshop.title}</h1>
                         <p className="creator-info">
-                            Created by: {workshop.creator_firstname} {workshop.creator_lastname}
+                            Created by: {workshop.creator_firstname} {workshop.creator_lastname} ({workshop.creator_email})
                         </p>
                     </div>
                     <div className="workshop-description">
