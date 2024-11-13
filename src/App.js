@@ -6,6 +6,7 @@ import Profile from './components/Profile';
 import CreateWorkshop from './components/CreateWorkshop';
 import Workshop from './components/Workshop';
 import EditWorkshop from './components/EditWorkshop';
+import Calendar from 'react-calendar';
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
         <Route path="/create-workshop" element= { <CreateWorkshop />} />
         <Route path="/workshop/:id" element= { <Workshop />} />
         <Route path="/edit-workshop/:id" element= { <EditWorkshop />} />
+        <Route path="/calendar" element= { <Calendar />} />
       </Routes>
     </Router>
   );

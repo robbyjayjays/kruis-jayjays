@@ -37,10 +37,11 @@ export default async function handler(req, res) {
 
             // Get workshops where the current user is in the subscribers list
             const workshopResult = await pool.query(
-                'SELECT id, title, description, creator_id, created_at FROM workshops WHERE $1 = ANY (subscribers)',
+                'SELECT id, title, description, creator_id, workshop_date, created_at FROM workshops WHERE $1 = ANY (subscribers)',
                 [userId]
             );
 
+            // Return the workshops with their dates
             res.status(200).json({ workshops: workshopResult.rows });
         } catch (error) {
             console.error('Error fetching subscribed workshops:', error.message);
