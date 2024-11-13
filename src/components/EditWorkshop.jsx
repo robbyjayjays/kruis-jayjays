@@ -10,13 +10,13 @@ const EditWorkshop = () => {
     const [loading, setLoading] = useState(true);
     const token = localStorage.getItem('token'); // Check token in localStorage
 
-    // Function to format date to mm/dd/yyyy
-    const formatDate = (date) => {
+    // Function to format the date to YYYY-MM-DD for input field compatibility
+    const formatDateForInput = (date) => {
         const d = new Date(date);
         const month = String(d.getMonth() + 1).padStart(2, '0'); // Add leading zero if needed
         const day = String(d.getDate()).padStart(2, '0'); // Add leading zero if needed
         const year = d.getFullYear();
-        return `${month}/${day}/${year}`;
+        return `${year}-${month}-${day}`; // Return in the format 'YYYY-MM-DD'
     };
 
     useEffect(() => {
@@ -33,15 +33,15 @@ const EditWorkshop = () => {
                 const data = await response.json();
 
                 if (response.ok) {
-                    // Format the workshop date to mm/dd/yyyy format
+                    // Format the workshop date to YYYY-MM-DD format
                     const formattedDate = data.workshop.workshop_date 
-                        ? formatDate(data.workshop.workshop_date)
+                        ? formatDateForInput(data.workshop.workshop_date)
                         : '';
 
                     setWorkshop({
                         title: data.workshop.title,
                         description: data.workshop.description,
-                        workshop_date: formattedDate, // Set the formatted date
+                        workshop_date: formattedDate, // Set the formatted date for the input
                     });
                 } else {
                     console.error('Error fetching workshop:', data.error);
@@ -76,7 +76,7 @@ const EditWorkshop = () => {
                     id,
                     title: workshop.title,
                     description: workshop.description,
-                    workshop_date: workshop.workshop_date, // Send the updated date
+                    workshop_date: workshop.workshop_date, // Send the updated date in 'YYYY-MM-DD' format
                 }),
             });
 
