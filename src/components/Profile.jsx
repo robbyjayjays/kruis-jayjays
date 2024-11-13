@@ -13,6 +13,7 @@ const Profile = () => {
     const [functions, setFunctions] = useState([]);
     const [isInfoOpen, setIsInfoOpen] = useState(true);
     const [workshops, setWorkshops] = useState([]);
+    const [subscribedWorkshops, setSubscribedWorkshops] = useState([]);
 
     useEffect(() => {
         const token = localStorage.getItem('token');
@@ -46,6 +47,24 @@ const Profile = () => {
 
             fetchWorkshops();
         }
+
+        // Fetch workshops the current user is subscribed to
+        const fetchSubscribedWorkshops = async () => {
+            try {
+                const response = await fetch(`/api/get-subbed?email=${email}`);
+                const data = await response.json();
+
+                if (response.ok) {
+                    setSubscribedWorkshops(data.workshops);
+                } else {
+                    console.error('Error fetching subscribed workshops:', data.error);
+                }
+            } catch (error) {
+                console.error('Error fetching subscribed workshops:', error);
+            }
+        };
+
+        fetchSubscribedWorkshops();
     }, [navigate]);
 
     const handleFunctionChange = (e) => {
@@ -192,10 +211,18 @@ const Profile = () => {
 
                 <div className="profile-section">
                     <h2>Subscribed Workshops</h2>
-                    <ul className="workshop-list">
-                        <li>Subscribed Workshop 1</li>
-                        <li>Subscribed Workshop 2</li>
-                    </ul>
+                    <div className="workshop-container">
+                        {subscribedWorkshops.length > 0 ? (
+                            subscribedWorkshops.map((workshop) => (
+                                <div key={workshop.id} className="workshop-box">
+                                    <div className="workshop-title">{workshop.title}</div>
+                                    <div className="workshop-description">{workshop.description}</div>
+                                </div>
+                            ))
+                        ) : (
+                            <p>No subscribed workshops yet.</p>
+                        )}
+                    </div>
                 </div>
             </div>
         </>
