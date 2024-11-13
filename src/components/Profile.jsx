@@ -21,7 +21,7 @@ const Profile = () => {
             }
 
             // Make the PUT request to update the user's firstname and lastname
-            const response = await fetch('/api/user/update', {
+            const response = await fetch('/api/add-info', {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
