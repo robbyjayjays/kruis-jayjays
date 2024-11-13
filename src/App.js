@@ -5,6 +5,7 @@ import Home from './components/Home';
 import Profile from './components/Profile';
 import CreateWorkshop from './components/CreateWorkshop';
 import Workshop from './components/Workshop';
+import EditWorkshop from './components/EditWorkshop';
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
         <Route path="/profile" element= { <Profile />} />
         <Route path="/create-workshop" element= { <CreateWorkshop />} />
         <Route path="/workshop/:id" element= { <Workshop />} />
+        <Route path="/edit-workshop/:id" element= { <EditWorkshop />} />
       </Routes>
     </Router>
   );

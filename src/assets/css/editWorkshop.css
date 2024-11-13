@@ -1,0 +1,61 @@
+.edit-workshop-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 16px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    font-family: 'Arial', sans-serif;
+}
+
+.edit-workshop-container h1 {
+    font-size: 28px;
+    color: #2c3e50;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.edit-workshop-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.edit-workshop-form label {
+    font-size: 16px;
+    color: #555;
+    display: flex;
+    flex-direction: column;
+}
+
+.edit-workshop-form input,
+.edit-workshop-form textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 16px;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.edit-workshop-form button {
+    padding: 12px 20px;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s, transform 0.2s;
+    margin-top: 20px;
+}
+
+.edit-workshop-form button:hover {
+    background-color: #0056b3;
+    transform: translateY(-2px);
+}
+
+.edit-workshop-form button:active {
+    background-color: #004494;
+    transform: translateY(0);
+}
