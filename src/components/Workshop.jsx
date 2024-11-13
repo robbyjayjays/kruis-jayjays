@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import '../assets/css/workshop.css';
+import { toast } from 'react-toastify';
 
 const Workshop = () => {
     const { id } = useParams(); // Get the workshop ID from the route parameter
@@ -8,10 +9,9 @@ const Workshop = () => {
     const [isSubscribed, setIsSubscribed] = useState(false);
     const [isCreator, setIsCreator] = useState(false);
     const navigate = useNavigate();
+    const email = localStorage.getItem('email');
 
     useEffect(() => {
-        const email = localStorage.getItem('email');
-
         const fetchWorkshop = async () => {
             try {
                 const response = await fetch(`/api/get-workshop?id=${id}`);
@@ -26,7 +26,7 @@ const Workshop = () => {
                     }
 
                     // Check if the current user is in the subscribers list
-                    if (data.workshop.subscribers.includes(parseInt(localStorage.getItem('userId'), 10))) {
+                    if (email && data.workshop.subscribers.includes(email)) {
                         setIsSubscribed(true);
                     }
                 } else {
@@ -38,12 +38,29 @@ const Workshop = () => {
         };
 
         fetchWorkshop();
-    }, [id]);
+    }, [id, email]);
 
     const handleSubscribe = async () => {
-        // Placeholder for subscribe/unsubscribe logic
-        alert(isSubscribed ? 'Unsubscribed from the workshop' : 'Subscribed to the workshop');
-        setIsSubscribed(!isSubscribed);
+        try {
+            const response = await fetch(`/api/subscribe-workshop`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ email, workshopId: id, action: isSubscribed ? 'unsubscribe' : 'subscribe' }),
+            });
+
+            if (response.ok) {
+                setIsSubscribed(!isSubscribed);
+                toast.success(isSubscribed ? 'Successfully unsubscribed' : 'Successfully subscribed');
+            } else {
+                const errorData = await response.json();
+                toast.error(`Failed to ${isSubscribed ? 'unsubscribe' : 'subscribe'}: ${errorData.error}`);
+            }
+        } catch (error) {
+            console.error('Error updating subscription:', error);
+            toast.error('An error occurred while updating subscription.');
+        }
     };
 
     return (
@@ -53,7 +70,7 @@ const Workshop = () => {
                     <div className="workshop-header">
                         <h1 className="workshop-title">{workshop.title}</h1>
                         <p className="creator-info">
-                            Created by: {workshop.creator_firstname} {workshop.creator_lastname} {workshop.creator_email}
+                            Created by: {workshop.creator_firstname} {workshop.creator_lastname} ({workshop.creator_email})
                         </p>
                     </div>
                     <div className="workshop-description">
