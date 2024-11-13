@@ -25,8 +25,8 @@ const Workshop = () => {
                         setIsCreator(true);
                     }
 
-                    // Check if the current user is in the subscribers list
-                    if (email && data.workshop.subscribers.includes(email)) {
+                    // Check if the current user email is in the subscribers list
+                    if (email && data.workshop.subscribers.some(subscriberEmail => subscriberEmail === email)) {
                         setIsSubscribed(true);
                     }
                 } else {
