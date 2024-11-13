@@ -173,10 +173,20 @@ const Profile = () => {
 
                 <div className="profile-section">
                     <h2>Subscribed Workshops</h2>
-                    <ul className="workshop-list">
-                        <li>Subscribed Workshop 1</li>
-                        <li>Subscribed Workshop 2</li>
-                    </ul>
+                    <div className="workshop-container">
+                            <div className="workshop-box">
+                                <div className="workshop-title">Test Title 1</div>
+                                <div className="workshop-description">Test Description 1</div>
+                            </div>
+                            <div className="workshop-box">
+                                <div className="workshop-title">Test Title 2</div>
+                                <div className="workshop-description">Test Description 2</div>
+                            </div>
+                            <div className="workshop-box">
+                                <div className="workshop-title">Test Title 2</div>
+                                <div className="workshop-description">Test Description 2</div>
+                            </div>
+                        </div>
                 </div>
             </div>
         </>
