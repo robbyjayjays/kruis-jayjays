@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import '../assets/css/profile.css';
+import { useNavigate } from 'react-router-dom';
 import Navbar from './Navbar';
 
 const Profile = () => {
     // Placeholder for logic to determine if the user is a creator
+    const navigate = useNavigate();
     const [isCreator, setIsCreator] = useState(false);
     const [firstname, setFirstname] = useState('');
     const [lastname, setLastname] = useState('');
@@ -12,10 +14,16 @@ const Profile = () => {
     const [functions, setFunctions] = useState([]);
 
     useEffect(() => {
+      const token = localStorage.getItem('token');
+        if (!token) {
+            alert('You need to be logged in to access this page.');
+            navigate('/'); // Redirect to login page
+            return;
+        }
       // Check localStorage for creator status and set the state
       const creatorStatus = localStorage.getItem('isCreator') === 'true';
       setIsCreator(creatorStatus);
-    }, []);
+    }, [navigate]);
 
     const handleFunctionChange = (e) => {
       const value = e.target.value;
