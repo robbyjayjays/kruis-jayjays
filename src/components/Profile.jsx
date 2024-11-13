@@ -11,6 +11,7 @@ const Profile = () => {
     const [department, setDepartment] = useState('');
     const [province, setProvince] = useState('');
     const [functions, setFunctions] = useState([]);
+    const [isInfoOpen, setIsInfoOpen] = useState(true); // State for toggling section
 
     useEffect(() => {
         const token = localStorage.getItem('token');
@@ -70,71 +71,78 @@ const Profile = () => {
             <Navbar />
             <div className="profile-container">
                 <div className="profile-section">
-                    <h2>Add Info to Your Account</h2>
-                    <form className="profile-form" onSubmit={handleSubmit}>
-                        <label>
-                            Firstname:
-                            <input
-                                type="text"
-                                placeholder="Enter your firstname"
-                                value={firstname}
-                                onChange={(e) => setFirstname(e.target.value)}
-                            />
-                        </label>
-                        <label>
-                            Lastname:
-                            <input
-                                type="text"
-                                placeholder="Enter your lastname"
-                                value={lastname}
-                                onChange={(e) => setLastname(e.target.value)}
-                            />
-                        </label>
-                        <label>
-                            In which department are you active?
-                            <select value={department} onChange={(e) => setDepartment(e.target.value)}>
-                                <option value="">Select department</option>
-                                <option value="IT">IT Department</option>
-                                <option value="Marketing">Marketing Department</option>
-                                <option value="not-active">I am not active in a department</option>
-                            </select>
-                        </label>
-                        <label>
-                            In which province are you active?
-                            <select value={province} onChange={(e) => setProvince(e.target.value)}>
-                                <option value="">No choice</option>
-                                <option value="vlaams-brabant">Vlaams-Brabant</option>
-                                <option value="waals-brabant">Waals-Brabant</option>
-                            </select>
-                        </label>
-                        <label>What function(s) do you have?</label>
-                        <div className="function-checkboxes">
-                            {[
-                                'Animator Hartveilig',
-                                'Arts-lesgever',
-                                'Hoofdzetel Team Eerste Hulp',
-                                'Initiator JRK',
-                                'Kleuterinitiator',
-                                'Lesgever eerste hulp bij psychische problemen',
-                                'Lesgever eerstehulpverlening',
-                                'Lesgever eerstehulpverlening jeugd',
-                                'Lesgever eerstehulpverlening jeugd begeleider',
-                                'Lesgever reanimeren en defibrilleren',
-                                'Provincieverantwoordelijke Vorming',
-                                'Simulant lesgever'
-                            ].map((func, index) => (
-                                <label key={index}>
-                                    <input
-                                        type="checkbox"
-                                        value={func}
-                                        onChange={handleFunctionChange}
-                                    />
-                                    {func}
-                                </label>
-                            ))}
-                        </div>
-                        <button type="submit">Save Info</button>
-                    </form>
+                    <div className="collapsible-header" onClick={() => setIsInfoOpen(!isInfoOpen)}>
+                        <h2>Add Info to Your Account</h2>
+                        <button className="toggle-button">
+                            {isInfoOpen ? 'Hide' : 'Show'}
+                        </button>
+                    </div>
+                    {isInfoOpen && (
+                        <form className="profile-form" onSubmit={handleSubmit}>
+                            <label>
+                                Firstname:
+                                <input
+                                    type="text"
+                                    placeholder="Enter your firstname"
+                                    value={firstname}
+                                    onChange={(e) => setFirstname(e.target.value)}
+                                />
+                            </label>
+                            <label>
+                                Lastname:
+                                <input
+                                    type="text"
+                                    placeholder="Enter your lastname"
+                                    value={lastname}
+                                    onChange={(e) => setLastname(e.target.value)}
+                                />
+                            </label>
+                            <label>
+                                In which department are you active?
+                                <select value={department} onChange={(e) => setDepartment(e.target.value)}>
+                                    <option value="">Select department</option>
+                                    <option value="IT">IT Department</option>
+                                    <option value="Marketing">Marketing Department</option>
+                                    <option value="not-active">I am not active in a department</option>
+                                </select>
+                            </label>
+                            <label>
+                                In which province are you active?
+                                <select value={province} onChange={(e) => setProvince(e.target.value)}>
+                                    <option value="">No choice</option>
+                                    <option value="vlaams-brabant">Vlaams-Brabant</option>
+                                    <option value="waals-brabant">Waals-Brabant</option>
+                                </select>
+                            </label>
+                            <label>What function(s) do you have?</label>
+                            <div className="function-checkboxes">
+                                {[
+                                    'Animator Hartveilig',
+                                    'Arts-lesgever',
+                                    'Hoofdzetel Team Eerste Hulp',
+                                    'Initiator JRK',
+                                    'Kleuterinitiator',
+                                    'Lesgever eerste hulp bij psychische problemen',
+                                    'Lesgever eerstehulpverlening',
+                                    'Lesgever eerstehulpverlening jeugd',
+                                    'Lesgever eerstehulpverlening jeugd begeleider',
+                                    'Lesgever reanimeren en defibrilleren',
+                                    'Provincieverantwoordelijke Vorming',
+                                    'Simulant lesgever'
+                                ].map((func, index) => (
+                                    <label key={index}>
+                                        <input
+                                            type="checkbox"
+                                            value={func}
+                                            onChange={handleFunctionChange}
+                                        />
+                                        {func}
+                                    </label>
+                                ))}
+                            </div>
+                            <button type="submit">Save Info</button>
+                        </form>
+                    )}
                 </div>
 
                 {isCreator && (
@@ -144,18 +152,6 @@ const Profile = () => {
                             <div className="workshop-box">
                                 <div className="workshop-title">Test Title 1</div>
                                 <div className="workshop-description">Test Description 1</div>
-                            </div>
-                            <div className="workshop-box">
-                                <div className="workshop-title">Test Title 2</div>
-                                <div className="workshop-description">Test Description 2</div>
-                            </div>
-                            <div className="workshop-box">
-                                <div className="workshop-title">Test Title 2</div>
-                                <div className="workshop-description">Test Description 2</div>
-                            </div>
-                            <div className="workshop-box">
-                                <div className="workshop-title">Test Title 2</div>
-                                <div className="workshop-description">Test Description 2</div>
                             </div>
                             <div className="workshop-box">
                                 <div className="workshop-title">Test Title 2</div>
@@ -173,20 +169,10 @@ const Profile = () => {
 
                 <div className="profile-section">
                     <h2>Subscribed Workshops</h2>
-                    <div className="workshop-container">
-                            <div className="workshop-box">
-                                <div className="workshop-title">Test Title 1</div>
-                                <div className="workshop-description">Test Description 1</div>
-                            </div>
-                            <div className="workshop-box">
-                                <div className="workshop-title">Test Title 2</div>
-                                <div className="workshop-description">Test Description 2</div>
-                            </div>
-                            <div className="workshop-box">
-                                <div className="workshop-title">Test Title 2</div>
-                                <div className="workshop-description">Test Description 2</div>
-                            </div>
-                        </div>
+                    <ul className="workshop-list">
+                        <li>Subscribed Workshop 1</li>
+                        <li>Subscribed Workshop 2</li>
+                    </ul>
                 </div>
             </div>
         </>
