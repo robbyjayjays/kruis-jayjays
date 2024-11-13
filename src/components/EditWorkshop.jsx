@@ -8,8 +8,24 @@ const EditWorkshop = () => {
     const navigate = useNavigate();
     const [workshop, setWorkshop] = useState({ title: '', description: '', workshop_date: '' });
     const [loading, setLoading] = useState(true);
+    const token = localStorage.getItem('token'); // Check token in localStorage
+
+    // Function to format date to mm/dd/yyyy
+    const formatDate = (date) => {
+        const d = new Date(date);
+        const month = String(d.getMonth() + 1).padStart(2, '0'); // Add leading zero if needed
+        const day = String(d.getDate()).padStart(2, '0'); // Add leading zero if needed
+        const year = d.getFullYear();
+        return `${month}/${day}/${year}`;
+    };
 
     useEffect(() => {
+        // If no token exists, redirect to login page
+        if (!token) {
+            navigate('/'); // Redirect to login
+            return;
+        }
+
         // Fetch the workshop data
         const fetchWorkshop = async () => {
             try {
@@ -17,7 +33,16 @@ const EditWorkshop = () => {
                 const data = await response.json();
 
                 if (response.ok) {
-                    setWorkshop(data.workshop);
+                    // Format the workshop date to mm/dd/yyyy format
+                    const formattedDate = data.workshop.workshop_date 
+                        ? formatDate(data.workshop.workshop_date)
+                        : '';
+
+                    setWorkshop({
+                        title: data.workshop.title,
+                        description: data.workshop.description,
+                        workshop_date: formattedDate, // Set the formatted date
+                    });
                 } else {
                     console.error('Error fetching workshop:', data.error);
                     toast.error('Failed to load workshop data');
@@ -31,7 +56,7 @@ const EditWorkshop = () => {
         };
 
         fetchWorkshop();
-    }, [id]);
+    }, [id, token, navigate]); // Include token in dependencies
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -99,7 +124,7 @@ const EditWorkshop = () => {
                 <label>
                     Workshop Date:
                     <input
-                        type="date"
+                        type="text"
                         name="workshop_date"
                         value={workshop.workshop_date}
                         onChange={handleChange}
