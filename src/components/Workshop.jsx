@@ -11,8 +11,15 @@ const Workshop = () => {
     const [isCreator, setIsCreator] = useState(false);
     const navigate = useNavigate();
     const email = localStorage.getItem('email');
+    const token = localStorage.getItem('token');
 
     useEffect(() => {
+        // If no token exists, redirect to login page
+        if (!token) {
+            navigate('/');
+            return;
+        }
+
         const fetchWorkshopAndUserId = async () => {
             try {
                 // Fetch user ID based on the email stored in localStorage
@@ -50,7 +57,7 @@ const Workshop = () => {
         };
 
         fetchWorkshopAndUserId();
-    }, [id, email]);
+    }, [id, email, token, navigate]);
 
     const handleSubscribe = async () => {
         try {
