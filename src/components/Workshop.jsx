@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import '../assets/css/workshop.css';
 import { toast } from 'react-toastify';
+import Navbar from './Navbar';
 
 const Workshop = () => {
     const { id } = useParams(); // Get the workshop ID from the route parameter
@@ -75,6 +76,8 @@ const Workshop = () => {
     };
 
     return (
+        <>
+        <Navbar />
         <div className="workshop-container">
             {workshop ? (
                 <>
@@ -108,6 +111,7 @@ const Workshop = () => {
                 <p>Loading workshop details...</p>
             )}
         </div>
+        </>
     );
 };
 
