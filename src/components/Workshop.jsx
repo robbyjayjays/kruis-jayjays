@@ -53,7 +53,7 @@ const Workshop = () => {
                     <div className="workshop-header">
                         <h1 className="workshop-title">{workshop.title}</h1>
                         <p className="creator-info">
-                            Created by: {workshop.creator_firstname} {workshop.creator_lastname} ({workshop.creator_email})
+                            Created by: {workshop.creator_firstname} {workshop.creator_lastname} {workshop.creator_email}
                         </p>
                     </div>
                     <div className="workshop-description">

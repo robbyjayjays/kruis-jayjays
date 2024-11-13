@@ -1,50 +1,75 @@
 .workshop-container {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 20px;
-    background-color: #ffffff;
+    max-width: 1000px;
+    margin: 40px auto;
+    padding: 30px;
+    background-color: #f9f9f9;
     border-radius: 16px;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
     font-family: 'Arial', sans-serif;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
 }
 
 .workshop-header {
     display: flex;
     justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
+    align-items: flex-start;
+    background-color: #2c3e50;
+    padding: 15px;
+    border-radius: 12px;
+    color: #ecf0f1;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
 }
 
 h1 {
-    font-size: 28px;
-    color: #2c3e50;
-    margin-bottom: 10px;
-}
-
-p {
-    font-size: 16px;
-    color: #555;
-    line-height: 1.5;
-    margin-bottom: 15px;
+    font-size: 32px;
+    margin: 0;
+    color: #ffffff;
 }
 
 .creator-info {
     font-size: 14px;
-    color: #777;
-    margin-bottom: 20px;
+    color: #ecf0f1;
+    text-align: right;
+}
+
+.workshop-description {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+}
+
+.workshop-description h3 {
+    font-size: 22px;
+    color: #2c3e50;
+    margin-bottom: 10px;
+}
+
+.workshop-description p {
+    font-size: 16px;
+    color: #555;
+    line-height: 1.6;
+}
+
+.workshop-actions {
+    display: flex;
+    justify-content: flex-start;
+    gap: 15px;
 }
 
 button {
-    padding: 10px 20px;
+    padding: 12px 25px;
     background-color: #007BFF;
     color: #ffffff;
     border: none;
-    border-radius: 8px;
+    border-radius: 10px;
     cursor: pointer;
-    font-size: 14px;
+    font-size: 15px;
     transition: background-color 0.3s, transform 0.2s;
     margin-right: 10px;
-    box-shadow: 0 4px 8px rgba(0, 123, 255, 0.2);
+    box-shadow: 0 4px 10px rgba(0, 123, 255, 0.2);
 }
 
 button:hover {
