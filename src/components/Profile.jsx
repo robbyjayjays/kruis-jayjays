@@ -12,16 +12,40 @@ const Profile = () => {
     const [province, setProvince] = useState('');
     const [functions, setFunctions] = useState([]);
     const [isInfoOpen, setIsInfoOpen] = useState(true);
+    const [workshops, setWorkshops] = useState([]);
 
     useEffect(() => {
         const token = localStorage.getItem('token');
+        const email = localStorage.getItem('email');
+
         if (!token) {
             alert('You need to be logged in to access this page.');
             navigate('/'); // Redirect to login page
             return;
         }
+
         const creatorStatus = localStorage.getItem('isCreator') === 'true';
         setIsCreator(creatorStatus);
+
+        if (creatorStatus) {
+            // Fetch workshops created by the current user
+            const fetchWorkshops = async () => {
+                try {
+                    const response = await fetch(`/api/get-workshops?email=${email}`);
+                    const data = await response.json();
+
+                    if (response.ok) {
+                        setWorkshops(data.workshops);
+                    } else {
+                        console.error('Error fetching workshops:', data.error);
+                    }
+                } catch (error) {
+                    console.error('Error fetching workshops:', error);
+                }
+            };
+
+            fetchWorkshops();
+        }
     }, [navigate]);
 
     const handleFunctionChange = (e) => {
@@ -146,14 +170,16 @@ const Profile = () => {
                     <div className="profile-section">
                         <h2>Created Workshops</h2>
                         <div className="workshop-container">
-                            <div className="workshop-box">
-                                <div className="workshop-title">Test Title 1</div>
-                                <div className="workshop-description">Test Description 1</div>
-                            </div>
-                            <div className="workshop-box">
-                                <div className="workshop-title">Test Title 2</div>
-                                <div className="workshop-description">Test Description 2</div>
-                            </div>
+                            {workshops.length > 0 ? (
+                                workshops.map((workshop) => (
+                                    <div key={workshop.id} className="workshop-box">
+                                        <div className="workshop-title">{workshop.title}</div>
+                                        <div className="workshop-description">{workshop.description}</div>
+                                    </div>
+                                ))
+                            ) : (
+                                <p>No workshops created yet.</p>
+                            )}
                         </div>
                         <button
                             className="create-workshop-button"
