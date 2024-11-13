@@ -149,6 +149,18 @@ const Profile = () => {
                                 <div className="workshop-title">Test Title 2</div>
                                 <div className="workshop-description">Test Description 2</div>
                             </div>
+                            <div className="workshop-box">
+                                <div className="workshop-title">Test Title 2</div>
+                                <div className="workshop-description">Test Description 2</div>
+                            </div>
+                            <div className="workshop-box">
+                                <div className="workshop-title">Test Title 2</div>
+                                <div className="workshop-description">Test Description 2</div>
+                            </div>
+                            <div className="workshop-box">
+                                <div className="workshop-title">Test Title 2</div>
+                                <div className="workshop-description">Test Description 2</div>
+                            </div>
                         </div>
                         <button
                             className="create-workshop-button"
