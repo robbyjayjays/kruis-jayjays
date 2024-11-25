@@ -18,7 +18,6 @@ function App() {
         <Route path="/create-workshop" element= { <CreateWorkshop />} />
         <Route path="/workshop/:id" element= { <Workshop />} />
         <Route path="/edit-workshop/:id" element= { <EditWorkshop />} />
-        <Route path="/calendar" element= { <Calendar />} />
       </Routes>
     </Router>
   );

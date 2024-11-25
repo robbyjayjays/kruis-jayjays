@@ -34,11 +34,6 @@ const Navbar = () => {
                     <button className="navbar-button" onClick={() => navigate('/Home')}>Home</button>
                 )}
 
-                {/* Button to navigate to Calendar Page */}
-                <Link to="/calendar">
-                    <button className="navbar-button">View Calendar</button>
-                </Link>
-
                 <button className="navbar-button logout" onClick={handleLogout}>Logout</button>
             </div>
         </nav>
