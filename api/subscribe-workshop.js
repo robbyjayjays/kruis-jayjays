@@ -39,12 +39,12 @@ export default async function handler(req, res) {
       // Perform action (subscribe or unsubscribe)
       if (action === 'subscribe') {
         await pool.query(
-          'UPDATE workshops SET subscribers = array_append(subscribers, $1) WHERE id = $2 AND NOT subscribers @> ARRAY[$1]',
+          'UPDATE workshops SET subscribers = array_append(subscribers, $1::int) WHERE id = $2 AND NOT subscribers @> ARRAY[$1::int]',
           [userId, workshopId]
         );
       } else if (action === 'unsubscribe') {
         await pool.query(
-          'UPDATE workshops SET subscribers = array_remove(subscribers, $1) WHERE id = $2',
+          'UPDATE workshops SET subscribers = array_remove(subscribers, $1::int) WHERE id = $2',
           [userId, workshopId]
         );
       }
@@ -54,8 +54,8 @@ export default async function handler(req, res) {
         host: 'smtp.sendgrid.net',
         port: 587,
         auth: {
-          user: 'apikey', // SendGrid requires 'apikey' as the user
-          pass: process.env.SENDGRID_API_KEY, // Your SendGrid API Key
+          user: 'apikey',
+          pass: process.env.SENDGRID_API_KEY,
         },
       });
 
