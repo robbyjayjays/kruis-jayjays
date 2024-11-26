@@ -113,6 +113,8 @@ const Profile = () => {
 
                 localStorage.setItem('firstname', firstname);
                 setFirstname(firstname)
+                // Reload the page to fetch updated data
+                window.location.reload();
             } else {
                 const errorData = await response.json();
                 alert(`Failed to update information: ${errorData.error}`);
