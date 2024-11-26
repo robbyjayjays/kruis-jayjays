@@ -38,7 +38,7 @@ const Login = () => {
         toast.success('Login successfully!');
   
         // Navigate to homepage after successful login
-        navigate('/Home');
+        navigate('/Profile');
       } catch (error) {
         console.error('Login error:', error);
         toast.error('Invalid credentials.');
