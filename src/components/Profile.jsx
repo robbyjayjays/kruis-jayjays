@@ -20,6 +20,7 @@ const Profile = () => {
         const token = localStorage.getItem('token');
         const email = localStorage.getItem('email');
         const savedFirstname = localStorage.getItem('firstname');
+        console.log(savedFirstname)
 
         if (!token) {
             alert('You need to be logged in to access this page.');
