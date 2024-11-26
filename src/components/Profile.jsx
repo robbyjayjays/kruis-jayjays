@@ -246,7 +246,10 @@ const Profile = () => {
                                     </div>
                                 ))
                             ) : (
-                                <p>No subscribed workshops yet.</p>
+                                <div>
+                                    <p>No subscribed workshops yet.</p>
+                                    <button className="navbar-button" onClick={() => navigate('/Home')}>Profile</button>
+                                </div>
                             )}
                         </div>
                     </div>

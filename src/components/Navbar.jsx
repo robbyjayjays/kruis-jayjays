@@ -29,11 +29,7 @@ const Navbar = () => {
             <div className="navbar-links">
                 {email && <span className="navbar-user">Logged in as: {email}</span>}
                 
-                {location.pathname === '/Home' ? (
-                    <button className="navbar-button" onClick={() => navigate('/Profile')}>Profile</button>
-                ) : (
-                    <button className="navbar-button" onClick={() => navigate('/Home')}>Home</button>
-                )}
+                <button className="navbar-button" onClick={() => navigate('/Profile')}>Profile</button>
 
                 <button className="navbar-button logout" onClick={handleLogout}>Logout</button>
             </div>
