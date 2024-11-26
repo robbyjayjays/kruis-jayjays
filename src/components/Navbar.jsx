@@ -13,6 +13,7 @@ const Navbar = () => {
         // Remove the token and email from localStorage
         localStorage.removeItem('token');
         localStorage.removeItem('email');
+        localStorage.removeItem('firstname');
         
         // Navigate to the login page after logging out
         navigate('/');
