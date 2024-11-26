@@ -6,6 +6,7 @@ import Navbar from './Navbar';
 const Profile = () => {
     const navigate = useNavigate();
     const [isCreator, setIsCreator] = useState(false);
+    const [isFirstname, setIsFirstname] = useState(false);
     const [firstname, setFirstname] = useState('');
     const [lastname, setLastname] = useState('');
     const [department, setDepartment] = useState('');
@@ -18,6 +19,7 @@ const Profile = () => {
     useEffect(() => {
         const token = localStorage.getItem('token');
         const email = localStorage.getItem('email');
+        const savedFirstname = localStorage.getItem('firstname');
 
         if (!token) {
             alert('You need to be logged in to access this page.');
@@ -27,6 +29,8 @@ const Profile = () => {
 
         const creatorStatus = localStorage.getItem('isCreator') === 'true';
         setIsCreator(creatorStatus);
+
+        setIsFirstname(!!savedFirstname);
 
         if (creatorStatus) {
             // Fetch workshops created by the current user
@@ -213,25 +217,27 @@ const Profile = () => {
                     </div>
                 )}
 
-                <div className="profile-section">
-                    <h2>Subscribed Workshops</h2>
-                    <div className="workshop-container">
-                        {subscribedWorkshops.length > 0 ? (
-                            subscribedWorkshops.map((workshop) => (
-                                <div 
-                                    key={workshop.id} 
-                                    className="workshop-box"
-                                    onClick={() => navigate(`/workshop/${workshop.id}`)}
-                                >
-                                    <div className="workshop-title">{workshop.title}</div>
-                                    <div className="workshop-description">{workshop.description}</div>
-                                </div>
-                            ))
-                        ) : (
-                            <p>No subscribed workshops yet.</p>
-                        )}
+                {isFirstname && ( // Show only if firstname exists
+                    <div className="profile-section">
+                        <h2>Subscribed Workshops</h2>
+                        <div className="workshop-container">
+                            {subscribedWorkshops.length > 0 ? (
+                                subscribedWorkshops.map((workshop) => (
+                                    <div 
+                                        key={workshop.id} 
+                                        className="workshop-box"
+                                        onClick={() => navigate(`/workshop/${workshop.id}`)}
+                                    >
+                                        <div className="workshop-title">{workshop.title}</div>
+                                        <div className="workshop-description">{workshop.description}</div>
+                                    </div>
+                                ))
+                            ) : (
+                                <p>No subscribed workshops yet.</p>
+                            )}
+                        </div>
                     </div>
-                </div>
+                )}
             </div>
         </>
     );

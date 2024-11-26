@@ -34,6 +34,9 @@ const Login = () => {
         localStorage.setItem('token', data.token);
         localStorage.setItem('email', data.user.email);
         localStorage.setItem('isCreator', data.user.creator)
+        if (data.user.firstname) {
+          localStorage.setItem('firstname', data.user.firstname); // Store firstname if it exists
+        }
   
         toast.success('Login successfully!');
   
