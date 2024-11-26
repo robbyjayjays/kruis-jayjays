@@ -7,6 +7,7 @@ const Profile = () => {
     const navigate = useNavigate();
     const [isCreator, setIsCreator] = useState(false);
     const [isFirstname, setIsFirstname] = useState(false);
+    const [isInfoSubmitted, setIsInfoSubmitted] = useState(false);
     const [firstname, setFirstname] = useState('');
     const [lastname, setLastname] = useState('');
     const [department, setDepartment] = useState('');
@@ -84,6 +85,12 @@ const Profile = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
+        // Check if firstname is filled
+        if (!firstname.trim()) {
+            alert('Firstname is required. Please fill it in.');
+          
+            return; // Prevent form submission if firstname is empty
+        }
         try {
             const email = localStorage.getItem('email');
             if (!email) {
@@ -103,6 +110,9 @@ const Profile = () => {
                 const result = await response.json();
                 alert('Information updated successfully');
                 console.log('Updated fields:', result.updatedFields);
+
+                localStorage.setItem('firstname', firstname);
+                setFirstname(firstname)
             } else {
                 const errorData = await response.json();
                 alert(`Failed to update information: ${errorData.error}`);
