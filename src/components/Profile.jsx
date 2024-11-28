@@ -152,6 +152,7 @@ const Profile = () => {
                 setDepartment(department);
                 setProvince(province);
                 setFunctions([...functions]);
+                console.log(functions);
                 setIsInfoOpen(false); // Switch to read-only mode
 
             } else {
