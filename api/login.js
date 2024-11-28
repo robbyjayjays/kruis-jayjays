@@ -53,7 +53,16 @@ export default async function handler(req, res) {
       res.status(200).json({
         message: 'Login successful',
         token, // Send the JWT token to the client
-        user: { id: user.id, email: user.email, creator: user.creator, firstname: user.firstname }, // You can return user data as well, if needed
+        user: { 
+          id: user.id, 
+          email: user.email, 
+          creator: user.creator, 
+          firstname: user.firstname, 
+          lastname: user.lastname, 
+          department: user.department, 
+          province: user.province, 
+          functions: user.functions 
+        }, // You can return user data as well, if needed
       });
     } catch (error) {
       console.error('Error logging in:', error.message);
