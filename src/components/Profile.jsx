@@ -24,10 +24,6 @@ const Profile = () => {
         const savedDepartment = localStorage.getItem('department');
         const savedProvince = localStorage.getItem('province');
         const savedFunctions = localStorage.getItem('functions');
-        const parsedFunctions = savedFunctions ? JSON.parse(savedFunctions) : [];
-        console.log('new')
-        console.log(savedFunctions)
-        console.log(parsedFunctions)
 
         if (!token) {
             alert('You need to be logged in to access this page.');
@@ -38,18 +34,26 @@ const Profile = () => {
         const creatorStatus = localStorage.getItem('isCreator') === 'true';
         setIsCreator(creatorStatus);
 
-        // Check if data exists in localStorage and set state
+        // Parse and validate `functions`
+        try {
+            const parsedFunctions = savedFunctions ? JSON.parse(savedFunctions) : [];
+            setFunctions(Array.isArray(parsedFunctions) ? parsedFunctions : []);
+        } catch (error) {
+            console.error('Error parsing functions:', error);
+            setFunctions([]); // Default to empty array
+        }
+
+        // Set other state values if they exist
         if (savedFirstname) {
             setIsFirstname(true);
             setFirstname(savedFirstname);
             setLastname(savedLastname || '');
             setDepartment(savedDepartment || '');
             setProvince(savedProvince || '');
-            setFunctions(parsedFunctions);
-            console.log(functions);
             setIsInfoOpen(false); // Switch to read-only mode
         }
 
+        // Fetch workshops if the user is a creator
         if (creatorStatus) {
             const fetchWorkshops = async () => {
                 try {
@@ -69,6 +73,7 @@ const Profile = () => {
             fetchWorkshops();
         }
 
+        // Fetch subscribed workshops
         const fetchSubscribedWorkshops = async () => {
             try {
                 const response = await fetch(`/api/get-subbed?email=${email}`);
@@ -89,11 +94,11 @@ const Profile = () => {
 
     const handleFunctionChange = (e) => {
         const value = e.target.value;
-        if (functions.includes(value)) {
-            setFunctions(functions.filter(func => func !== value));
-        } else {
-            setFunctions([...functions, value]);
-        }
+        setFunctions((prevFunctions) =>
+            prevFunctions.includes(value)
+                ? prevFunctions.filter((func) => func !== value) // Remove if already selected
+                : [...prevFunctions, value] // Add if not already selected
+        );
     };
 
     const handleSubmit = async (e) => {
@@ -141,23 +146,15 @@ const Profile = () => {
 
             if (response.ok) {
                 alert('Information updated successfully');
-                // Save the updated values in localStorage (if needed) or state
+                // Update localStorage and state
                 localStorage.setItem('firstname', firstname);
                 localStorage.setItem('lastname', lastname);
                 localStorage.setItem('department', department);
                 localStorage.setItem('province', province);
                 localStorage.setItem('functions', JSON.stringify(functions));
-                
-                // Set state to switch to read-only mode and reflect updated values
-                setIsFirstname(true);
-                setFirstname(firstname);
-                setLastname(lastname);
-                setDepartment(department);
-                setProvince(province);
-                setFunctions([...functions]);
-                console.log(functions);
-                setIsInfoOpen(false); // Switch to read-only mode
 
+                setIsFirstname(true);
+                setIsInfoOpen(false); // Switch to read-only mode
             } else {
                 const errorData = await response.json();
                 alert(`Failed to update information: ${errorData.error}`);
