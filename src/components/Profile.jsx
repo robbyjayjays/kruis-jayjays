@@ -20,6 +20,10 @@ const Profile = () => {
         const token = localStorage.getItem('token');
         const email = localStorage.getItem('email');
         const savedFirstname = localStorage.getItem('firstname');
+        const savedLastname = localStorage.getItem('lastname');
+        const savedDepartment = localStorage.getItem('department');
+        const savedProvince = localStorage.getItem('province');
+        const savedFunctions = localStorage.getItem('functions');
 
         if (!token) {
             alert('You need to be logged in to access this page.');
@@ -32,6 +36,7 @@ const Profile = () => {
 
         // Check if data exists in localStorage and set state
         if (savedFirstname) {
+            setIsFirstname(true);
             setFirstname(savedFirstname);
             setLastname(savedLastname || '');
             setDepartment(savedDepartment || '');
@@ -139,6 +144,7 @@ const Profile = () => {
                 localStorage.setItem('functions', JSON.stringify(functions));
                 
                 // Set state to switch to read-only mode and reflect updated values
+                setIsFirstname(true);
                 setFirstname(firstname);
                 setLastname(lastname);
                 setDepartment(department);
