@@ -24,6 +24,7 @@ const Profile = () => {
         const savedDepartment = localStorage.getItem('department');
         const savedProvince = localStorage.getItem('province');
         const savedFunctions = localStorage.getItem('functions');
+        console.log(savedFunctions)
 
         if (!token) {
             alert('You need to be logged in to access this page.');
