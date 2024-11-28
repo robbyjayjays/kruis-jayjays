@@ -14,6 +14,10 @@ const Navbar = () => {
         localStorage.removeItem('token');
         localStorage.removeItem('email');
         localStorage.removeItem('firstname');
+        localStorage.removeItem('lastname');
+        localStorage.removeItem('department');
+        localStorage.removeItem('province');
+        localStorage.removeItem('functions');
         
         // Navigate to the login page after logging out
         navigate('/');
