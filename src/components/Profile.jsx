@@ -24,7 +24,9 @@ const Profile = () => {
         const savedDepartment = localStorage.getItem('department');
         const savedProvince = localStorage.getItem('province');
         const savedFunctions = localStorage.getItem('functions');
+        const parsedFunctions = savedFunctions ? JSON.parse(savedFunctions) : [];
         console.log(savedFunctions)
+        console.log(parsedFunctions)
 
         if (!token) {
             alert('You need to be logged in to access this page.');
@@ -42,7 +44,7 @@ const Profile = () => {
             setLastname(savedLastname || '');
             setDepartment(savedDepartment || '');
             setProvince(savedProvince || '');
-            setFunctions([...savedFunctions]);
+            setFunctions(parsedFunctions);
             console.log(functions);
             setIsInfoOpen(false); // Switch to read-only mode
         }
