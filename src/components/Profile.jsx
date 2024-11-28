@@ -34,13 +34,25 @@ const Profile = () => {
         const creatorStatus = localStorage.getItem('isCreator') === 'true';
         setIsCreator(creatorStatus);
 
-        // Parse and validate `functions`
+        // Parse and process `functions`
         try {
-            const parsedFunctions = savedFunctions ? JSON.parse(savedFunctions) : [];
+            let parsedFunctions = [];
+
+            if (savedFunctions && savedFunctions.startsWith('{') && savedFunctions.endsWith('}')) {
+                // Handle improperly formatted object-like strings
+                parsedFunctions = savedFunctions
+                    .replace(/[{}"]/g, '') // Remove `{`, `}`, and `"`
+                    .split(',') // Split by commas if there are multiple values
+                    .map((func) => func.trim()); // Trim spaces
+            } else if (savedFunctions) {
+                // Fallback to parsing as JSON
+                parsedFunctions = JSON.parse(savedFunctions);
+            }
+
             setFunctions(Array.isArray(parsedFunctions) ? parsedFunctions : []);
         } catch (error) {
             console.error('Error parsing functions:', error);
-            setFunctions([]); // Default to empty array
+            setFunctions([]); // Default to empty array on error
         }
 
         // Set other state values if they exist
