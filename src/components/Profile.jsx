@@ -187,6 +187,52 @@ const Profile = () => {
                                 <input type="text" value={gebruiker} disabled />
                             </label>
                             <button onClick={() => setIsInfoOpen(true)}>Edit Info</button>
+                            <form className="profile-form" onSubmit={handleSubmit}>
+                                <label>
+                                    In which department are you active?
+                                    <select value={department} onChange={(e) => setDepartment(e.target.value)}>
+                                        <option value="">Select department</option>
+                                        <option value="IT">IT Department</option>
+                                        <option value="Marketing">Marketing Department</option>
+                                        <option value="not-active">I am not active in a department</option>
+                                    </select>
+                                </label>
+                                <label>
+                                    In which province are you active?
+                                    <select value={province} onChange={(e) => setProvince(e.target.value)}>
+                                        <option value="">No choice</option>
+                                        <option value="vlaams-brabant">Vlaams-Brabant</option>
+                                        <option value="waals-brabant">Waals-Brabant</option>
+                                    </select>
+                                </label>
+                                <label>What function(s) do you have?</label>
+                                <div className="function-checkboxes">
+                                    {[
+                                        'Animator Hartveilig',
+                                        'Arts-lesgever',
+                                        'Hoofdzetel Team Eerste Hulp',
+                                        'Initiator JRK',
+                                        'Kleuterinitiator',
+                                        'Lesgever eerste hulp bij psychische problemen',
+                                        'Lesgever eerstehulpverlening',
+                                        'Lesgever eerstehulpverlening jeugd',
+                                        'Lesgever eerstehulpverlening jeugd begeleider',
+                                        'Lesgever reanimeren en defibrilleren',
+                                        'Provincieverantwoordelijke Vorming',
+                                        'Simulant lesgever',
+                                    ].map((func, index) => (
+                                        <label key={index}>
+                                            <input
+                                                type="checkbox"
+                                                value={func}
+                                                checked={functions.includes(func)}
+                                                onChange={handleFunctionChange}
+                                            />
+                                            {func}
+                                        </label>
+                                    ))}
+                                </div>
+                            </form>
                         </div>
                     )}
                 </div>
