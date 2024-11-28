@@ -170,6 +170,9 @@ const Profile = () => {
             <Navbar />
             <div className="profile-container">
                 <div className="profile-section">
+                    <div>
+                        <h2>Add Info to Your Account</h2>
+                    </div>
                     {isInfoOpen ? (
                         <form className="profile-form" onSubmit={handleSubmit}>
                             <label>
