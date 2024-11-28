@@ -33,15 +33,6 @@ const Profile = () => {
         const creatorStatus = localStorage.getItem('isCreator') === 'true';
         setIsCreator(creatorStatus);
 
-        // Parse and validate `functions`
-        try {
-            const parsedFunctions = savedFunctions ? JSON.parse(savedFunctions) : [];
-            setFunctions(Array.isArray(parsedFunctions) ? parsedFunctions : []);
-        } catch (error) {
-            console.error('Error parsing functions:', error);
-            setFunctions([]); // Default to empty array
-        }
-
         // Set other state values if they exist
         if (savedFirstname) {
             setIsFirstname(true);
