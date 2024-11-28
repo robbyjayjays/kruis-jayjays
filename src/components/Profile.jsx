@@ -7,7 +7,6 @@ const Profile = () => {
     const navigate = useNavigate();
     const [isCreator, setIsCreator] = useState(false);
     const [isFirstname, setIsFirstname] = useState(false);
-    const [isInfoSubmitted, setIsInfoSubmitted] = useState(false);
     const [firstname, setFirstname] = useState('');
     const [lastname, setLastname] = useState('');
     const [department, setDepartment] = useState('');
@@ -21,7 +20,6 @@ const Profile = () => {
         const token = localStorage.getItem('token');
         const email = localStorage.getItem('email');
         const savedFirstname = localStorage.getItem('firstname');
-        console.log(savedFirstname)
 
         if (!token) {
             alert('You need to be logged in to access this page.');
@@ -35,7 +33,6 @@ const Profile = () => {
         setIsFirstname(!!savedFirstname);
 
         if (creatorStatus) {
-            // Fetch workshops created by the current user
             const fetchWorkshops = async () => {
                 try {
                     const response = await fetch(`/api/get-workshops?email=${email}`);
@@ -54,7 +51,6 @@ const Profile = () => {
             fetchWorkshops();
         }
 
-        // Fetch workshops the current user is subscribed to
         const fetchSubscribedWorkshops = async () => {
             try {
                 const response = await fetch(`/api/get-subbed?email=${email}`);
@@ -85,12 +81,31 @@ const Profile = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        // Check if firstname is filled
         if (!firstname.trim()) {
             alert('Firstname is required. Please fill it in.');
-          
-            return; // Prevent form submission if firstname is empty
+            return;
         }
+
+        if (!lastname.trim()) {
+            alert('Lastname is required. Please fill it in.');
+            return;
+        }
+
+        if (!department.trim()) {
+            alert('Please select your department.');
+            return;
+        }
+
+        if (!province.trim()) {
+            alert('Please select your province.');
+            return;
+        }
+
+        if (functions.length === 0) {
+            alert('Please select at least one function.');
+            return;
+        }
+
         try {
             const email = localStorage.getItem('email');
             if (!email) {
@@ -107,14 +122,22 @@ const Profile = () => {
             });
 
             if (response.ok) {
-                const result = await response.json();
                 alert('Information updated successfully');
-                console.log('Updated fields:', result.updatedFields);
-
+                // Save the updated values in localStorage (if needed) or state
                 localStorage.setItem('firstname', firstname);
-                setFirstname(firstname)
-                // Reload the page to fetch updated data
-                window.location.reload();
+                localStorage.setItem('lastname', lastname);
+                localStorage.setItem('department', department);
+                localStorage.setItem('province', province);
+                localStorage.setItem('functions', JSON.stringify(functions));
+                
+                // Set state to switch to read-only mode and reflect updated values
+                setFirstname(firstname);
+                setLastname(lastname);
+                setDepartment(department);
+                setProvince(province);
+                setFunctions([...functions]);
+                setIsInfoOpen(false); // Switch to read-only mode
+
             } else {
                 const errorData = await response.json();
                 alert(`Failed to update information: ${errorData.error}`);
@@ -134,7 +157,7 @@ const Profile = () => {
                         <h2>Add Info to Your Account</h2>
                         <span className={`arrow-icon ${isInfoOpen ? 'open' : ''}`}></span>
                     </div>
-                    {isInfoOpen && (
+                    {isInfoOpen ? (
                         <form className="profile-form" onSubmit={handleSubmit}>
                             <label>
                                 Firstname:
@@ -185,12 +208,13 @@ const Profile = () => {
                                     'Lesgever eerstehulpverlening jeugd begeleider',
                                     'Lesgever reanimeren en defibrilleren',
                                     'Provincieverantwoordelijke Vorming',
-                                    'Simulant lesgever'
+                                    'Simulant lesgever',
                                 ].map((func, index) => (
                                     <label key={index}>
                                         <input
                                             type="checkbox"
                                             value={func}
+                                            checked={functions.includes(func)}
                                             onChange={handleFunctionChange}
                                         />
                                         {func}
@@ -199,17 +223,45 @@ const Profile = () => {
                             </div>
                             <button type="submit">Save Info</button>
                         </form>
+                    ) : (
+                        <div className="profile-form">
+                            <label>
+                                Firstname:
+                                <input type="text" value={firstname} disabled />
+                            </label>
+                            <label>
+                                Lastname:
+                                <input type="text" value={lastname} disabled />
+                            </label>
+                            <label>
+                                In which department are you active?
+                                <input type="text" value={department} disabled />
+                            </label>
+                            <label>
+                                In which province are you active?
+                                <input type="text" value={province} disabled />
+                            </label>
+                            <label>What function(s) do you have?</label>
+                            <div className="function-checkboxes">
+                                {functions.map((func, index) => (
+                                    <label key={index}>
+                                        <input type="checkbox" value={func} checked disabled />
+                                        {func}
+                                    </label>
+                                ))}
+                            </div>
+                            <button onClick={() => setIsInfoOpen(true)}>Edit Info</button>
+                        </div>
                     )}
                 </div>
-
                 {isCreator && (
                     <div className="profile-section">
                         <h2>Created Workshops</h2>
                         <div className="workshop-container">
                             {workshops.length > 0 ? (
                                 workshops.map((workshop) => (
-                                    <div 
-                                        key={workshop.id} 
+                                    <div
+                                        key={workshop.id}
                                         className="workshop-box"
                                         onClick={() => navigate(`/workshop/${workshop.id}`)}
                                     >
@@ -229,15 +281,14 @@ const Profile = () => {
                         </button>
                     </div>
                 )}
-
-                {isFirstname && ( // Show only if firstname exists
+                {isFirstname && (
                     <div className="profile-section">
                         <h2>Subscribed Workshops</h2>
                         <div className="workshop-container">
                             {subscribedWorkshops.length > 0 ? (
                                 subscribedWorkshops.map((workshop) => (
-                                    <div 
-                                        key={workshop.id} 
+                                    <div
+                                        key={workshop.id}
                                         className="workshop-box"
                                         onClick={() => navigate(`/workshop/${workshop.id}`)}
                                     >
@@ -248,7 +299,12 @@ const Profile = () => {
                             ) : (
                                 <div>
                                     <p>No subscribed workshops yet.</p>
-                                    <button className="navbar-button" onClick={() => navigate('/Home')}>Look at workshops</button>
+                                    <button
+                                        className="navbar-button"
+                                        onClick={() => navigate('/Home')}
+                                    >
+                                        Look at workshops
+                                    </button>
                                 </div>
                             )}
                         </div>
