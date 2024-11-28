@@ -23,7 +23,7 @@ const Profile = () => {
         const savedLastname = localStorage.getItem('lastname');
         const savedDepartment = localStorage.getItem('department');
         const savedProvince = localStorage.getItem('province');
-        const savedFunctions = localStorage.setItem('functions', JSON.stringify(functions));
+        const savedFunctions = localStorage.getItem('functions', JSON.stringify(functions));
 
         if (!token) {
             alert('You need to be logged in to access this page.');
