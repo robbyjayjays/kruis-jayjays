@@ -289,6 +289,61 @@ const Profile = () => {
                 </div>
                 )}
 
+                {!isInfoOpen && (
+                    <div className="profile-section">
+                        <h2>Jouw Keuze</h2>
+                        <form className="profile-form" onSubmit={handleSubmit}>
+                            <label>
+                                Voormiddag:
+                                <input
+                                    type="text"
+                                    placeholder="Vul jouw voornaam in."
+                                    value={firstname}
+                                    onChange={(e) => setFirstname(e.target.value)}
+                                />
+                            </label>
+                            <label>
+                                Namiddag:
+                                <input
+                                    type="text"
+                                    placeholder="Vul jouw naam in."
+                                    value={lastname}
+                                    onChange={(e) => setLastname(e.target.value)}
+                                />
+                            </label>
+                            <h3>Persoonlijke info</h3>
+                            <label>
+                                Eetvoorkeuren:
+                                <input
+                                    type="text"
+                                    placeholder="Vul jouw gebruiker in."
+                                    value={gebruiker}
+                                    onChange={(e) => setGebruiker(e.target.value)}
+                                />
+                            </label>
+                            <label>
+                                Allergiën:
+                                <input
+                                    type="text"
+                                    placeholder="Vul jouw gebruiker in."
+                                    value={gebruiker}
+                                    onChange={(e) => setGebruiker(e.target.value)}
+                                />
+                            </label>
+                            <label>
+                                Carpool:
+                                <input
+                                    type="text"
+                                    placeholder="Vul jouw gebruiker in."
+                                    value={gebruiker}
+                                    onChange={(e) => setGebruiker(e.target.value)}
+                                />
+                            </label>
+                            <button type="submit">Ga door.</button>
+                        </form>
+                    </div>
+                )}
+
                 {isCreator && (
                     <div className="profile-section">
                         <h2>Created Workshops</h2>
