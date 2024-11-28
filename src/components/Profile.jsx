@@ -25,6 +25,7 @@ const Profile = () => {
         const savedProvince = localStorage.getItem('province');
         const savedFunctions = localStorage.getItem('functions');
         const parsedFunctions = savedFunctions ? JSON.parse(savedFunctions) : [];
+        console.log('new')
         console.log(savedFunctions)
         console.log(parsedFunctions)
 
