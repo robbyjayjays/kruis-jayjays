@@ -142,6 +142,24 @@ const Profile = () => {
         }
     };
 
+    // Fetch all workshops excluding the ones created by the current user
+    const fetchWorkshops = async () => {
+        try {
+            const response = await fetch(`/api/all-workshops?email=${email}`);
+            const data = await response.json();
+
+            if (response.ok) {
+                setWorkshops(data.workshops);
+            } else {
+                console.error('Error fetching workshops:', data.error);
+            }
+        } catch (error) {
+            console.error('Error fetching workshops:', error);
+        }
+    };
+
+    fetchWorkshops();
+
     return (
         <>
             <Navbar />
@@ -245,6 +263,25 @@ const Profile = () => {
                                     ))}
                                 </div>
                             </form>
+                            <div className="homepage-container">
+                                <h2>All Workshops</h2>
+                                <div className="workshop-list">
+                                    {workshops.length > 0 ? (
+                                        workshops.map((workshop) => (
+                                            <div
+                                                key={workshop.id}
+                                                className="workshop-box"
+                                                onClick={() => navigate(`/workshop/${workshop.id}`)}
+                                            >
+                                                <div className="workshop-title">{workshop.title}</div>
+                                                <div className="workshop-description">{workshop.description}</div>
+                                            </div>
+                                        ))
+                                    ) : (
+                                        <p>No workshops available.</p>
+                                    )}
+                                </div>
+                            </div>
                         </div>
                     )}
                 </div>
