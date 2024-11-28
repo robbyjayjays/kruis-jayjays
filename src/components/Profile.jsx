@@ -89,7 +89,7 @@ const Profile = () => {
                 : [...prevFunctions, value] // Add if not already selected
         );
     };
-    
+
     const handleSubmit = async (e) => {
         e.preventDefault();
 
@@ -197,6 +197,9 @@ const Profile = () => {
                             </label>
                             <button onClick={() => setIsInfoOpen(true)}>Edit Info</button>
                             <form className="profile-form" onSubmit={handleSubmit}>
+                            <div>
+                                <h2>Jouw RKV informatie.</h2>
+                            </div>
                                 <label>
                                     In which department are you active?
                                     <select value={department} onChange={(e) => setDepartment(e.target.value)}>
