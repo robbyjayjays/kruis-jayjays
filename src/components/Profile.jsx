@@ -81,6 +81,15 @@ const Profile = () => {
         fetchSubscribedWorkshops();
     }, [navigate]);
 
+    const handleFunctionChange = (e) => {
+        const value = e.target.value;
+        setFunctions((prevFunctions) =>
+            prevFunctions.includes(value)
+                ? prevFunctions.filter((func) => func !== value) // Remove if already selected
+                : [...prevFunctions, value] // Add if not already selected
+        );
+    };
+    
     const handleSubmit = async (e) => {
         e.preventDefault();
 
