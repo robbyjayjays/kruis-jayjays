@@ -9,6 +9,7 @@ const Profile = () => {
     const [isFirstname, setIsFirstname] = useState(false);
     const [firstname, setFirstname] = useState('');
     const [lastname, setLastname] = useState('');
+    const [gebruiker, setGebruiker] = useState('');
     const [department, setDepartment] = useState('');
     const [province, setProvince] = useState('');
     const [functions, setFunctions] = useState([]);
@@ -21,9 +22,7 @@ const Profile = () => {
         const email = localStorage.getItem('email');
         const savedFirstname = localStorage.getItem('firstname');
         const savedLastname = localStorage.getItem('lastname');
-        const savedDepartment = localStorage.getItem('department');
-        const savedProvince = localStorage.getItem('province');
-        const savedFunctions = localStorage.getItem('functions');
+        const savedGebruiker = localStorage.getItem('gebruiker');
 
         if (!token) {
             alert('You need to be logged in to access this page.');
@@ -48,8 +47,7 @@ const Profile = () => {
             setIsFirstname(true);
             setFirstname(savedFirstname);
             setLastname(savedLastname || '');
-            setDepartment(savedDepartment || '');
-            setProvince(savedProvince || '');
+            setGebruiker(savedGebruiker || '');
             setIsInfoOpen(false); // Switch to read-only mode
         }
 
@@ -92,15 +90,6 @@ const Profile = () => {
         fetchSubscribedWorkshops();
     }, [navigate]);
 
-    const handleFunctionChange = (e) => {
-        const value = e.target.value;
-        setFunctions((prevFunctions) =>
-            prevFunctions.includes(value)
-                ? prevFunctions.filter((func) => func !== value) // Remove if already selected
-                : [...prevFunctions, value] // Add if not already selected
-        );
-    };
-
     const handleSubmit = async (e) => {
         e.preventDefault();
 
@@ -114,18 +103,8 @@ const Profile = () => {
             return;
         }
 
-        if (!department.trim()) {
+        if (!gebruiker.trim()) {
             alert('Please select your department.');
-            return;
-        }
-
-        if (!province.trim()) {
-            alert('Please select your province.');
-            return;
-        }
-
-        if (functions.length === 0) {
-            alert('Please select at least one function.');
             return;
         }
 
@@ -141,7 +120,7 @@ const Profile = () => {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ email, firstname, lastname, department, province, functions }),
+                body: JSON.stringify({ email, firstname, lastname, gebruiker }),
             });
 
             if (response.ok) {
@@ -149,9 +128,7 @@ const Profile = () => {
                 // Update localStorage and state
                 localStorage.setItem('firstname', firstname);
                 localStorage.setItem('lastname', lastname);
-                localStorage.setItem('department', department);
-                localStorage.setItem('province', province);
-                localStorage.setItem('functions', JSON.stringify(functions));
+                localStorage.setItem('gebruiker', gebruiker);
 
                 setIsFirstname(true);
                 setIsInfoOpen(false); // Switch to read-only mode
@@ -171,101 +148,53 @@ const Profile = () => {
             <div className="profile-container">
                 <div className="profile-section">
                     <div>
-                        <h2>Add Info to Your Account</h2>
+                        <h2>Voeg info toe aan jouw profiel</h2>
                     </div>
                     {isInfoOpen ? (
                         <form className="profile-form" onSubmit={handleSubmit}>
                             <label>
-                                Firstname:
+                                Voornaam:
                                 <input
                                     type="text"
-                                    placeholder="Enter your firstname"
+                                    placeholder="Vul jouw voornaam in."
                                     value={firstname}
                                     onChange={(e) => setFirstname(e.target.value)}
                                 />
                             </label>
                             <label>
-                                Lastname:
+                                Naam:
                                 <input
                                     type="text"
-                                    placeholder="Enter your lastname"
+                                    placeholder="Vul jouw naam in."
                                     value={lastname}
                                     onChange={(e) => setLastname(e.target.value)}
                                 />
                             </label>
                             <label>
-                                In which department are you active?
-                                <select value={department} onChange={(e) => setDepartment(e.target.value)}>
-                                    <option value="">Select department</option>
-                                    <option value="IT">IT Department</option>
-                                    <option value="Marketing">Marketing Department</option>
-                                    <option value="not-active">I am not active in a department</option>
-                                </select>
+                                Gebruiker:
+                                <input
+                                    type="text"
+                                    placeholder="Vul jouw gebruiker in."
+                                    value={gebruiker}
+                                    onChange={(e) => setGebruiker(e.target.value)}
+                                />
                             </label>
-                            <label>
-                                In which province are you active?
-                                <select value={province} onChange={(e) => setProvince(e.target.value)}>
-                                    <option value="">No choice</option>
-                                    <option value="vlaams-brabant">Vlaams-Brabant</option>
-                                    <option value="waals-brabant">Waals-Brabant</option>
-                                </select>
-                            </label>
-                            <label>What function(s) do you have?</label>
-                            <div className="function-checkboxes">
-                                {[
-                                    'Animator Hartveilig',
-                                    'Arts-lesgever',
-                                    'Hoofdzetel Team Eerste Hulp',
-                                    'Initiator JRK',
-                                    'Kleuterinitiator',
-                                    'Lesgever eerste hulp bij psychische problemen',
-                                    'Lesgever eerstehulpverlening',
-                                    'Lesgever eerstehulpverlening jeugd',
-                                    'Lesgever eerstehulpverlening jeugd begeleider',
-                                    'Lesgever reanimeren en defibrilleren',
-                                    'Provincieverantwoordelijke Vorming',
-                                    'Simulant lesgever',
-                                ].map((func, index) => (
-                                    <label key={index}>
-                                        <input
-                                            type="checkbox"
-                                            value={func}
-                                            checked={functions.includes(func)}
-                                            onChange={handleFunctionChange}
-                                        />
-                                        {func}
-                                    </label>
-                                ))}
-                            </div>
-                            <button type="submit">Save Info</button>
+                            <button type="submit">Ga door.</button>
                         </form>
                     ) : (
                         <div className="profile-form">
                             <label>
-                                Firstname:
+                                Voornaam:
                                 <input type="text" value={firstname} disabled />
                             </label>
                             <label>
-                                Lastname:
+                                Naam:
                                 <input type="text" value={lastname} disabled />
                             </label>
                             <label>
-                                In which department are you active?
-                                <input type="text" value={department} disabled />
+                                Gebruiker:
+                                <input type="text" value={gebruiker} disabled />
                             </label>
-                            <label>
-                                In which province are you active?
-                                <input type="text" value={province} disabled />
-                            </label>
-                            <label>What function(s) do you have?</label>
-                            <div className="function-checkboxes">
-                                {functions.map((func, index) => (
-                                    <label key={index}>
-                                        <input type="checkbox" value={func} checked disabled />
-                                        {func}
-                                    </label>
-                                ))}
-                            </div>
                             <button onClick={() => setIsInfoOpen(true)}>Edit Info</button>
                         </div>
                     )}

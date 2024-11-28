@@ -59,6 +59,7 @@ export default async function handler(req, res) {
           creator: user.creator, 
           firstname: user.firstname, 
           lastname: user.lastname, 
+          gebruiker: user.gebruiker,
           department: user.department, 
           province: user.province, 
           functions: user.functions 

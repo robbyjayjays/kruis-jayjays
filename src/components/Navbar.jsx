@@ -18,6 +18,7 @@ const Navbar = () => {
         localStorage.removeItem('department');
         localStorage.removeItem('province');
         localStorage.removeItem('functions');
+        localStorage.removeItem('gebruiker');
         
         // Navigate to the login page after logging out
         navigate('/');

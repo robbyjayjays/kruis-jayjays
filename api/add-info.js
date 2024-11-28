@@ -18,7 +18,7 @@ const pool = new Pool({
 
 export default async function handler(req, res) {
   if (req.method === 'PUT') {
-    const { email, firstname, lastname, department, province, functions } = req.body;
+    const { email, firstname, lastname, gebruiker } = req.body;
 
     if (!email) {
       return res.status(400).json({ error: 'Email is required' });
@@ -47,19 +47,9 @@ export default async function handler(req, res) {
         values.push(lastname);
       }
 
-      if (department) {
-        fieldsToUpdate.push('department');
-        values.push(department);
-      }
-
-      if (province) {
-        fieldsToUpdate.push('province');
-        values.push(province);
-      }
-
-      if (functions) {
-        fieldsToUpdate.push('functions');
-        values.push(functions);
+      if (gebruiker) {
+        fieldsToUpdate.push('gebruiker');
+        values.push(gebruiker);
       }
 
       // Construct the query dynamically
@@ -78,9 +68,7 @@ export default async function handler(req, res) {
         updatedFields: {
           firstname,
           lastname,
-          department,
-          province,
-          functions,
+          gebruiker,
         },
       });
     } catch (error) {
