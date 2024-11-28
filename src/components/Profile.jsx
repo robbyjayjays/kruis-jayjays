@@ -30,7 +30,15 @@ const Profile = () => {
         const creatorStatus = localStorage.getItem('isCreator') === 'true';
         setIsCreator(creatorStatus);
 
-        setIsFirstname(!!savedFirstname);
+        // Check if data exists in localStorage and set state
+        if (savedFirstname) {
+            setFirstname(savedFirstname);
+            setLastname(savedLastname || '');
+            setDepartment(savedDepartment || '');
+            setProvince(savedProvince || '');
+            setFunctions(savedFunctions ? JSON.parse(savedFunctions) : []);
+            setIsInfoOpen(false); // Switch to read-only mode
+        }
 
         if (creatorStatus) {
             const fetchWorkshops = async () => {

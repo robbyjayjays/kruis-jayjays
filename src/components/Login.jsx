@@ -37,6 +37,19 @@ const Login = () => {
         if (data.user.firstname) {
           localStorage.setItem('firstname', data.user.firstname); // Store firstname if it exists
         }
+        if (data.user.lastname) {
+          localStorage.setItem('lastname', data.user.lastname); // Store firstname if it exists
+        }
+        if (data.user.department) {
+          localStorage.setItem('department', data.user.department);
+        }
+        if (data.user.province) {
+          localStorage.setItem('province', data.user.province);
+        }
+        if (data.user.functions) {
+          localStorage.setItem('functions', JSON.stringify(data.user.functions));
+        }
+
   
         toast.success('Login successfully!');
   
