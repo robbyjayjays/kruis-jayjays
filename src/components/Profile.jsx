@@ -43,6 +43,7 @@ const Profile = () => {
             setDepartment(savedDepartment || '');
             setProvince(savedProvince || '');
             setFunctions([...savedFunctions]);
+            console.log(functions);
             setIsInfoOpen(false); // Switch to read-only mode
         }
 
