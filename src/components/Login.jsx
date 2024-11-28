@@ -41,7 +41,7 @@ const Login = () => {
           localStorage.setItem('lastname', data.user.lastname); // Store firstname if it exists
         }
         if (data.user.gebruiker) {
-          localStorage.setItem('lastname', data.user.gebruiker); // Store firstname if it exists
+          localStorage.setItem('gebruiker', data.user.gebruiker); // Store firstname if it exists
         }
         if (data.user.department) {
           localStorage.setItem('department', data.user.department);
