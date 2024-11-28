@@ -72,6 +72,8 @@ const Workshop = () => {
             if (response.ok) {
                 setIsSubscribed(!isSubscribed);
                 toast.success(isSubscribed ? 'Successfully unsubscribed' : 'Successfully subscribed');
+                // Navigate to /Profile after successful subscription/unsubscription
+                navigate('/Profile');
             } else {
                 const errorData = await response.json();
                 toast.error(`Failed to ${isSubscribed ? 'unsubscribe' : 'subscribe'}: ${errorData.error}`);
