@@ -295,21 +295,25 @@ const Profile = () => {
                         <form className="profile-form" onSubmit={handleSubmit}>
                             <label>
                                 Voormiddag:
-                                <input
-                                    type="text"
-                                    placeholder="Vul jouw voornaam in."
-                                    value={firstname}
-                                    onChange={(e) => setFirstname(e.target.value)}
-                                />
+                                <select value={workshopMorning} onChange={(e) => setWorkshopMorning(e.target.value)}>
+                                    <option value="">Selecteer een workshop</option>
+                                    {workshops.map((workshop) => (
+                                        <option key={workshop.id} value={workshop.title}>
+                                            {workshop.title}
+                                        </option>
+                                    ))}
+                                </select>
                             </label>
                             <label>
                                 Namiddag:
-                                <input
-                                    type="text"
-                                    placeholder="Vul jouw naam in."
-                                    value={lastname}
-                                    onChange={(e) => setLastname(e.target.value)}
-                                />
+                                <select value={workshopAfternoon} onChange={(e) => setWorkshopAfternoon(e.target.value)}>
+                                    <option value="">Selecteer een workshop</option>
+                                    {workshops.map((workshop) => (
+                                        <option key={workshop.id} value={workshop.title}>
+                                            {workshop.title}
+                                        </option>
+                                    ))}
+                                </select>
                             </label>
                             <h3>Persoonlijke info</h3>
                             <label>
