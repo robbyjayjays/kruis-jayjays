@@ -16,6 +16,7 @@ const Profile = () => {
     const [isInfoOpen, setIsInfoOpen] = useState(true);
     const [workshops, setWorkshops] = useState([]);
     const [subscribedWorkshops, setSubscribedWorkshops] = useState([]);
+    const email = localStorage.getItem('email');
 
     useEffect(() => {
         const token = localStorage.getItem('token');
