@@ -37,15 +37,10 @@ const Profile = () => {
         // Parse and validate `functions`
         try {
             const parsedFunctions = savedFunctions ? JSON.parse(savedFunctions) : [];
-            if (Array.isArray(parsedFunctions)) {
-                setFunctions(parsedFunctions);
-            } else {
-                console.error('Invalid functions format:', savedFunctions);
-                setFunctions([]);
-            }
+            setFunctions(Array.isArray(parsedFunctions) ? parsedFunctions : []);
         } catch (error) {
             console.error('Error parsing functions:', error);
-            setFunctions([]);
+            setFunctions([]); // Default to empty array
         }
 
         // Set other state values if they exist
@@ -140,9 +135,6 @@ const Profile = () => {
                 alert('User email not found. Please log in.');
                 return;
             }
-
-            // Debug: Log data being sent
-            console.log('Data being sent:', { email, firstname, lastname, department, province, functions });
 
             const response = await fetch('/api/add-info', {
                 method: 'PUT',
@@ -279,6 +271,62 @@ const Profile = () => {
                         </div>
                     )}
                 </div>
+                {isCreator && (
+                    <div className="profile-section">
+                        <h2>Created Workshops</h2>
+                        <div className="workshop-container">
+                            {workshops.length > 0 ? (
+                                workshops.map((workshop) => (
+                                    <div
+                                        key={workshop.id}
+                                        className="workshop-box"
+                                        onClick={() => navigate(`/workshop/${workshop.id}`)}
+                                    >
+                                        <div className="workshop-title">{workshop.title}</div>
+                                        <div className="workshop-description">{workshop.description}</div>
+                                    </div>
+                                ))
+                            ) : (
+                                <p>No workshops created yet.</p>
+                            )}
+                        </div>
+                        <button
+                            className="create-workshop-button"
+                            onClick={() => navigate('/create-workshop')}
+                        >
+                            Create Workshop
+                        </button>
+                    </div>
+                )}
+                {isFirstname && (
+                    <div className="profile-section">
+                        <h2>Subscribed Workshops</h2>
+                        <div className="workshop-container">
+                            {subscribedWorkshops.length > 0 ? (
+                                subscribedWorkshops.map((workshop) => (
+                                    <div
+                                        key={workshop.id}
+                                        className="workshop-box"
+                                        onClick={() => navigate(`/workshop/${workshop.id}`)}
+                                    >
+                                        <div className="workshop-title">{workshop.title}</div>
+                                        <div className="workshop-description">{workshop.description}</div>
+                                    </div>
+                                ))
+                            ) : (
+                                <div>
+                                    <p>No subscribed workshops yet.</p>
+                                    <button
+                                        className="navbar-button"
+                                        onClick={() => navigate('/Home')}
+                                    >
+                                        Look at workshops
+                                    </button>
+                                </div>
+                            )}
+                        </div>
+                    </div>
+                )}
             </div>
         </>
     );
