@@ -35,8 +35,6 @@ const Profile = () => {
 
         const creatorStatus = localStorage.getItem('isCreator') === 'true';
         setIsCreator(creatorStatus);
-        
-        console.log('this is Robby new pc test');
 
         // Set other state values if they exist
         if (savedFirstname) {
