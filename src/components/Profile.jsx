@@ -282,10 +282,8 @@ const Profile = () => {
                                 onChange={(e) => setCarpoolPreferences(e.target.value)}
                             />
                         </label>
+                        <button type="submit">Opslaan</button>
                     </div>
-
-                    {/* Submit Button */}
-                    <button type="submit">Opslaan</button>
                 </form>
 
                 {/* Workshops Section */}
