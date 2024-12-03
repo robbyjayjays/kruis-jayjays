@@ -32,7 +32,7 @@ export default async function handler(req, res) {
     } = req.body;
 
     if (!email) {
-      return res.status(400).json({ error: 'Email is required to fetch user ID' });
+      return res.status(400).json({ error: 'Email is required to fetch user IDs' });
     }
 
     try {
