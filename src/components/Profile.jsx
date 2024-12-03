@@ -180,7 +180,8 @@ const Profile = () => {
                             </div>
                         )}
                     </div>
-
+                </form>
+                <form className="profile-form" onSubmit={handleSubmitRkv}>
                     {/* RKV Information Section */}
                     <div className="profile-section">
                         <h2>Jouw RKV informatie</h2>
@@ -229,7 +230,7 @@ const Profile = () => {
                             ))}
                         </div>
                     </div>
-                    
+
                     {/* Workshops Section */}
                     {!isInfoOpen && (
                         <div className="profile-section">
@@ -252,7 +253,7 @@ const Profile = () => {
                             </div>
                         </div>
                     )}
-                    
+
                     {/* Workshop Selection Section */}
                     <div className="profile-section">
                         <h2>Jouw Keuze</h2>
