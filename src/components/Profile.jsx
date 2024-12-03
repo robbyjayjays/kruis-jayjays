@@ -83,6 +83,7 @@ const Profile = () => {
                 const response = await fetch('/api/eetvoorkeuren'); // Replace with your API route
                 if (response.ok) {
                     const data = await response.json();
+                    console.log(data)
                     setDietaryPreferences(data);
                 } else {
                     console.error('Failed to fetch dietary preferences');
