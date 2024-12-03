@@ -356,7 +356,7 @@ const Profile = () => {
                                 <option value="">Selecteer eetvoorkeur</option>
                                 {dietaryOptions.map((option) => (
                                     <option key={option.id} value={option.preference_name}>
-                                        {option.name}
+                                        {option.preference_name}
                                     </option>
                                 ))}
                             </select>
