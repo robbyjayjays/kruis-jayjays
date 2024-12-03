@@ -1,7 +1,7 @@
 export default async function handler(req, res) {
     if (req.method === 'GET') {
         try {
-            const query = 'SELECT * FROM eetvoorkeuren;';
+            const query = 'SELECT preference_name FROM eetvoorkeuren;';
             const result = await pool.query(query);
             res.status(200).json(result.rows);
         } catch (error) {
