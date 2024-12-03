@@ -229,7 +229,30 @@ const Profile = () => {
                             ))}
                         </div>
                     </div>
-
+                    
+                    {/* Workshops Section */}
+                    {!isInfoOpen && (
+                        <div className="profile-section">
+                            <h2>Workshops</h2>
+                            <div className="workshop-container">
+                                {workshops.length > 0 ? (
+                                    workshops.map((workshop) => (
+                                        <div
+                                            key={workshop.id}
+                                            className="workshop-box"
+                                            onClick={() => navigate(`/workshop/${workshop.id}`)}
+                                        >
+                                            <div className="workshop-title">{workshop.title}</div>
+                                            <div className="workshop-description">{workshop.description}</div>
+                                        </div>
+                                    ))
+                                ) : (
+                                    <p>No workshops available.</p>
+                                )}
+                            </div>
+                        </div>
+                    )}
+                    
                     {/* Workshop Selection Section */}
                     <div className="profile-section">
                         <h2>Jouw Keuze</h2>
@@ -285,29 +308,6 @@ const Profile = () => {
                         <button type="submit">Opslaan</button>
                     </div>
                 </form>
-
-                {/* Workshops Section */}
-                {!isInfoOpen && (
-                    <div className="profile-section">
-                        <h2>Workshops</h2>
-                        <div className="workshop-container">
-                            {workshops.length > 0 ? (
-                                workshops.map((workshop) => (
-                                    <div
-                                        key={workshop.id}
-                                        className="workshop-box"
-                                        onClick={() => navigate(`/workshop/${workshop.id}`)}
-                                    >
-                                        <div className="workshop-title">{workshop.title}</div>
-                                        <div className="workshop-description">{workshop.description}</div>
-                                    </div>
-                                ))
-                            ) : (
-                                <p>No workshops available.</p>
-                            )}
-                        </div>
-                    </div>
-                )}
 
                 {/* Created Workshops Section */}
                 {isCreator && (
