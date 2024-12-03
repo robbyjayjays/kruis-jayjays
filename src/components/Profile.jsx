@@ -121,6 +121,56 @@ const Profile = () => {
         }
     };
 
+    const handleSubmitRkv = async (e) => {
+        e.preventDefault();
+    
+        // Validate required fields
+        if (
+            !department.trim() ||
+            !province.trim() ||
+            functions.length === 0 ||
+            !workshopMorning.trim() ||
+            !workshopAfternoon.trim() ||
+            !dietaryPreferences.trim() ||
+            !allergies.trim() ||
+            !carpoolPreferences.trim()
+        ) {
+            alert('Please fill out all required fields in the RKV form.');
+            return;
+        }
+    
+        try {
+            // API call to save RKV and workshop info
+            const response = await fetch('/api/save-rkv-info', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    email,
+                    department,
+                    province,
+                    functions,
+                    morningWorkshop: workshopMorning,
+                    afternoonWorkshop: workshopAfternoon,
+                    dietaryPreferences,
+                    allergies,
+                    carpoolPreferences,
+                }),
+            });
+    
+            if (response.ok) {
+                alert('RKV and workshop information saved successfully.');
+                // Optionally clear the form or provide user feedback
+            } else {
+                const errorData = await response.json();
+                alert(`Failed to save RKV information: ${errorData.error}`);
+            }
+        } catch (error) {
+            console.error('Error saving RKV information:', error);
+            alert('An error occurred while saving RKV information.');
+        }
+    };
+    
+
     return (
         <>
             <Navbar />
