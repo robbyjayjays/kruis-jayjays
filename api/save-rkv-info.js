@@ -19,7 +19,7 @@ const pool = new Pool({
 export default async function handler(req, res) {
   if (req.method === 'POST') {
     const {
-      user_id,
+      email, // Email will be provided instead of user_id
       department,
       province,
       functions,
@@ -30,13 +30,23 @@ export default async function handler(req, res) {
       carpool,
     } = req.body;
 
-    if (!user_id) {
-      return res.status(400).json({ error: 'User ID is required' });
+    if (!email) {
+      return res.status(400).json({ error: 'Email is required to fetch user ID' });
     }
 
     try {
-      // Insert data into the "inschrijvingen" table
-      const query = `
+      // Step 1: Retrieve user_id using the provided email
+      const userQuery = 'SELECT id FROM users WHERE email = $1 LIMIT 1;';
+      const userResult = await pool.query(userQuery, [email]);
+
+      if (userResult.rows.length === 0) {
+        return res.status(404).json({ error: 'User not found for the provided email' });
+      }
+
+      const user_id = userResult.rows[0].id;
+
+      // Step 2: Insert data into the "inschrijvingen" table
+      const insertQuery = `
         INSERT INTO inschrijvingen (
           user_id,
           department,
@@ -54,7 +64,7 @@ export default async function handler(req, res) {
         ) RETURNING *;
       `;
 
-      const values = [
+      const insertValues = [
         user_id,
         department || null,
         province || null,
@@ -66,7 +76,7 @@ export default async function handler(req, res) {
         carpool || null,
       ];
 
-      const result = await pool.query(query, values);
+      const result = await pool.query(insertQuery, insertValues);
       const insertedRecord = result.rows[0];
 
       res.status(201).json({
