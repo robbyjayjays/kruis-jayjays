@@ -81,6 +81,21 @@ const Profile = () => {
             }
         };
 
+        const fetchDietaryOptions = async () => {
+            try {
+                const response = await fetch('/api/eetvoorkeuren'); // Replace with your API route
+                if (response.ok) {
+                    const data = await response.json();
+                    console.log('Fetched dietary options:', data); // Debugging log
+                    setDietaryOptions(data); // Set fetched options
+                } else {
+                    console.error('Failed to fetch dietary preferences');
+                }
+            } catch (error) {
+                console.error('Error fetching dietary preferences:', error);
+            }
+        };
+
         const fetchAllergyOptions = async () => {
             try {
                 const response = await fetch('/api/allergies'); // API for allergies
