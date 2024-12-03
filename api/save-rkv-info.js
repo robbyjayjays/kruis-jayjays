@@ -68,7 +68,7 @@ export default async function handler(req, res) {
         user_id,
         department || null,
         province || null,
-        Array.isArray(functions) ? functions.join(',') : null, // Store functions as a comma-separated string
+        Array.isArray(functions) ? `{${functions.map(func => func.replace(/"/g, '\\"')).join(',')}}` : null,
         workshop_morning || null,
         workshop_afternoon || null,
         food_choice || null,
