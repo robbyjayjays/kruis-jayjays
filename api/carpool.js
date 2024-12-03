@@ -19,7 +19,7 @@ const pool = new Pool({
 export default async function handler(req, res) {
     if (req.method === 'GET') {
         try {
-            const query = 'SELECT id, carpool_role FROM carpool_preferences;';
+            const query = 'SELECT id, carpool_role FROM carpool;';
             const result = await pool.query(query);
             res.status(200).json(result.rows);
         } catch (error) {
