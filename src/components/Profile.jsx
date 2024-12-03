@@ -21,7 +21,9 @@ const Profile = () => {
     const [dietaryPreferences, setDietaryPreferences] = useState('');
     const [dietaryOptions, setDietaryOptions] = useState([]); // Options for the dropdown
     const [allergies, setAllergies] = useState('');
+    const [allergyOptions, setAllergyOptions] = useState([]); // Allergy options
     const [carpoolPreferences, setCarpoolPreferences] = useState('');
+    const [carpoolOptions, setCarpoolOptions] = useState([]);
     const email = localStorage.getItem('email');
 
     useEffect(() => {
@@ -79,21 +81,39 @@ const Profile = () => {
             }
         };
 
-        const fetchDietaryOptions = async () => {
+        const fetchAllergyOptions = async () => {
             try {
-                const response = await fetch('/api/eetvoorkeuren'); // Replace with your API route
+                const response = await fetch('/api/allergies'); // API for allergies
                 if (response.ok) {
                     const data = await response.json();
-                    console.log(data)
-                    setDietaryOptions(data);
+                    console.log('Allergy options:', data);
+                    setAllergyOptions(data);
                 } else {
-                    console.error('Failed to fetch dietary preferences');
+                    console.error('Failed to fetch allergies');
                 }
             } catch (error) {
-                console.error('Error fetching dietary preferences:', error);
+                console.error('Error fetching allergies:', error);
             }
         };
+    
+        const fetchCarpoolOptions = async () => {
+            try {
+                const response = await fetch('/api/carpool'); // API for carpool options
+                if (response.ok) {
+                    const data = await response.json();
+                    console.log('Carpool options:', data);
+                    setCarpoolOptions(data);
+                } else {
+                    console.error('Failed to fetch carpool options');
+                }
+            } catch (error) {
+                console.error('Error fetching carpool options:', error);
+            }
+        };
+    
         fetchDietaryOptions();
+        fetchAllergyOptions();
+        fetchCarpoolOptions();
 
 
         fetchSubscribedWorkshops();
@@ -363,21 +383,31 @@ const Profile = () => {
                         </label>
                         <label>
                             Allergiën:
-                            <input
-                                type="text"
-                                placeholder="Allergieën"
+                            <select
                                 value={allergies}
                                 onChange={(e) => setAllergies(e.target.value)}
-                            />
+                            >
+                                <option value="">Selecteer allergieën</option>
+                                {allergyOptions.map((option, index) => (
+                                    <option key={index} value={option.allergy_name}>
+                                        {option.allergy_name}
+                                    </option>
+                                ))}
+                            </select>
                         </label>
                         <label>
                             Carpool:
-                            <input
-                                type="text"
-                                placeholder="Carpool voorkeuren"
+                            <select
                                 value={carpoolPreferences}
                                 onChange={(e) => setCarpoolPreferences(e.target.value)}
-                            />
+                            >
+                                <option value="">Selecteer carpool voorkeur</option>
+                                {carpoolOptions.map((option, index) => (
+                                    <option key={index} value={option.carpool_role}>
+                                        {option.carpool_role}
+                                    </option>
+                                ))}
+                            </select>
                         </label>
                         <button type="submit">Opslaan</button>
                     </div>
