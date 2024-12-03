@@ -19,6 +19,7 @@ const Profile = () => {
     const [workshopMorning, setWorkshopMorning] = useState('');
     const [workshopAfternoon, setWorkshopAfternoon] = useState('');
     const [dietaryPreferences, setDietaryPreferences] = useState('');
+    const [dietaryOptions, setDietaryOptions] = useState([]); // Options for the dropdown
     const [allergies, setAllergies] = useState('');
     const [carpoolPreferences, setCarpoolPreferences] = useState('');
     const email = localStorage.getItem('email');
@@ -84,7 +85,7 @@ const Profile = () => {
                 if (response.ok) {
                     const data = await response.json();
                     console.log(data)
-                    setDietaryPreferences(data.preference_name);
+                    setDietaryOptions(data);
                 } else {
                     console.error('Failed to fetch dietary preferences');
                 }
@@ -92,8 +93,8 @@ const Profile = () => {
                 console.error('Error fetching dietary preferences:', error);
             }
         };
-
         fetchDietaryOptions();
+
 
         fetchSubscribedWorkshops();
     }, [navigate, email]);
@@ -353,7 +354,7 @@ const Profile = () => {
                                 onChange={(e) => setDietaryPreferences(e.target.value)}
                             >
                                 <option value="">Selecteer eetvoorkeur</option>
-                                {dietaryPreferences.map((option) => (
+                                {dietaryOptions.map((option) => (
                                     <option key={option.id} value={option.name}>
                                         {option.name}
                                     </option>
