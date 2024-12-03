@@ -78,6 +78,22 @@ const Profile = () => {
             }
         };
 
+        const fetchDietaryOptions = async () => {
+            try {
+                const response = await fetch('/api/eetvoorkeuren'); // Replace with your API route
+                if (response.ok) {
+                    const data = await response.json();
+                    setDietaryOptions(data);
+                } else {
+                    console.error('Failed to fetch dietary preferences');
+                }
+            } catch (error) {
+                console.error('Error fetching dietary preferences:', error);
+            }
+        };
+
+        fetchDietaryOptions();
+
         fetchSubscribedWorkshops();
     }, [navigate, email]);
 
@@ -331,12 +347,17 @@ const Profile = () => {
                         </label>
                         <label>
                             Eetvoorkeuren:
-                            <input
-                                type="text"
-                                placeholder="Eetvoorkeuren"
+                            <select
                                 value={dietaryPreferences}
                                 onChange={(e) => setDietaryPreferences(e.target.value)}
-                            />
+                            >
+                                <option value="">Selecteer eetvoorkeur</option>
+                                {dietaryOptions.map((option) => (
+                                    <option key={option.id} value={option.name}>
+                                        {option.name}
+                                    </option>
+                                ))}
+                            </select>
                         </label>
                         <label>
                             Allergiën:
