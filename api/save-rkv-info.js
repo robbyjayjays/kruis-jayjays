@@ -24,11 +24,11 @@ export default async function handler(req, res) {
       department,
       province,
       functions,
-      workshop_morning,
-      workshop_afternoon,
-      food_choice,
+      morningWorkshop: workshop_morning,
+      afternoonWorkshop: workshop_afternoon,
+      dietaryPreferences: food_choice,
       allergies,
-      carpool,
+      carpoolPreferences: carpool,
     } = req.body;
 
     if (!email) {
