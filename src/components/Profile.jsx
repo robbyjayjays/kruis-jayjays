@@ -156,7 +156,7 @@ const Profile = () => {
                     carpoolPreferences,
                 }),
             });
-            console.log(req.body);
+
             if (response.ok) {
                 alert('RKV and workshop information saved successfully.');
                 // Optionally clear the form or provide user feedback

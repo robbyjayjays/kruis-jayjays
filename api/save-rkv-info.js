@@ -18,6 +18,7 @@ const pool = new Pool({
 
 export default async function handler(req, res) {
   if (req.method === 'POST') {
+    console.log('Request body received:', req.body);
     const {
       email, // Email will be provided instead of user_id
       department,
