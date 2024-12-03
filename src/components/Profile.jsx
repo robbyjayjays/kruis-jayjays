@@ -84,7 +84,7 @@ const Profile = () => {
                 if (response.ok) {
                     const data = await response.json();
                     console.log(data)
-                    setDietaryPreferences(data);
+                    setDietaryPreferences(data.preference_name);
                 } else {
                     console.error('Failed to fetch dietary preferences');
                 }

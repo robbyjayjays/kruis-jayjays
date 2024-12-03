@@ -3,6 +3,7 @@ export default async function handler(req, res) {
         try {
             const query = 'SELECT preference_name FROM eetvoorkeuren;';
             const result = await pool.query(query);
+            console.log(result)
             res.status(200).json(result.rows);
         } catch (error) {
             console.error('Error fetching dietary preferences:', error.message);
