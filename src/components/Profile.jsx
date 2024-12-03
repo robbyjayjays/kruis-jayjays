@@ -18,6 +18,9 @@ const Profile = () => {
     const [subscribedWorkshops, setSubscribedWorkshops] = useState([]);
     const [workshopMorning, setWorkshopMorning] = useState('');
     const [workshopAfternoon, setWorkshopAfternoon] = useState('');
+    const [dietaryPreferences, setDietaryPreferences] = useState('');
+    const [allergies, setAllergies] = useState('');
+    const [carpoolPreferences, setCarpoolPreferences] = useState('');
     const email = localStorage.getItem('email');
 
     useEffect(() => {
@@ -36,16 +39,14 @@ const Profile = () => {
         const creatorStatus = localStorage.getItem('isCreator') === 'true';
         setIsCreator(creatorStatus);
 
-        // Set other state values if they exist
         if (savedFirstname) {
             setIsFirstname(true);
             setFirstname(savedFirstname);
             setLastname(savedLastname || '');
             setGebruiker(savedGebruiker || '');
-            setIsInfoOpen(false); // Switch to read-only mode
+            setIsInfoOpen(false);
         }
 
-        // Fetch workshops if the user is a creator
         if (creatorStatus) {
             const fetchWorkshops = async () => {
                 try {
@@ -65,7 +66,6 @@ const Profile = () => {
             fetchWorkshops();
         }
 
-        // Fetch subscribed workshops
         const fetchSubscribedWorkshops = async () => {
             try {
                 const response = await fetch(`/api/get-subbed?email=${email}`);
@@ -88,8 +88,8 @@ const Profile = () => {
         const value = e.target.value;
         setFunctions((prevFunctions) =>
             prevFunctions.includes(value)
-                ? prevFunctions.filter((func) => func !== value) // Remove if already selected
-                : [...prevFunctions, value] // Add if not already selected
+                ? prevFunctions.filter((func) => func !== value)
+                : [...prevFunctions, value]
         );
     };
 
@@ -128,13 +128,12 @@ const Profile = () => {
 
             if (response.ok) {
                 alert('Information updated successfully');
-                // Update localStorage and state
                 localStorage.setItem('firstname', firstname);
                 localStorage.setItem('lastname', lastname);
                 localStorage.setItem('gebruiker', gebruiker);
 
                 setIsFirstname(true);
-                setIsInfoOpen(false); // Switch to read-only mode
+                setIsInfoOpen(false);
             } else {
                 const errorData = await response.json();
                 alert(`Failed to update information: ${errorData.error}`);
@@ -145,214 +144,63 @@ const Profile = () => {
         }
     };
 
-    // Fetch all workshops excluding the ones created by the current user
-    const fetchWorkshops = async () => {
-        try {
-            const response = await fetch(`/api/all-workshops?email=${email}`);
-            const data = await response.json();
-
-            if (response.ok) {
-                setWorkshops(data.workshops);
-            } else {
-                console.error('Error fetching workshops:', data.error);
-            }
-        } catch (error) {
-            console.error('Error fetching workshops:', error);
-        }
-    };
-
-    fetchWorkshops();
-
     return (
         <>
             <Navbar />
-            <div className="profile-container">
+            <form className="profile-form" onSubmit={handleSubmit}>
+                {/* RKV Information Section */}
                 <div className="profile-section">
-                    <div>
-                        <h2>Voeg info toe aan jouw profiel</h2>
-                    </div>
-                    {isInfoOpen ? (
-                        <form className="profile-form" onSubmit={handleSubmit}>
-                            <label>
-                                Voornaam:
+                    <h2>Jouw RKV informatie.</h2>
+                    <label>
+                        In which department are you active?
+                        <select value={department} onChange={(e) => setDepartment(e.target.value)}>
+                            <option value="">Select department</option>
+                            <option value="IT">IT Department</option>
+                            <option value="Marketing">Marketing Department</option>
+                            <option value="not-active">I am not active in a department</option>
+                        </select>
+                    </label>
+                    <label>
+                        In which province are you active?
+                        <select value={province} onChange={(e) => setProvince(e.target.value)}>
+                            <option value="">No choice</option>
+                            <option value="vlaams-brabant">Vlaams-Brabant</option>
+                            <option value="waals-brabant">Waals-Brabant</option>
+                        </select>
+                    </label>
+                    <label>What function(s) do you have?</label>
+                    <div className="function-checkboxes">
+                        {[
+                            'Animator Hartveilig',
+                            'Arts-lesgever',
+                            'Hoofdzetel Team Eerste Hulp',
+                            'Initiator JRK',
+                            'Kleuterinitiator',
+                            'Lesgever eerste hulp bij psychische problemen',
+                            'Lesgever eerstehulpverlening',
+                            'Lesgever eerstehulpverlening jeugd',
+                            'Lesgever eerstehulpverlening jeugd begeleider',
+                            'Lesgever reanimeren en defibrilleren',
+                            'Provincieverantwoordelijke Vorming',
+                            'Simulant lesgever',
+                        ].map((func, index) => (
+                            <label key={index}>
                                 <input
-                                    type="text"
-                                    placeholder="Vul jouw voornaam in."
-                                    value={firstname}
-                                    onChange={(e) => setFirstname(e.target.value)}
+                                    type="checkbox"
+                                    value={func}
+                                    checked={functions.includes(func)}
+                                    onChange={handleFunctionChange}
                                 />
+                                {func}
                             </label>
-                            <label>
-                                Naam:
-                                <input
-                                    type="text"
-                                    placeholder="Vul jouw naam in."
-                                    value={lastname}
-                                    onChange={(e) => setLastname(e.target.value)}
-                                />
-                            </label>
-                            <label>
-                                Gebruiker:
-                                <input
-                                    type="text"
-                                    placeholder="Vul jouw gebruiker in."
-                                    value={gebruiker}
-                                    onChange={(e) => setGebruiker(e.target.value)}
-                                />
-                            </label>
-                            <button type="submit">Ga door.</button>
-                        </form>
-                    ) : (
-                        <div className="profile-form">
-                            <label>
-                                Voornaam:
-                                <input type="text" value={firstname} disabled />
-                            </label>
-                            <label>
-                                Naam:
-                                <input type="text" value={lastname} disabled />
-                            </label>
-                            <label>
-                                Gebruiker:
-                                <input type="text" value={gebruiker} disabled />
-                            </label>
-                            <button onClick={() => setIsInfoOpen(true)}>Edit Info</button>
-                            <form className="profile-form" onSubmit={handleSubmit}>
-                            <div>
-                                <h2>Jouw RKV informatie.</h2>
-                            </div>
-                                <label>
-                                    In which department are you active?
-                                    <select value={department} onChange={(e) => setDepartment(e.target.value)}>
-                                        <option value="">Select department</option>
-                                        <option value="IT">IT Department</option>
-                                        <option value="Marketing">Marketing Department</option>
-                                        <option value="not-active">I am not active in a department</option>
-                                    </select>
-                                </label>
-                                <label>
-                                    In which province are you active?
-                                    <select value={province} onChange={(e) => setProvince(e.target.value)}>
-                                        <option value="">No choice</option>
-                                        <option value="vlaams-brabant">Vlaams-Brabant</option>
-                                        <option value="waals-brabant">Waals-Brabant</option>
-                                    </select>
-                                </label>
-                                <label>What function(s) do you have?</label>
-                                <div className="function-checkboxes">
-                                    {[
-                                        'Animator Hartveilig',
-                                        'Arts-lesgever',
-                                        'Hoofdzetel Team Eerste Hulp',
-                                        'Initiator JRK',
-                                        'Kleuterinitiator',
-                                        'Lesgever eerste hulp bij psychische problemen',
-                                        'Lesgever eerstehulpverlening',
-                                        'Lesgever eerstehulpverlening jeugd',
-                                        'Lesgever eerstehulpverlening jeugd begeleider',
-                                        'Lesgever reanimeren en defibrilleren',
-                                        'Provincieverantwoordelijke Vorming',
-                                        'Simulant lesgever',
-                                    ].map((func, index) => (
-                                        <label key={index}>
-                                            <input
-                                                type="checkbox"
-                                                value={func}
-                                                checked={functions.includes(func)}
-                                                onChange={handleFunctionChange}
-                                            />
-                                            {func}
-                                        </label>
-                                    ))}
-                                </div>
-                            </form>
-                        </div>
-                    )}
-                </div>
-                {!isInfoOpen && (
-                <div className="profile-section">
-                    <h2>Workshops</h2>
-                    <div className="workshop-container">
-                        {workshops.length > 0 ? (
-                            workshops.map((workshop) => (
-                                <div
-                                    key={workshop.id}
-                                    className="workshop-box"
-                                    onClick={() => navigate(`/workshop/${workshop.id}`)}
-                                >
-                                    <div className="workshop-title">{workshop.title}</div>
-                                    <div className="workshop-description">{workshop.description}</div>
-                                </div>
-                            ))
-                        ) : (
-                            <p>No workshops available.</p>
-                        )}
+                        ))}
                     </div>
                 </div>
-                )}
 
+                {/* Workshops Section */}
                 {!isInfoOpen && (
                     <div className="profile-section">
-                        <h2>Jouw Keuze</h2>
-                        <form className="profile-form" onSubmit={handleSubmit}>
-                            <label>
-                                Voormiddag:
-                                <select value={workshopMorning} onChange={(e) => setWorkshopMorning(e.target.value)}>
-                                    <option value="">Selecteer een workshop</option>
-                                    {workshops.map((workshop) => (
-                                        <option key={workshop.id} value={workshop.title}>
-                                            {workshop.title}
-                                        </option>
-                                    ))}
-                                </select>
-                            </label>
-                            <label>
-                                Namiddag:
-                                <select value={workshopAfternoon} onChange={(e) => setWorkshopAfternoon(e.target.value)}>
-                                    <option value="">Selecteer een workshop</option>
-                                    {workshops.map((workshop) => (
-                                        <option key={workshop.id} value={workshop.title}>
-                                            {workshop.title}
-                                        </option>
-                                    ))}
-                                </select>
-                            </label>
-                            <h3>Persoonlijke info</h3>
-                            <label>
-                                Eetvoorkeuren:
-                                <input
-                                    type="text"
-                                    placeholder="Vul jouw gebruiker in."
-                                    value={gebruiker}
-                                    onChange={(e) => setGebruiker(e.target.value)}
-                                />
-                            </label>
-                            <label>
-                                Allergiën:
-                                <input
-                                    type="text"
-                                    placeholder="Vul jouw gebruiker in."
-                                    value={gebruiker}
-                                    onChange={(e) => setGebruiker(e.target.value)}
-                                />
-                            </label>
-                            <label>
-                                Carpool:
-                                <input
-                                    type="text"
-                                    placeholder="Vul jouw gebruiker in."
-                                    value={gebruiker}
-                                    onChange={(e) => setGebruiker(e.target.value)}
-                                />
-                            </label>
-                            <button type="submit">Ga door.</button>
-                        </form>
-                    </div>
-                )}
-
-                {isCreator && (
-                    <div className="profile-section">
-                        <h2>Created Workshops</h2>
+                        <h2>Workshops</h2>
                         <div className="workshop-container">
                             {workshops.length > 0 ? (
                                 workshops.map((workshop) => (
@@ -366,48 +214,69 @@ const Profile = () => {
                                     </div>
                                 ))
                             ) : (
-                                <p>No workshops created yet.</p>
+                                <p>No workshops available.</p>
                             )}
                         </div>
-                        <button
-                            className="create-workshop-button"
-                            onClick={() => navigate('/create-workshop')}
-                        >
-                            Create Workshop
-                        </button>
                     </div>
                 )}
 
-                {isFirstname && (
-                    <div className="profile-section">
-                        <h2>Subscribed Workshops</h2>
-                        <div className="workshop-container">
-                            {subscribedWorkshops.length > 0 ? (
-                                subscribedWorkshops.map((workshop) => (
-                                    <div
-                                        key={workshop.id}
-                                        className="workshop-box"
-                                        onClick={() => navigate(`/workshop/${workshop.id}`)}
-                                    >
-                                        <div className="workshop-title">{workshop.title}</div>
-                                        <div className="workshop-description">{workshop.description}</div>
-                                    </div>
-                                ))
-                            ) : (
-                                <div>
-                                    <p>No subscribed workshops yet.</p>
-                                    <button
-                                        className="navbar-button"
-                                        onClick={() => navigate('/Home')}
-                                    >
-                                        Look at workshops
-                                    </button>
-                                </div>
-                            )}
-                        </div>
-                    </div>
-                )}
-            </div>
+                {/* Workshops and Personal Info Section */}
+                <div className="profile-section">
+                    <label>
+                        Voormiddag:
+                        <select value={workshopMorning} onChange={(e) => setWorkshopMorning(e.target.value)}>
+                            <option value="">Selecteer een workshop</option>
+                            {workshops.map((workshop) => (
+                                <option key={workshop.id} value={workshop.title}>
+                                    {workshop.title}
+                                </option>
+                            ))}
+                        </select>
+                    </label>
+                    <label>
+                        Namiddag:
+                        <select value={workshopAfternoon} onChange={(e) => setWorkshopAfternoon(e.target.value)}>
+                            <option value="">Selecteer een workshop</option>
+                            {workshops.map((workshop) => (
+                                <option key={workshop.id} value={workshop.title}>
+                                    {workshop.title}
+                                </option>
+                            ))}
+                        </select>
+                    </label>
+                    <h3>Persoonlijke info</h3>
+                    <label>
+                        Eetvoorkeuren:
+                        <input
+                            type="text"
+                            placeholder="Eetvoorkeuren"
+                            value={dietaryPreferences}
+                            onChange={(e) => setDietaryPreferences(e.target.value)}
+                        />
+                    </label>
+                    <label>
+                        Allergiën:
+                        <input
+                            type="text"
+                            placeholder="Allergieën"
+                            value={allergies}
+                            onChange={(e) => setAllergies(e.target.value)}
+                        />
+                    </label>
+                    <label>
+                        Carpool:
+                        <input
+                            type="text"
+                            placeholder="Carpool voorkeuren"
+                            value={carpoolPreferences}
+                            onChange={(e) => setCarpoolPreferences(e.target.value)}
+                        />
+                    </label>
+                </div>
+
+                {/* Submit Button */}
+                <button type="submit">Ga door.</button>
+            </form>
         </>
     );
 };
