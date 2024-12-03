@@ -83,7 +83,7 @@ const Profile = () => {
                 const response = await fetch('/api/eetvoorkeuren'); // Replace with your API route
                 if (response.ok) {
                     const data = await response.json();
-                    setDietaryOptions(data);
+                    setDietaryPreferences(data);
                 } else {
                     console.error('Failed to fetch dietary preferences');
                 }
@@ -352,7 +352,7 @@ const Profile = () => {
                                 onChange={(e) => setDietaryPreferences(e.target.value)}
                             >
                                 <option value="">Selecteer eetvoorkeur</option>
-                                {dietaryOptions.map((option) => (
+                                {dietaryPreferences.map((option) => (
                                     <option key={option.id} value={option.name}>
                                         {option.name}
                                     </option>
