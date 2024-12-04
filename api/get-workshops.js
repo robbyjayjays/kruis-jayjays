@@ -37,7 +37,7 @@ export default async function handler(req, res) {
 
             // Get workshops where the creator_id matches the user ID
             const workshopResult = await pool.query(
-                'SELECT id, title, description, created_at FROM workshops WHERE creator_id = $1',
+                'SELECT id, title, description, created_at FROM workshops WHERE creator_id != $1',
                 [userId]
             );
 
