@@ -222,6 +222,7 @@ const Profile = () => {
 
             if (response.ok) {
                 alert('RKV and workshop information saved successfully.');
+                window.location.reload();
                 // Optionally clear the form or provide user feedback
             } else {
                 const errorData = await response.json();
