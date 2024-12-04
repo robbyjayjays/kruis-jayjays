@@ -81,6 +81,32 @@ const Profile = () => {
             }
         };
 
+        const fetchInschrijvingen = async () => {
+            try {
+                const email = localStorage.getItem('email');
+                if (!email) {
+                    console.error('No email found in localStorage');
+                    return;
+                }
+        
+                const response = await fetch(`/api/inschrijvingen?email=${email}`);
+                const data = await response.json();
+                if (response.ok) {
+                    if (data.exists) {
+                        setHasInschrijving(true); // Update state if an inschrijving exists
+                    } else {
+                        setHasInschrijving(false); // No inschrijving found
+                    }
+                } else {
+                    console.error('Error fetching inschrijvingen:', data.error);
+                }
+            } catch (error) {
+                console.error('Error fetching inschrijvingen:', error);
+            }
+        };
+        
+        fetchInschrijvingen();
+
         const fetchDietaryOptions = async () => {
             try {
                 const response = await fetch('/api/eetvoorkeuren'); // Replace with your API route
@@ -431,15 +457,19 @@ const Profile = () => {
                 {/* Edit or Cancel inschrijving */}
                 {!isInfoOpen && (
                     <div className="profile-section">
-                        <div className="edit-cancel-section">
-                            <p>Als je jouw inschrijving wilt annuleren of aanpassen klik hier:</p>
-                            <button
-                                className="edit-cancel-button"
-                                onClick={() => navigate('/edit-cancel-inschrijving')}
-                            >
-                                Annuleren of Aanpassen
-                            </button>
-                        </div>
+                        {hasInschrijving ? (
+                            <div className="edit-cancel-section">
+                                <p>Als je jouw inschrijving wilt annuleren of aanpassen klik hier:</p>
+                                <button
+                                    className="edit-cancel-button"
+                                    onClick={() => navigate('/edit-cancel-inschrijving')}
+                                >
+                                    Annuleren of aanpassen van inschrijving.
+                                </button>
+                            </div>
+                        ) : (
+                            <p>Er is nog geen inschrijving gevonden.</p>
+                        )}
                     </div>
                 )}
 
