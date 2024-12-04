@@ -17,9 +17,7 @@ const Profile = () => {
     const [workshops, setWorkshops] = useState([]);
     const [subscribedWorkshops, setSubscribedWorkshops] = useState([]);
     const [workshopMorning, setWorkshopMorning] = useState('');
-    const [workshopMorningOptions, setWorkshopMorningOptions] = useState('');
     const [workshopAfternoon, setWorkshopAfternoon] = useState('');
-    const [workshopAfternoonOptions, setWorkshopAfternoonOptions] = useState('');
     const [dietaryPreferences, setDietaryPreferences] = useState('');
     const [dietaryOptions, setDietaryOptions] = useState([]); // Options for the dropdown
     const [allergies, setAllergies] = useState('');
@@ -59,8 +57,6 @@ const Profile = () => {
                     const data = await response.json();
                     if (response.ok) {
                         setWorkshops(data.workshops);
-                        setWorkshopAfternoonOptions(data.workshops);
-                        setWorkshopMorningOptions(data.workshops);
                     } else {
                         console.error('Error fetching workshops:', data.error);
                     }
@@ -297,167 +293,169 @@ const Profile = () => {
                                 <button type="submit">Ga door.</button>
                             </>
                         ) : (
-                            <>
-                                <div className="profile-form">
-                                    <label>
-                                        Voornaam:
-                                        <input type="text" value={firstname} disabled />
-                                    </label>
-                                    <label>
-                                        Naam:
-                                        <input type="text" value={lastname} disabled />
-                                    </label>
-                                    <label>
-                                        Gebruiker:
-                                        <input type="text" value={gebruiker} disabled />
-                                    </label>
-                                    <button onClick={() => setIsInfoOpen(true)}>Edit Info</button>
-                                </div>
-                                <form className="profile-form" onSubmit={handleSubmitRkv}>
-                                {/* RKV Information Section */}
-                                    <h2>Jouw RKV informatie</h2>
-                                    <label>
-                                        In which department are you active?
-                                        <select value={department} onChange={(e) => setDepartment(e.target.value)}>
-                                            <option value="">Select department</option>
-                                            <option value="IT">IT Department</option>
-                                            <option value="Marketing">Marketing Department</option>
-                                            <option value="not-active">I am not active in a department</option>
-                                        </select>
-                                    </label>
-                                    <label>
-                                        In which province are you active?
-                                        <select value={province} onChange={(e) => setProvince(e.target.value)}>
-                                            <option value="">No choice</option>
-                                            <option value="vlaams-brabant">Vlaams-Brabant</option>
-                                            <option value="waals-brabant">Waals-Brabant</option>
-                                        </select>
-                                    </label>
-                                    <label>What function(s) do you have?</label>
-                                    <div className="function-checkboxes">
-                                        {[
-                                            'Animator Hartveilig',
-                                            'Arts-lesgever',
-                                            'Hoofdzetel Team Eerste Hulp',
-                                            'Initiator JRK',
-                                            'Kleuterinitiator',
-                                            'Lesgever eerste hulp bij psychische problemen',
-                                            'Lesgever eerstehulpverlening',
-                                            'Lesgever eerstehulpverlening jeugd',
-                                            'Lesgever eerstehulpverlening jeugd begeleider',
-                                            'Lesgever reanimeren en defibrilleren',
-                                            'Provincieverantwoordelijke Vorming',
-                                            'Simulant lesgever',
-                                        ].map((func, index) => (
-                                            <label key={index}>
-                                                <input
-                                                    type="checkbox"
-                                                    value={func}
-                                                    checked={functions.includes(func)}
-                                                    onChange={handleFunctionChange}
-                                                />
-                                                {func}
-                                            </label>
-                                        ))}
-                                    </div>
-            
-                                {/* Workshops Section */}
-                                {!isInfoOpen && (
-                                    <div className="profile-section">
-                                        <h2>Workshops</h2>
-                                        <div className="workshop-container">
-                                            {workshops.length > 0 ? (
-                                                workshops.map((workshop) => (
-                                                    <div
-                                                        key={workshop.id}
-                                                        className="workshop-box"
-                                                        onClick={() => navigate(`/workshop/${workshop.id}`)}
-                                                    >
-                                                        <div className="workshop-title">{workshop.title}</div>
-                                                        <div className="workshop-description">{workshop.description}</div>
-                                                    </div>
-                                                ))
-                                            ) : (
-                                                <p>No workshops available.</p>
-                                            )}
-                                        </div>
-                                    </div>
-                                )}
-            
-                                {/* Workshop Selection Section */}
-                                <div className="profile-section">
-                                    <h2>Jouw Keuze</h2>
-                                    <label>
-                                        Voormiddag:
-                                        <select value={workshopMorning} onChange={(e) => setWorkshopMorning(e.target.value)}>
-                                            <option value="">Selecteer een workshop</option>
-                                            {workshopMorningOptions.map((workshop) => (
-                                                <option key={workshop.id} value={workshop.title}>
-                                                    {workshop.title}
-                                                </option>
-                                            ))}
-                                        </select>
-                                    </label>
-                                    <label>
-                                        Namiddag:
-                                        <select value={workshopAfternoon} onChange={(e) => setWorkshopAfternoon(e.target.value)}>
-                                            <option value="">Selecteer een workshop</option>
-                                            {workshopAfternoonOptions.map((workshop) => (
-                                                <option key={workshop.id} value={workshop.title}>
-                                                    {workshop.title}
-                                                </option>
-                                            ))}
-                                        </select>
-                                    </label>
-                                    <label>
-                                        Eetvoorkeuren:
-                                        <select
-                                            value={dietaryPreferences}
-                                            onChange={(e) => setDietaryPreferences(e.target.value)}
-                                        >
-                                            <option value="">Selecteer eetvoorkeur</option>
-                                            {dietaryOptions.map((option) => (
-                                                <option key={option.id} value={option.preference_name}>
-                                                    {option.preference_name}
-                                                </option>
-                                            ))}
-                                        </select>
-                                    </label>
-                                    <label>
-                                        Allergiën:
-                                        <select
-                                            value={allergies}
-                                            onChange={(e) => setAllergies(e.target.value)}
-                                        >
-                                            <option value="">Selecteer allergieën</option>
-                                            {allergyOptions.map((option, index) => (
-                                                <option key={index} value={option.allergy_name}>
-                                                    {option.allergy_name}
-                                                </option>
-                                            ))}
-                                        </select>
-                                    </label>
-                                    <label>
-                                        Carpool:
-                                        <select
-                                            value={carpoolPreferences}
-                                            onChange={(e) => setCarpoolPreferences(e.target.value)}
-                                        >
-                                            <option value="">Selecteer carpool voorkeur</option>
-                                            {carpoolOptions.map((option, index) => (
-                                                <option key={index} value={option.carpool_role}>
-                                                    {option.carpool_role}
-                                                </option>
-                                            ))}
-                                        </select>
-                                    </label>
-                                    <button type="submit">Opslaan</button>
-                                </div>
-                            </form>
-                        </>
+                            <div className="profile-form">
+                                <label>
+                                    Voornaam:
+                                    <input type="text" value={firstname} disabled />
+                                </label>
+                                <label>
+                                    Naam:
+                                    <input type="text" value={lastname} disabled />
+                                </label>
+                                <label>
+                                    Gebruiker:
+                                    <input type="text" value={gebruiker} disabled />
+                                </label>
+                                <button onClick={() => setIsInfoOpen(true)}>Edit Info</button>
+                            </div>
                         )}
                     </div>
                 </form>
+                {!isInfoOpen && !hasInschrijving && (
+                <form className="profile-form" onSubmit={handleSubmitRkv}>
+                    {/* RKV Information Section */}
+                    <div className="profile-section">
+                        <h2>Jouw RKV informatie</h2>
+                        <label>
+                            In which department are you active?
+                            <select value={department} onChange={(e) => setDepartment(e.target.value)}>
+                                <option value="">Select department</option>
+                                <option value="IT">IT Department</option>
+                                <option value="Marketing">Marketing Department</option>
+                                <option value="not-active">I am not active in a department</option>
+                            </select>
+                        </label>
+                        <label>
+                            In which province are you active?
+                            <select value={province} onChange={(e) => setProvince(e.target.value)}>
+                                <option value="">No choice</option>
+                                <option value="vlaams-brabant">Vlaams-Brabant</option>
+                                <option value="waals-brabant">Waals-Brabant</option>
+                            </select>
+                        </label>
+                        <label>What function(s) do you have?</label>
+                        <div className="function-checkboxes">
+                            {[
+                                'Animator Hartveilig',
+                                'Arts-lesgever',
+                                'Hoofdzetel Team Eerste Hulp',
+                                'Initiator JRK',
+                                'Kleuterinitiator',
+                                'Lesgever eerste hulp bij psychische problemen',
+                                'Lesgever eerstehulpverlening',
+                                'Lesgever eerstehulpverlening jeugd',
+                                'Lesgever eerstehulpverlening jeugd begeleider',
+                                'Lesgever reanimeren en defibrilleren',
+                                'Provincieverantwoordelijke Vorming',
+                                'Simulant lesgever',
+                            ].map((func, index) => (
+                                <label key={index}>
+                                    <input
+                                        type="checkbox"
+                                        value={func}
+                                        checked={functions.includes(func)}
+                                        onChange={handleFunctionChange}
+                                    />
+                                    {func}
+                                </label>
+                            ))}
+                        </div>
+                    </div>
+
+                    {/* Workshops Section */}
+                    {!isInfoOpen && (
+                        <div className="profile-section">
+                            <h2>Workshops</h2>
+                            <div className="workshop-container">
+                                {workshops.length > 0 ? (
+                                    workshops.map((workshop) => (
+                                        <div
+                                            key={workshop.id}
+                                            className="workshop-box"
+                                            onClick={() => navigate(`/workshop/${workshop.id}`)}
+                                        >
+                                            <div className="workshop-title">{workshop.title}</div>
+                                            <div className="workshop-description">{workshop.description}</div>
+                                        </div>
+                                    ))
+                                ) : (
+                                    <p>No workshops available.</p>
+                                )}
+                            </div>
+                        </div>
+                    )}
+
+                    {/* Workshop Selection Section */}
+                    <div className="profile-section">
+                        <h2>Jouw Keuze</h2>
+                        <label>
+                            Voormiddag:
+                            <select value={workshopMorning} onChange={(e) => setWorkshopMorning(e.target.value)}>
+                                <option value="">Selecteer een workshop</option>
+                                {workshops.map((workshop) => (
+                                    <option key={workshop.id} value={workshop.title}>
+                                        {workshop.title}
+                                    </option>
+                                ))}
+                            </select>
+                        </label>
+                        <label>
+                            Namiddag:
+                            <select value={workshopAfternoon} onChange={(e) => setWorkshopAfternoon(e.target.value)}>
+                                <option value="">Selecteer een workshop</option>
+                                {workshops.map((workshop) => (
+                                    <option key={workshop.id} value={workshop.title}>
+                                        {workshop.title}
+                                    </option>
+                                ))}
+                            </select>
+                        </label>
+                        <label>
+                            Eetvoorkeuren:
+                            <select
+                                value={dietaryPreferences}
+                                onChange={(e) => setDietaryPreferences(e.target.value)}
+                            >
+                                <option value="">Selecteer eetvoorkeur</option>
+                                {dietaryOptions.map((option) => (
+                                    <option key={option.id} value={option.preference_name}>
+                                        {option.preference_name}
+                                    </option>
+                                ))}
+                            </select>
+                        </label>
+                        <label>
+                            Allergiën:
+                            <select
+                                value={allergies}
+                                onChange={(e) => setAllergies(e.target.value)}
+                            >
+                                <option value="">Selecteer allergieën</option>
+                                {allergyOptions.map((option, index) => (
+                                    <option key={index} value={option.allergy_name}>
+                                        {option.allergy_name}
+                                    </option>
+                                ))}
+                            </select>
+                        </label>
+                        <label>
+                            Carpool:
+                            <select
+                                value={carpoolPreferences}
+                                onChange={(e) => setCarpoolPreferences(e.target.value)}
+                            >
+                                <option value="">Selecteer carpool voorkeur</option>
+                                {carpoolOptions.map((option, index) => (
+                                    <option key={index} value={option.carpool_role}>
+                                        {option.carpool_role}
+                                    </option>
+                                ))}
+                            </select>
+                        </label>
+                        <button type="submit">Opslaan</button>
+                    </div>
+                </form>
+                )};
 
                 {/* Edit or Cancel inschrijving */}
                 {!isInfoOpen && (
