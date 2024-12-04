@@ -142,8 +142,6 @@ const Profile = () => {
         fetchAllergyOptions();
         fetchCarpoolOptions();
 
-
-        fetchSubscribedWorkshops();
     }, [navigate, email]);
 
     const handleFunctionChange = (e) => {
@@ -488,37 +486,6 @@ const Profile = () => {
                         >
                             Create Workshop
                         </button>
-                    </div>
-                )}
-
-                {/* Subscribed Workshops Section */}
-                {isFirstname && (
-                    <div className="profile-section">
-                        <h2>Subscribed Workshops</h2>
-                        <div className="workshop-container">
-                            {subscribedWorkshops.length > 0 ? (
-                                subscribedWorkshops.map((workshop) => (
-                                    <div
-                                        key={workshop.id}
-                                        className="workshop-box"
-                                        onClick={() => navigate(`/workshop/${workshop.id}`)}
-                                    >
-                                        <div className="workshop-title">{workshop.title}</div>
-                                        <div className="workshop-description">{workshop.description}</div>
-                                    </div>
-                                ))
-                            ) : (
-                                <div>
-                                    <p>No subscribed workshops yet.</p>
-                                    <button
-                                        className="navbar-button"
-                                        onClick={() => navigate('/Home')}
-                                    >
-                                        Look at workshops
-                                    </button>
-                                </div>
-                            )}
-                        </div>
                     </div>
                 )}
             </div>
