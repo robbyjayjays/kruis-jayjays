@@ -14,6 +14,7 @@ const Profile = () => {
     const [province, setProvince] = useState('');
     const [functions, setFunctions] = useState([]);
     const [isInfoOpen, setIsInfoOpen] = useState(true);
+    const [workshops, setWorkshops] = useState([]);
     const [workshopMorning, setWorkshopMorning] = useState('');
     const [workshopAfternoon, setWorkshopAfternoon] = useState('');
     const [dietaryPreferences, setDietaryPreferences] = useState('');
@@ -242,6 +243,7 @@ const Profile = () => {
         console.log('Inschrijving aangepast');
         // Add your logic for editing the inschrijving
     };
+    
     
 
     return (
