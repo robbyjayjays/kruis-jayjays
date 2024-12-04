@@ -17,7 +17,9 @@ const Profile = () => {
     const [workshops, setWorkshops] = useState([]);
     const [subscribedWorkshops, setSubscribedWorkshops] = useState([]);
     const [workshopMorning, setWorkshopMorning] = useState('');
+    const [workshopMorningOptions, setWorkshopMorningOptions] = useState('');
     const [workshopAfternoon, setWorkshopAfternoon] = useState('');
+    const [workshopAfternoonOptions, setWorkshopAfternoonOptions] = useState('');
     const [dietaryPreferences, setDietaryPreferences] = useState('');
     const [dietaryOptions, setDietaryOptions] = useState([]); // Options for the dropdown
     const [allergies, setAllergies] = useState('');
@@ -57,6 +59,8 @@ const Profile = () => {
                     const data = await response.json();
                     if (response.ok) {
                         setWorkshops(data.workshops);
+                        setWorkshopAfternoonOptions(data.workshops);
+                        setWorkshopMorningOptions(data.workshops);
                     } else {
                         console.error('Error fetching workshops:', data.error);
                     }
@@ -311,7 +315,6 @@ const Profile = () => {
                                 </div>
                                 <form className="profile-form" onSubmit={handleSubmitRkv}>
                                 {/* RKV Information Section */}
-                                <div className="profile-section">
                                     <h2>Jouw RKV informatie</h2>
                                     <label>
                                         In which department are you active?
@@ -357,7 +360,6 @@ const Profile = () => {
                                             </label>
                                         ))}
                                     </div>
-                                </div>
             
                                 {/* Workshops Section */}
                                 {!isInfoOpen && (
@@ -389,7 +391,7 @@ const Profile = () => {
                                         Voormiddag:
                                         <select value={workshopMorning} onChange={(e) => setWorkshopMorning(e.target.value)}>
                                             <option value="">Selecteer een workshop</option>
-                                            {workshops.map((workshop) => (
+                                            {workshopMorningOptions.map((workshop) => (
                                                 <option key={workshop.id} value={workshop.title}>
                                                     {workshop.title}
                                                 </option>
@@ -400,7 +402,7 @@ const Profile = () => {
                                         Namiddag:
                                         <select value={workshopAfternoon} onChange={(e) => setWorkshopAfternoon(e.target.value)}>
                                             <option value="">Selecteer een workshop</option>
-                                            {workshops.map((workshop) => (
+                                            {workshopAfternoonOptions.map((workshop) => (
                                                 <option key={workshop.id} value={workshop.title}>
                                                     {workshop.title}
                                                 </option>
