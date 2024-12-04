@@ -24,6 +24,7 @@ const Profile = () => {
     const [allergyOptions, setAllergyOptions] = useState([]); // Allergy options
     const [carpoolPreferences, setCarpoolPreferences] = useState('');
     const [carpoolOptions, setCarpoolOptions] = useState([]);
+    const [hasInschrijving, setHasInschrijving] = useState(false);
     const email = localStorage.getItem('email');
 
     useEffect(() => {
