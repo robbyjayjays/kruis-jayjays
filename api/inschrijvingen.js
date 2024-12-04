@@ -50,6 +50,39 @@ export default async function handler(req, res) {
       console.error('Error checking inschrijvingen:', error.message);
       res.status(500).send('Server error');
     }
+  } else if (req.method === 'DELETE') {
+    const { email } = req.query;
+
+    if (!email) {
+      return res.status(400).json({ error: 'Email is required' });
+    }
+
+    try {
+      // Fetch user_id based on email
+      const userResult = await pool.query('SELECT id FROM users WHERE email = $1', [email]);
+      const user = userResult.rows[0];
+
+      if (!user) {
+        return res.status(404).json({ error: 'User not found' });
+      }
+
+      const userId = user.id;
+
+      // Delete the inschrijving for the user
+      const deleteResult = await pool.query(
+        'DELETE FROM inschrijvingen WHERE user_id = $1',
+        [userId]
+      );
+
+      if (deleteResult.rowCount > 0) {
+        res.status(200).json({ message: 'Inschrijving successfully deleted' });
+      } else {
+        res.status(404).json({ error: 'No inschrijving found to delete' });
+      }
+    } catch (error) {
+      console.error('Error deleting inschrijving:', error.message);
+      res.status(500).send('Server error');
+    }
   } else {
     res.status(405).json({ message: 'Method not allowed' });
   }

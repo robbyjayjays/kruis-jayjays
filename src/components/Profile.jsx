@@ -234,9 +234,31 @@ const Profile = () => {
         }
     };
 
-    const handleAnnuleren = () => {
-        console.log('Inschrijving geannuleerd');
-        // Add your logic for canceling the inschrijving
+    const handleAnnuleren = async () => {
+        const email = localStorage.getItem('email');
+      
+        if (!email) {
+          console.error('No email found in localStorage');
+          return;
+        }
+      
+        try {
+          const response = await fetch(`/api/inschrijvingen?email=${email}`, {
+            method: 'DELETE',
+          });
+      
+          const data = await response.json();
+      
+          if (response.ok) {
+            console.log('Inschrijving deleted:', data.message);
+            // Optional: Trigger a page reload or UI update
+            window.location.reload();
+          } else {
+            console.error('Error deleting inschrijving:', data.error);
+          }
+        } catch (error) {
+          console.error('Error:', error);
+        }
     };
     
     const handleAanpassen = () => {
