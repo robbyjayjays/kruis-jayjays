@@ -428,6 +428,22 @@ const Profile = () => {
                     </div>
                 </form>
 
+                {/* Edit or Cancel inschrijving */}
+                {!isInfoOpen && (
+                    <div className="profile-section">
+                        <div className="edit-cancel-section">
+                            <p>Als je jouw inschrijving wilt annuleren of aanpassen klik hier:</p>
+                            <button
+                                className="edit-cancel-button"
+                                onClick={() => navigate('/edit-cancel-inschrijving')}
+                            >
+                                Annuleren of Aanpassen
+                            </button>
+                        </div>
+                    </div>
+                )}
+
+
                 {/* Created Workshops Section */}
                 {isCreator && (
                     <div className="profile-section">
