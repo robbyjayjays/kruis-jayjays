@@ -25,6 +25,7 @@ const Profile = () => {
     const [carpoolPreferences, setCarpoolPreferences] = useState('');
     const [carpoolOptions, setCarpoolOptions] = useState([]);
     const [hasInschrijving, setHasInschrijving] = useState(false);
+    const [showOptions, setShowOptions] = useState(false);
     const email = localStorage.getItem('email');
 
     useEffect(() => {
@@ -447,12 +448,29 @@ const Profile = () => {
                         {hasInschrijving ? (
                             <div className="edit-cancel-section">
                                 <p>Als je jouw inschrijving wilt annuleren of aanpassen klik hier:</p>
-                                <button
-                                    className="edit-cancel-button"
-                                    onClick={() => navigate('/edit-cancel-inschrijving')}
-                                >
-                                    Annuleren of aanpassen van inschrijving.
-                                </button>
+                                {!showOptions ? (
+                                    <button
+                                        className="edit-cancel-button"
+                                        onClick={() => setShowOptions(true)} // Show options when clicked
+                                    >
+                                        Annuleren of aanpassen van inschrijving.
+                                    </button>
+                                ) : (
+                                    <div className="option-buttons">
+                                        <button
+                                            className="cancel-button"
+                                            onClick={handleAnnuleren} // Add your logic for annuleren
+                                        >
+                                            Annuleren
+                                        </button>
+                                        <button
+                                            className="edit-button"
+                                            onClick={handleAanpassen} // Add your logic for aanpassen
+                                        >
+                                            Aanpassen
+                                        </button>
+                                    </div>
+                                )}
                             </div>
                         ) : (
                             <p>Er is nog geen inschrijving gevonden.</p>
