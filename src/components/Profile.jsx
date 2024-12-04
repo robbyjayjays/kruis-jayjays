@@ -50,37 +50,22 @@ const Profile = () => {
             setIsInfoOpen(false); // Switch to read-only mode
         }
 
-        if (creatorStatus) {
-            const fetchWorkshops = async () => {
-                try {
-                    const response = await fetch(`/api/get-workshops?email=${email}`);
-                    const data = await response.json();
-                    if (response.ok) {
-                        setWorkshops(data.workshops);
-                    } else {
-                        console.error('Error fetching workshops:', data.error);
-                    }
-                } catch (error) {
-                    console.error('Error fetching workshops:', error);
-                }
-            };
-
-            fetchWorkshops();
-        }
-
-        const fetchSubscribedWorkshops = async () => {
+        const fetchWorkshops = async () => {
             try {
-                const response = await fetch(`/api/get-subbed?email=${email}`);
+                const response = await fetch(`/api/get-workshops?email=${email}`);
                 const data = await response.json();
                 if (response.ok) {
-                    setSubscribedWorkshops(data.workshops);
+                    setWorkshops(data.workshops);
                 } else {
-                    console.error('Error fetching subscribed workshops:', data.error);
+                    console.error('Error fetching workshops:', data.error);
                 }
             } catch (error) {
-                console.error('Error fetching subscribed workshops:', error);
+                console.error('Error fetching workshops:', error);
             }
         };
+
+        fetchWorkshops();
+
 
         const fetchInschrijvingen = async () => {
             try {
