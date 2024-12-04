@@ -14,8 +14,6 @@ const Profile = () => {
     const [province, setProvince] = useState('');
     const [functions, setFunctions] = useState([]);
     const [isInfoOpen, setIsInfoOpen] = useState(true);
-    const [workshops, setWorkshops] = useState([]);
-    const [subscribedWorkshops, setSubscribedWorkshops] = useState([]);
     const [workshopMorning, setWorkshopMorning] = useState('');
     const [workshopAfternoon, setWorkshopAfternoon] = useState('');
     const [dietaryPreferences, setDietaryPreferences] = useState('');
@@ -233,6 +231,16 @@ const Profile = () => {
             console.error('Error saving RKV information:', error);
             alert('An error occurred while saving RKV information.');
         }
+    };
+
+    const handleAnnuleren = () => {
+        console.log('Inschrijving geannuleerd');
+        // Add your logic for canceling the inschrijving
+    };
+    
+    const handleAanpassen = () => {
+        console.log('Inschrijving aangepast');
+        // Add your logic for editing the inschrijving
     };
     
 
