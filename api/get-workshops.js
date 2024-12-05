@@ -41,7 +41,7 @@ export default async function handler(req, res) {
                     SELECT id, preference_name
                     FROM eetvoorkeuren
                 `;
-                const foodResult = await pool.query(foodQuery, [userId]);
+                const foodResult = await pool.query(foodQuery);
 
                 res.status(200).json({ food_preferences: foodResult.rows });
             } else {
