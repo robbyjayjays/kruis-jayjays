@@ -261,9 +261,29 @@ const Profile = () => {
         }
     };
     
-    const handleAanpassen = () => {
-        console.log('Inschrijving aangepast');
-        // Add your logic for editing the inschrijving
+    const handleEditInschrijving = async () => {
+        try {
+            const response = await fetch(`/api/inschrijvingen?email=${email}`);
+            const data = await response.json();
+
+            if (response.ok && data.exists) {
+                const { inschrijving } = data;
+                setDepartment(inschrijving.department || '');
+                setProvince(inschrijving.province || '');
+                setFunctions(inschrijving.functions || []);
+                setWorkshopMorning(inschrijving.morning_workshop || '');
+                setWorkshopAfternoon(inschrijving.afternoon_workshop || '');
+                setDietaryPreferences(inschrijving.dietary_preferences || '');
+                setAllergies(inschrijving.allergies || '');
+                setCarpoolPreferences(inschrijving.carpool_preferences || '');
+                setShowRkvForm(true);
+            } else {
+                alert('No inschrijving found.');
+            }
+        } catch (error) {
+            console.error('Error fetching inschrijving:', error);
+            alert('An error occurred while fetching inschrijving.');
+        }
     };
     
     
@@ -334,23 +354,23 @@ const Profile = () => {
                     <div className="profile-section">
                         <h2>Jouw RKV informatie</h2>
                         <label>
-                            In which department are you active?
+                            In welk departement ben je actief?
                             <select value={department} onChange={(e) => setDepartment(e.target.value)}>
-                                <option value="">Select department</option>
+                                <option value="">Selecteer departement</option>
                                 <option value="IT">IT Department</option>
                                 <option value="Marketing">Marketing Department</option>
-                                <option value="not-active">I am not active in a department</option>
+                                <option value="not-active">Ik ben niet actief in een departement</option>
                             </select>
                         </label>
                         <label>
-                            In which province are you active?
+                            In welke provincie ben je actief?
                             <select value={province} onChange={(e) => setProvince(e.target.value)}>
                                 <option value="">No choice</option>
                                 <option value="vlaams-brabant">Vlaams-Brabant</option>
                                 <option value="waals-brabant">Waals-Brabant</option>
                             </select>
                         </label>
-                        <label>What function(s) do you have?</label>
+                        <label>Welke functie(s) heb je?</label>
                         <div className="function-checkboxes">
                             {[
                                 'Animator Hartveilig',
@@ -396,7 +416,7 @@ const Profile = () => {
                                         </div>
                                     ))
                                 ) : (
-                                    <p>No workshops available.</p>
+                                    <p>Geen workshops gevonden.</p>
                                 )}
                             </div>
                         </div>
@@ -483,7 +503,11 @@ const Profile = () => {
                                 {!showOptions ? (
                                     <button
                                         className="edit-cancel-button"
-                                        onClick={() => setShowOptions(true)} // Show options when clicked
+                                        onClick={() => {
+                                            setShowOptions(true);
+                                            handleEditInschrijving();
+
+                                            }}
                                     >
                                         Annuleren of aanpassen van inschrijving.
                                     </button>
