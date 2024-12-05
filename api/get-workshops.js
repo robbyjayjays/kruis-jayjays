@@ -45,7 +45,7 @@ export default async function handler(req, res) {
             if (Carpool === 'true') {
                 const carpoolQuery = `
                     SELECT id, carpool_role
-                    FROM carpools
+                    FROM carpool
                 `;
                 const carpoolResult = await pool.query(carpoolQuery);
                 return res.status(200).json({ carpool_roles: carpoolResult.rows });
