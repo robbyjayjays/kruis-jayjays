@@ -20,7 +20,7 @@ const CreateEetvoorkeur = () => {
 
     const handleSubmitEetvoorkeur = async () => {
         try {
-            const response = await fetch('/api/create?eetvoorkeur=true', {
+            const response = await fetch('/api/create-workshops?eetvoorkeur=true', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
