@@ -1,8 +1,12 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import '../assets/css/profile.css';
 
 const Admin = () => {
+    const navigate = useNavigate();
     const [workshops, setWorkshops] = useState([]);
+    const email = localStorage.getItem('email')
+    const isCreator = localStorage.getItem('isCreator')
 
     const fetchWorkshops = async () => {
         try {
