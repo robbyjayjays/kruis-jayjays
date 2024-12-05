@@ -271,7 +271,6 @@ const Profile = () => {
         try {
             const response = await fetch(`/api/inschrijvingen?email=${email}`);
             const data = await response.json();
-            setHasInschrijving(false);
 
             if (response.ok && data.exists) {
                 const { inschrijving } = data;
@@ -355,7 +354,7 @@ const Profile = () => {
                         )}
                     </div>
                 </form>
-                {!isInfoOpen && !hasInschrijving && (
+                {!isInfoOpen && (!hasInschrijving || showRkvForm) && (
                 <form className="profile-form" onSubmit={handleSubmitRkv}>
                     {/* RKV Information Section */}
                     <div className="profile-section">
