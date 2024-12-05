@@ -20,6 +20,7 @@ const Navbar = () => {
         localStorage.removeItem('province');
         localStorage.removeItem('functions');
         localStorage.removeItem('gebruiker');
+        localStorage.removeItem('isCreator');
         
         // Navigate to the login page after logging out
         navigate('/');
