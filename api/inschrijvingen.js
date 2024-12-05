@@ -1,5 +1,6 @@
 import pkg from 'pg';
 import dotenv from 'dotenv';
+import nodemailer from 'nodemailer';
 
 dotenv.config(); // Load environment variables
 
