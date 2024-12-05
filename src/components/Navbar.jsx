@@ -8,7 +8,8 @@ const Navbar = () => {
     const navigate = useNavigate();
     const location = useLocation();
     const email = localStorage.getItem('email');
-    const creator = localStorage.getItem('isCreator');
+    const creator = localStorage.getItem('isCreator') === 'true';
+    console.log(creator)
 
     const handleLogout = () => {
         // Remove the token and email from localStorage
