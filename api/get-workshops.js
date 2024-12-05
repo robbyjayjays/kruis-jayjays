@@ -18,7 +18,7 @@ const pool = new Pool({
 
 export default async function handler(req, res) {
     if (req.method === 'GET') {
-        const { email, isAdmin, Eetvoorkeuren, Allergies } = req.query;
+        const { email, isAdmin, Eetvoorkeuren, Allergies, Carpool } = req.query;
 
         try {
             // Fetch all food preferences if Eetvoorkeuren is true
@@ -39,6 +39,16 @@ export default async function handler(req, res) {
                 `;
                 const allergyResult = await pool.query(allergyQuery);
                 return res.status(200).json({ allergies: allergyResult.rows });
+            }
+
+            // Fetch all carpool roles if Carpool is true
+            if (Carpool === 'true') {
+                const carpoolQuery = `
+                    SELECT id, carpool_role
+                    FROM carpools
+                `;
+                const carpoolResult = await pool.query(carpoolQuery);
+                return res.status(200).json({ carpool_roles: carpoolResult.rows });
             }
 
             // Validate email

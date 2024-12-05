@@ -8,6 +8,7 @@ const Admin = () => {
     const [workshops, setWorkshops] = useState([]);
     const [eetvoorkeur, setEetvoorkeuren] = useState([]);
     const [allergies, setAllergies] = useState([]);
+    const [carpoolRoles, setCarpoolRoles] = useState([]);
     const email = localStorage.getItem('email');
     const isCreator = localStorage.getItem('isCreator') === 'true'; // Convert string to boolean
 
@@ -56,11 +57,27 @@ const Admin = () => {
         }
     };
 
+    // Fetch Carpool Roles
+    const fetchCarpoolRoles = async () => {
+        try {
+            const response = await fetch(`/api/get-workshops?carpool=true`);
+            const data = await response.json();
+            if (response.ok) {
+                setCarpoolRoles(data.carpool_roles); // Correctly assign the array
+            } else {
+                console.error('Error fetching carpool roles:', data.error);
+            }
+        } catch (error) {
+            console.error('Error fetching carpool roles:', error);
+        }
+    };
+
     // Use useEffect to trigger API calls once on component mount
     useEffect(() => {
         fetchWorkshops();
         fetchEetvoorkeuren();
         fetchAllergies();
+        fetchCarpoolRoles();
     }, []);
 
     return (
@@ -146,6 +163,33 @@ const Admin = () => {
                             onClick={() => navigate('/create-allergy')}
                         >
                             Create Allergy
+                        </button>
+                    </div>
+                )}
+
+                {/* Carpool Roles Section */}
+                {isCreator && (
+                    <div className="profile-section">
+                        <h2>Carpool Roles</h2>
+                        <div className="workshop-container">
+                            {carpoolRoles.length > 0 ? (
+                                carpoolRoles.map((carpoolRole) => (
+                                    <div
+                                        key={carpoolRole.id} // Ensure a unique key
+                                        className="workshop-box"
+                                    >
+                                        <div className="workshop-title">{carpoolRole.carpool_role}</div>
+                                    </div>
+                                ))
+                            ) : (
+                                <p>No carpool roles created yet.</p>
+                            )}
+                        </div>
+                        <button
+                            className="create-workshop-button"
+                            onClick={() => navigate('/create-carpool')}
+                        >
+                            Create Carpool Role
                         </button>
                     </div>
                 )}

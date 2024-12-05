@@ -10,6 +10,7 @@ import Calendar from 'react-calendar';
 import Admin from './components/Admin';
 import CreateEetvoorkeur from './components/CreateEetvoorkeur';
 import CreateAllergy from './components/CreateAllergy';
+import CreateCarpool from './components/CreateCarpool';
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
         <Route path="/Admin" element= { <Admin />} />
         <Route path="/create-eetvoorkeur" element= { <CreateEetvoorkeur /> } />
         <Route path="/create-allergy" element= { <CreateAllergy /> } />
+        <Route path="/create-carpool" element= { <CreateCarpool /> } />
       </Routes>
     </Router>
   );

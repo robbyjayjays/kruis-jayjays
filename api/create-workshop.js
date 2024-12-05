@@ -18,8 +18,8 @@ const pool = new Pool({
 
 export default async function handler(req, res) {
     if (req.method === 'POST') {
-        const { email, title, description, workshop_date, preference_name, allergy_name } = req.body;
-        const { eetvoorkeur, allergy } = req.query; // Query parameters for creating Eetvoorkeur or Allergy
+        const { email, title, description, workshop_date, preference_name, allergy_name, carpool_role } = req.body;
+        const { eetvoorkeur, allergy, carpool } = req.query; // Query parameters for creating different records
 
         if (!email) {
             return res.status(400).json({ error: 'Email is required' });
@@ -51,6 +51,20 @@ export default async function handler(req, res) {
                 return res.status(200).json({
                     message: 'Allergy created successfully',
                     allergyId: allergyResult.rows[0].id,
+                });
+            }
+
+            // Handle carpool role creation
+            if (carpool === 'true' && carpool_role) {
+                const insertCarpoolQuery = `
+                    INSERT INTO carpool (carpool_role)
+                    VALUES ($1) RETURNING id
+                `;
+                const carpoolResult = await pool.query(insertCarpoolQuery, [carpool_role]);
+
+                return res.status(200).json({
+                    message: 'Carpool role created successfully',
+                    carpoolId: carpoolResult.rows[0].id,
                 });
             }
 
