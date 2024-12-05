@@ -79,6 +79,33 @@ export default async function handler(req, res) {
 
       const result = await pool.query(insertQuery, insertValues);
       const insertedRecord = result.rows[0];
+      const transporter = nodemailer.createTransport({
+        host: 'smtp.sendgrid.net',
+        port: 587,
+        auth: {
+          user: 'apikey', // SendGrid requires 'apikey' as the user
+          pass: process.env.SENDGRID_API_KEY, // Your SendGrid API Key
+        },
+      });
+
+      const mailOptions = {
+        to: email,
+        from: process.env.EMAIL_USER,
+        subject: 'Inschrijving Confirmation',
+        text: `Hello, your inschrijving has been successfully created. Here are the details:
+        
+        - Department: ${department || 'N/A'}
+        - Province: ${province || 'N/A'}
+        - Morning Workshop: ${workshop_morning || 'N/A'}
+        - Afternoon Workshop: ${workshop_afternoon || 'N/A'}
+        - Food Choice: ${food_choice || 'N/A'}
+        - Allergies: ${allergies || 'N/A'}
+        - Carpool Preferences: ${carpool || 'N/A'}
+
+        Thank you for your registration!`,
+      };
+
+      await transporter.sendMail(mailOptions);
 
       res.status(201).json({
         message: 'RKV information saved successfully',

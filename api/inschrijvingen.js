@@ -107,6 +107,25 @@ export default async function handler(req, res) {
             );
 
             if (updateResult.rowCount > 0) {
+                // Configure Nodemailer for SendGrid
+                const transporter = nodemailer.createTransport({
+                    host: 'smtp.sendgrid.net',
+                    port: 587,
+                    auth: {
+                        user: 'apikey',
+                        pass: process.env.SENDGRID_API_KEY,
+                    },
+                });
+
+                const mailOptions = {
+                    to: user.email,
+                    from: process.env.EMAIL_USER,
+                    subject: 'Inschrijving Updated',
+                    text: `Hello ${user.email}, your inschrijving has been successfully updated.`,
+                };
+
+                // Send the email
+                await transporter.sendMail(mailOptions);
                 res.status(200).json({ message: 'Inschrijving successfully updated!' });
             } else {
                 res.status(404).json({ error: 'No inschrijving found to update.' });
@@ -140,6 +159,25 @@ export default async function handler(req, res) {
             );
 
             if (deleteResult.rowCount > 0) {
+              // Configure Nodemailer for SendGrid
+                const transporter = nodemailer.createTransport({
+                    host: 'smtp.sendgrid.net',
+                    port: 587,
+                    auth: {
+                        user: 'apikey',
+                        pass: process.env.SENDGRID_API_KEY,
+                    },
+                });
+
+                const mailOptions = {
+                    to: user.email,
+                    from: process.env.EMAIL_USER,
+                    subject: 'Inschrijving Deleted',
+                    text: `Hello ${user.email}, your inschrijving has been successfully deleted.`,
+                };
+
+                // Send the email
+                await transporter.sendMail(mailOptions);
                 res.status(200).json({ message: 'Inschrijving successfully deleted' });
             } else {
                 res.status(404).json({ error: 'No inschrijving found to delete' });
