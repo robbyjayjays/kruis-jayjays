@@ -20,11 +20,21 @@ export default async function handler(req, res) {
     if (req.method === 'GET') {
         const { email, isAdmin, Eetvoorkeuren } = req.query;
 
-        if (!email) {
-            return res.status(400).json({ error: 'Email is required' });
-        }
-
         try {
+            if (Eetvoorkeuren === 'true') {
+                // Fetch all food preferences
+                const foodQuery = `
+                    SELECT id, preference_name
+                    FROM eetvoorkeuren
+                `;
+                const foodResult = await pool.query(foodQuery);
+                return res.status(200).json({ food_preferences: foodResult.rows });
+            }
+
+            if (!email) {
+                return res.status(400).json({ error: 'Email is required' });
+            }
+
             // Get the user ID from the email
             const userResult = await pool.query('SELECT id FROM users WHERE email = $1', [email]);
             const user = userResult.rows[0];
@@ -35,25 +45,14 @@ export default async function handler(req, res) {
 
             const userId = user.id;
 
-            if (Eetvoorkeuren === 'true') {
-                // Fetch food preferences
-                const foodQuery = `
-                    SELECT id, preference_name
-                    FROM eetvoorkeuren
-                `;
-                const foodResult = await pool.query(foodQuery);
+            // Determine the query based on isAdmin parameter
+            const workshopQuery = isAdmin === 'true'
+                ? 'SELECT id, title, description, created_at FROM workshops WHERE creator_id = $1'
+                : 'SELECT id, title, description, created_at FROM workshops WHERE creator_id != $1';
 
-                res.status(200).json({ food_preferences: foodResult.rows });
-            } else {
-                // Determine the query based on isAdmin parameter
-                const workshopQuery = isAdmin === 'true'
-                    ? 'SELECT id, title, description, created_at FROM workshops WHERE creator_id = $1'
-                    : 'SELECT id, title, description, created_at FROM workshops WHERE creator_id != $1';
+            const workshopResult = await pool.query(workshopQuery, [userId]);
 
-                const workshopResult = await pool.query(workshopQuery, [userId]);
-
-                res.status(200).json({ workshops: workshopResult.rows });
-            }
+            res.status(200).json({ workshops: workshopResult.rows });
         } catch (error) {
             console.error('Error processing request:', error.message);
             res.status(500).json({ error: 'Server error' });
