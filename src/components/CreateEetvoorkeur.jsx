@@ -34,7 +34,7 @@ const CreateEetvoorkeur = () => {
             const data = await response.json();
     
             if (response.ok) {
-                toast.success('Food preference created successfully');
+                console.log('Food preference created successfully');
                 navigate('/Admin');
             } else {
                 toast.error(`Failed to create food preference: ${data.error}`);
