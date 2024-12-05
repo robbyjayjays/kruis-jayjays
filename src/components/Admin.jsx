@@ -60,7 +60,7 @@ const Admin = () => {
     // Fetch Carpool Roles
     const fetchCarpoolRoles = async () => {
         try {
-            const response = await fetch(`/api/get-workshops?carpool=true`);
+            const response = await fetch(`/api/get-workshops?Carpool=true`);
             const data = await response.json();
             if (response.ok) {
                 setCarpoolRoles(data.carpool_roles); // Correctly assign the array
