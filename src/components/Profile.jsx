@@ -495,7 +495,9 @@ const Profile = () => {
                                 ))}
                             </select>
                         </label>
-                        <button type="submit">Opslaan</button>
+                        {!showRkvForm && (
+                            <button type="submit">Opslaan</button>
+                        )}
                     </div>
                 </form>
                 )};
@@ -505,18 +507,20 @@ const Profile = () => {
                     <div className="profile-section">
                         {hasInschrijving ? (
                             <div className="edit-cancel-section">
-                                <p>Als je jouw inschrijving wilt annuleren of aanpassen klik hier:</p>
                                 {!showOptions ? (
-                                    <button
-                                        className="edit-cancel-button"
-                                        onClick={() => {
-                                            setShowOptions(true);
-                                            handleEditInschrijving();
+                                    <>
+                                        <p>Als je jouw inschrijving wilt annuleren of aanpassen klik hier:</p>
+                                        <button
+                                            className="edit-cancel-button"
+                                            onClick={() => {
+                                                setShowOptions(true);
+                                                handleEditInschrijving();
 
-                                            }}
-                                    >
-                                        Annuleren of aanpassen van inschrijving.
-                                    </button>
+                                                }}
+                                        >
+                                            Annuleren of aanpassen van inschrijving.
+                                        </button>
+                                    </>
                                 ) : (
                                     <div className="option-buttons">
                                         <button
