@@ -8,6 +8,7 @@ const Navbar = () => {
     const navigate = useNavigate();
     const location = useLocation();
     const email = localStorage.getItem('email');
+    const creator = localStorage.getItem('isCreator');
 
     const handleLogout = () => {
         // Remove the token and email from localStorage
@@ -33,6 +34,10 @@ const Navbar = () => {
             </div>
             <div className="navbar-links">
                 {email && <span className="navbar-user">Logged in as: {email}</span>}
+
+                {creator && (
+                    <button className="navbar-button" onClick={() => navigate('/Admin')}>Admin</button>
+                )}
                 
                 <button className="navbar-button" onClick={() => navigate('/Profile')}>Profile</button>
 
