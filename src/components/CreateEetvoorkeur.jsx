@@ -19,6 +19,7 @@ const CreateEetvoorkeur = () => {
     }, [navigate, token, email]);
 
     const handleSubmitEetvoorkeur = async () => {
+        e.preventDefault();
         try {
             const response = await fetch('/api/create-workshop?eetvoorkeur=true', {
                 method: 'POST',
