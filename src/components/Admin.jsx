@@ -6,6 +6,7 @@ import Navbar from './Navbar';
 const Admin = () => {
     const navigate = useNavigate();
     const [workshops, setWorkshops] = useState([]);
+    const [eetvoorkeur, setEetvoorkeuren] = useState([]);
     const email = localStorage.getItem('email')
     const isCreator = localStorage.getItem('isCreator')
 
@@ -24,6 +25,22 @@ const Admin = () => {
     };
 
     fetchWorkshops();
+
+    const fetchEetvoorkeuren = async () => {
+        try {
+            const response = await fetch(`/api/get-workshops?email=${email}&Eetvoorkeuren=true`);
+            const data = await response.json();
+            if (response.ok) {
+                setEetvoorkeuren(data.preference_name);
+            } else {
+                console.error('Error fetching workshops:', data.error);
+            }
+        } catch (error) {
+            console.error('Error fetching workshops:', error);
+        }
+    };
+
+    fetchEetvoorkeuren();
 
     return (
         <>
@@ -54,6 +71,32 @@ const Admin = () => {
                             onClick={() => navigate('/create-workshop')}
                         >
                             Create Workshop
+                        </button>
+                    </div>
+                )}
+
+                {/* Eetvoorkeuren Section */}
+                {isCreator && (
+                    <div className="profile-section">
+                        <h2>Eetvoorkeuren</h2>
+                        <div className="workshop-container">
+                            {eetvoorkeur.length > 0 ? (
+                                eetvoorkeur.map((eetvoorkeur) => (
+                                    <div
+                                        className="workshop-box"
+                                    >
+                                        <div className="workshop-title">{eetvoorkeur.preference_name}</div>
+                                    </div>
+                                ))
+                            ) : (
+                                <p>No eetvoorkeur created yet.</p>
+                            )}
+                        </div>
+                        <button
+                            className="create-workshop-button"
+                            onClick={() => navigate('/create-workshop')}
+                        >
+                            Create Eetvoorkeur
                         </button>
                     </div>
                 )}

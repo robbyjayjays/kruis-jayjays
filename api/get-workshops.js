@@ -18,7 +18,7 @@ const pool = new Pool({
 
 export default async function handler(req, res) {
     if (req.method === 'GET') {
-        const { email, isAdmin } = req.query;
+        const { email, isAdmin, Eetvoorkeuren } = req.query;
 
         if (!email) {
             return res.status(400).json({ error: 'Email is required' });
@@ -35,16 +35,27 @@ export default async function handler(req, res) {
 
             const userId = user.id;
 
-            // Determine the query based on isAdmin parameter
-            const workshopQuery = isAdmin === 'true'
-                ? 'SELECT id, title, description, created_at FROM workshops WHERE creator_id = $1'
-                : 'SELECT id, title, description, created_at FROM workshops WHERE creator_id != $1';
+            if (Eetvoorkeuren === 'true') {
+                // Fetch food preferences
+                const foodQuery = `
+                    SELECT id, preference_name
+                    FROM eetvoorkeuren
+                `;
+                const foodResult = await pool.query(foodQuery, [userId]);
 
-            const workshopResult = await pool.query(workshopQuery, [userId]);
+                res.status(200).json({ food_preferences: foodResult.rows });
+            } else {
+                // Determine the query based on isAdmin parameter
+                const workshopQuery = isAdmin === 'true'
+                    ? 'SELECT id, title, description, created_at FROM workshops WHERE creator_id = $1'
+                    : 'SELECT id, title, description, created_at FROM workshops WHERE creator_id != $1';
 
-            res.status(200).json({ workshops: workshopResult.rows });
+                const workshopResult = await pool.query(workshopQuery, [userId]);
+
+                res.status(200).json({ workshops: workshopResult.rows });
+            }
         } catch (error) {
-            console.error('Error fetching workshops:', error.message);
+            console.error('Error processing request:', error.message);
             res.status(500).json({ error: 'Server error' });
         }
     } else {
