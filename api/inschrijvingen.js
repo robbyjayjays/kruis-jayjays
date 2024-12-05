@@ -73,7 +73,7 @@ export default async function handler(req, res) {
 
         try {
             // Fetch user_id based on email
-            const userResult = await pool.query('SELECT id FROM users WHERE email = $1', [email]);
+            const userResult = await pool.query('SELECT id, email FROM users WHERE email = $1', [email]);
             const user = userResult.rows[0];
 
             if (!user) {
@@ -144,7 +144,7 @@ export default async function handler(req, res) {
 
         try {
             // Fetch user_id based on email
-            const userResult = await pool.query('SELECT id FROM users WHERE email = $1', [email]);
+            const userResult = await pool.query('SELECT id, email FROM users WHERE email = $1', [email]);
             const user = userResult.rows[0];
 
             if (!user) {
