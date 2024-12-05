@@ -25,6 +25,7 @@ const Profile = () => {
     const [carpoolOptions, setCarpoolOptions] = useState([]);
     const [hasInschrijving, setHasInschrijving] = useState(false);
     const [showOptions, setShowOptions] = useState(false);
+    const [showRkvForm, setShowRkvForm] = useState(false);
     const email = localStorage.getItem('email');
 
     useEffect(() => {
@@ -260,6 +261,11 @@ const Profile = () => {
           console.error('Error:', error);
         }
     };
+    
+    const handleAanpassen = async () => {
+        console.log('Inschrijving aanpassen')
+        return;
+    }
     
     const handleEditInschrijving = async () => {
         try {
