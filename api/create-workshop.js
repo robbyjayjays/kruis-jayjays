@@ -18,15 +18,15 @@ const pool = new Pool({
 
 export default async function handler(req, res) {
     if (req.method === 'POST') {
-        const { email, title, description, workshop_date, preference_name } = req.body;
-        const { eetvoorkeur } = req.query; // Query parameter for creating Eetvoorkeur
+        const { email, title, description, workshop_date, preference_name, allergy_name } = req.body;
+        const { eetvoorkeur, allergy } = req.query; // Query parameters for creating Eetvoorkeur or Allergy
 
         if (!email) {
             return res.status(400).json({ error: 'Email is required' });
         }
 
         try {
-            // If eetvoorkeur=true, handle Eetvoorkeur creation
+            // Handle food preference creation
             if (eetvoorkeur === 'true' && preference_name) {
                 const insertEetvoorkeurQuery = `
                     INSERT INTO eetvoorkeuren (preference_name)
@@ -37,6 +37,20 @@ export default async function handler(req, res) {
                 return res.status(200).json({
                     message: 'Food preference created successfully',
                     preferenceId: eetvoorkeurResult.rows[0].id,
+                });
+            }
+
+            // Handle allergy creation
+            if (allergy === 'true' && allergy_name) {
+                const insertAllergyQuery = `
+                    INSERT INTO allergies (allergy_name)
+                    VALUES ($1) RETURNING id
+                `;
+                const allergyResult = await pool.query(insertAllergyQuery, [allergy_name]);
+
+                return res.status(200).json({
+                    message: 'Allergy created successfully',
+                    allergyId: allergyResult.rows[0].id,
                 });
             }
 
