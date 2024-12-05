@@ -49,7 +49,7 @@ const CreateEetvoorkeur = () => {
     return (
       <>
         <Navbar />
-        <div className="create-eetvoorkeur-container">
+        <div className="create-workshop-container">
             <h1>Create New Food Preference</h1>
             <form onSubmit={handleSubmitEetvoorkeur} className="create-workshop-form">
                 <label>
