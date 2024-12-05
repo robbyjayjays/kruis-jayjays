@@ -272,17 +272,17 @@ const Profile = () => {
             const response = await fetch(`/api/inschrijvingen?email=${email}`);
             const data = await response.json();
             setHasInschrijving(false);
-            
+
             if (response.ok && data.exists) {
                 const { inschrijving } = data;
                 setDepartment(inschrijving.department || '');
                 setProvince(inschrijving.province || '');
                 setFunctions(inschrijving.functions || []);
-                setWorkshopMorning(inschrijving.morning_workshop || '');
-                setWorkshopAfternoon(inschrijving.afternoon_workshop || '');
-                setDietaryPreferences(inschrijving.dietary_preferences || '');
+                setWorkshopMorning(inschrijving.workshop_morning || '');
+                setWorkshopAfternoon(inschrijving.workshop_afternoon || '');
+                setDietaryPreferences(inschrijving.food_choice || '');
                 setAllergies(inschrijving.allergies || '');
-                setCarpoolPreferences(inschrijving.carpool_preferences || '');
+                setCarpoolPreferences(inschrijving.carpool || '');
                 setShowRkvForm(true);
             } else {
                 alert('No inschrijving found.');
