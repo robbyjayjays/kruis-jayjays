@@ -35,7 +35,7 @@ const CreateEetvoorkeur = () => {
     
             if (response.ok) {
                 toast.success('Food preference created successfully');
-                navigate('/admin');
+                navigate('/Admin');
             } else {
                 toast.error(`Failed to create food preference: ${data.error}`);
             }
@@ -51,7 +51,7 @@ const CreateEetvoorkeur = () => {
         <Navbar />
         <div className="create-eetvoorkeur-container">
             <h1>Create New Food Preference</h1>
-            <form onSubmit={handleSubmitEetvoorkeur} className="create-eetvoorkeur-form">
+            <form onSubmit={handleSubmitEetvoorkeur} className="create-workshop-form">
                 <label>
                     Eetvoorkeur:
                     <input
