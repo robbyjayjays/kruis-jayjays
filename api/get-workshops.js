@@ -18,7 +18,7 @@ const pool = new Pool({
 
 export default async function handler(req, res) {
     if (req.method === 'GET') {
-        const { email } = req.query; // Extract email from query parameters
+        const { email, isAdmin } = req.query;
 
         if (!email) {
             return res.status(400).json({ error: 'Email is required' });
@@ -35,11 +35,12 @@ export default async function handler(req, res) {
 
             const userId = user.id;
 
-            // Get workshops where the creator_id matches the user ID
-            const workshopResult = await pool.query(
-                'SELECT id, title, description, created_at FROM workshops WHERE creator_id != $1',
-                [userId]
-            );
+            // Determine the query based on isAdmin parameter
+            const workshopQuery = isAdmin === 'true'
+                ? 'SELECT id, title, description, created_at FROM workshops WHERE creator_id = $1'
+                : 'SELECT id, title, description, created_at FROM workshops WHERE creator_id != $1';
+
+            const workshopResult = await pool.query(workshopQuery, [userId]);
 
             res.status(200).json({ workshops: workshopResult.rows });
         } catch (error) {

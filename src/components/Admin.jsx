@@ -10,7 +10,7 @@ const Admin = () => {
 
     const fetchWorkshops = async () => {
         try {
-            const response = await fetch(`/api/get-workshops?email=${email}`);
+            const response = await fetch(`/api/get-workshops?email=${email}&isAdmin=true`);
             const data = await response.json();
             if (response.ok) {
                 setWorkshops(data.workshops);
