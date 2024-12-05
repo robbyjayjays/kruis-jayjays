@@ -18,13 +18,35 @@ const pool = new Pool({
 
 export default async function handler(req, res) {
     if (req.method === 'POST') {
-        const { email, title, description, workshop_date } = req.body;
+        const { email, title, description, workshop_date, preference_name } = req.body;
+        const { eetvoorkeur } = req.query; // Query parameter for creating Eetvoorkeur
 
-        if (!email || !title || !description || !workshop_date) {
-            return res.status(400).json({ error: 'Email, title, description, and workshop date are required' });
+        if (!email) {
+            return res.status(400).json({ error: 'Email is required' });
         }
 
         try {
+            // If eetvoorkeur=true, handle Eetvoorkeur creation
+            if (eetvoorkeur === 'true' && preference_name) {
+                const insertEetvoorkeurQuery = `
+                    INSERT INTO eetvoorkeuren (preference_name)
+                    VALUES ($1) RETURNING id
+                `;
+                const eetvoorkeurResult = await pool.query(insertEetvoorkeurQuery, [preference_name]);
+
+                return res.status(200).json({
+                    message: 'Food preference created successfully',
+                    preferenceId: eetvoorkeurResult.rows[0].id,
+                });
+            }
+
+            // Workshop creation logic
+            if (!title || !description || !workshop_date) {
+                return res.status(400).json({
+                    error: 'Title, description, and workshop date are required for creating a workshop',
+                });
+            }
+
             // Get the user ID from the email
             const userResult = await pool.query('SELECT id FROM users WHERE email = $1', [email]);
             const user = userResult.rows[0];
@@ -35,18 +57,18 @@ export default async function handler(req, res) {
 
             const userId = user.id;
 
-            // Insert the new workshop into the database with the date
-            const insertQuery = `
-                INSERT INTO workshops (title, description, creator_id, subscribers, created_at, workshop_date)
-                VALUES ($1, $2, $3, $4, NOW(), $5) RETURNING id
+            const insertWorkshopQuery = `
+                INSERT INTO workshops (title, description, creator_id, subscribers, workshop_date)
+                VALUES ($1, $2, $3, $4, $5) RETURNING id
             `;
-            const result = await pool.query(insertQuery, [title, description, userId, [], workshop_date]);
+            const workshopResult = await pool.query(insertWorkshopQuery, [title, description, userId, [], workshop_date]);
 
-            const newWorkshopId = result.rows[0].id;
-
-            res.status(200).json({ message: 'Workshop created successfully', workshopId: newWorkshopId });
+            return res.status(200).json({
+                message: 'Workshop created successfully',
+                workshopId: workshopResult.rows[0].id,
+            });
         } catch (error) {
-            console.error('Error creating workshop:', error.message);
+            console.error('Error processing request:', error.message);
             res.status(500).json({ error: 'Server error' });
         }
     } else {
