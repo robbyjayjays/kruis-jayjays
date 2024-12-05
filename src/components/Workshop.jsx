@@ -92,7 +92,7 @@ const Workshop = () => {
 
             if (response.ok) {
                 toast.success('Workshop deleted successfully');
-                navigate('/Profile'); // Redirect to Profile after successful deletion
+                navigate('/Admin'); // Redirect to Profile after successful deletion
             } else {
                 const errorData = await response.json();
                 toast.error(`Failed to delete workshop: ${errorData.error}`);
