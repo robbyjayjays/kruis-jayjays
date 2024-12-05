@@ -53,6 +53,68 @@ export default async function handler(req, res) {
             console.error('Error checking inschrijvingen:', error.message);
             res.status(500).send('Server error');
         }
+    } else if (req.method === 'PUT') {
+        const {
+            email,
+            department,
+            province,
+            functions,
+            morningWorkshop,
+            afternoonWorkshop,
+            dietaryPreferences,
+            allergies,
+            carpoolPreferences,
+        } = req.body;
+
+        if (!email) {
+            return res.status(400).json({ error: 'Email is required' });
+        }
+
+        try {
+            // Fetch user_id based on email
+            const userResult = await pool.query('SELECT id FROM users WHERE email = $1', [email]);
+            const user = userResult.rows[0];
+
+            if (!user) {
+                return res.status(404).json({ error: 'User not found' });
+            }
+
+            const userId = user.id;
+
+            // Update the inschrijving for the user
+            const updateResult = await pool.query(
+                `UPDATE inschrijvingen
+                 SET department = $1,
+                     province = $2,
+                     functions = $3,
+                     workshop_morning = $4,
+                     workshop_afternoon = $5,
+                     food_choice = $6,
+                     allergies = $7,
+                     carpool = $8
+                 WHERE user_id = $9`,
+                [
+                    department,
+                    province,
+                    functions,
+                    morningWorkshop,
+                    afternoonWorkshop,
+                    dietaryPreferences,
+                    allergies,
+                    carpoolPreferences,
+                    userId,
+                ]
+            );
+
+            if (updateResult.rowCount > 0) {
+                res.status(200).json({ message: 'Inschrijving successfully updated!' });
+            } else {
+                res.status(404).json({ error: 'No inschrijving found to update.' });
+            }
+        } catch (error) {
+            console.error('Error updating inschrijving:', error.message);
+            res.status(500).send('Server error');
+        }
     } else if (req.method === 'DELETE') {
         const { email } = req.query;
 

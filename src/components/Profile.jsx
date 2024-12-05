@@ -263,9 +263,45 @@ const Profile = () => {
     };
     
     const handleAanpassen = async () => {
-        console.log('Inschrijving aanpassen')
-        return;
-    }
+        // Perform form validation (if needed)
+        if (!department.trim() || !province.trim() || functions.length === 0) {
+            alert('Please fill out all required fields.');
+            return;
+        }
+    
+        try {
+            // Send the updated data to the backend
+            const response = await fetch(`/api/inschrijvingen`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    email, // Unique identifier for the user
+                    department,
+                    province,
+                    functions,
+                    morningWorkshop: workshopMorning,
+                    afternoonWorkshop: workshopAfternoon,
+                    dietaryPreferences,
+                    allergies,
+                    carpoolPreferences,
+                }),
+            });
+    
+            if (response.ok) {
+                alert('Inschrijving successfully updated!');
+                setShowRkvForm(false); // Close the form after updating
+            } else {
+                const errorData = await response.json();
+                alert(`Failed to update inschrijving: ${errorData.error}`);
+            }
+        } catch (error) {
+            console.error('Error updating inschrijving:', error);
+            alert('An error occurred while updating inschrijving.');
+        }
+    };
+    
     
     const handleEditInschrijving = async () => {
         try {
