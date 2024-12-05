@@ -271,7 +271,8 @@ const Profile = () => {
         try {
             const response = await fetch(`/api/inschrijvingen?email=${email}`);
             const data = await response.json();
-
+            setHasInschrijving(false);
+            
             if (response.ok && data.exists) {
                 const { inschrijving } = data;
                 setDepartment(inschrijving.department || '');
