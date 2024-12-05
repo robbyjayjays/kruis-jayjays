@@ -122,7 +122,7 @@ export default async function handler(req, res) {
                     to: user.email,
                     from: process.env.EMAIL_USER,
                     subject: 'Inschrijving Updated',
-                    text: `Hello ${user.email}, your inschrijving has been successfully updated.`,
+                    text: `Hallo ${user.email}, jouw inschrijving is succesful aangepast.`,
                 };
 
                 // Send the email
@@ -174,7 +174,7 @@ export default async function handler(req, res) {
                     to: user.email,
                     from: process.env.EMAIL_USER,
                     subject: 'Inschrijving Deleted',
-                    text: `Hello ${user.email}, your inschrijving has been successfully deleted.`,
+                    text: `Hallo ${user.email}, jouw inschrijving is succesvol geannulleerd.`,
                 };
 
                 // Send the email

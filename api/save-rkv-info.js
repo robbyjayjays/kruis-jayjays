@@ -93,17 +93,17 @@ export default async function handler(req, res) {
         to: email,
         from: process.env.EMAIL_USER,
         subject: 'Inschrijving Confirmation',
-        text: `Hello, your inschrijving has been successfully created. Here are the details:
+        text: `Hallo, Jouw inschrijving was succesvol, hier zijn de details van jouw inschrijving:
         
-        - Department: ${department || 'N/A'}
-        - Province: ${province || 'N/A'}
-        - Morning Workshop: ${workshop_morning || 'N/A'}
-        - Afternoon Workshop: ${workshop_afternoon || 'N/A'}
-        - Food Choice: ${food_choice || 'N/A'}
-        - Allergies: ${allergies || 'N/A'}
-        - Carpool Preferences: ${carpool || 'N/A'}
+        - Departement: ${department || 'N/A'}
+        - Provincie: ${province || 'N/A'}
+        - Ochtend Workshop: ${workshop_morning || 'N/A'}
+        - Namiddag Workshop: ${workshop_afternoon || 'N/A'}
+        - Eetvoorkeur: ${food_choice || 'N/A'}
+        - Allergieën: ${allergies || 'N/A'}
+        - Carpool Optie: ${carpool || 'N/A'}
 
-        Thank you for your registration!`,
+        Bedankt voor jouw registratie!`,
       };
 
       await transporter.sendMail(mailOptions);
