@@ -20,7 +20,7 @@ const CreateAllergy = () => {
         e.preventDefault();
 
         try {
-            const response = await fetch('/api/create-workshop?Allergy=true', {
+            const response = await fetch('/api/create-workshop?allergy=true', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
