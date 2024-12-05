@@ -25,7 +25,7 @@ const CreateCarpool = () => {
         }
 
         try {
-            const response = await fetch('/api/create?carpool=true', {
+            const response = await fetch('/api/create-workshop?carpool=true', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
