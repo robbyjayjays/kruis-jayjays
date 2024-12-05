@@ -9,6 +9,7 @@ import EditWorkshop from './components/EditWorkshop';
 import Calendar from 'react-calendar';
 import Admin from './components/Admin';
 import CreateEetvoorkeur from './components/CreateEetvoorkeur';
+import CreateAllergy from './components/CreateAllergy';
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
         <Route path="/edit-workshop/:id" element= { <EditWorkshop />} />
         <Route path="/Admin" element= { <Admin />} />
         <Route path="/create-eetvoorkeur" element= { <CreateEetvoorkeur /> } />
+        <Route path="/create-allergy" element= { <CreateAllergy /> } />
       </Routes>
     </Router>
   );

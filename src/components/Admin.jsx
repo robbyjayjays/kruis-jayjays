@@ -7,6 +7,7 @@ const Admin = () => {
     const navigate = useNavigate();
     const [workshops, setWorkshops] = useState([]);
     const [eetvoorkeur, setEetvoorkeuren] = useState([]);
+    const [allergies, setAllergies] = useState([]);
     const email = localStorage.getItem('email');
     const isCreator = localStorage.getItem('isCreator') === 'true'; // Convert string to boolean
 
@@ -40,10 +41,26 @@ const Admin = () => {
         }
     };
 
+    // Fetch Allergies
+    const fetchAllergies = async () => {
+        try {
+            const response = await fetch(`/api/get-workshops?Allergies=true`);
+            const data = await response.json();
+            if (response.ok) {
+                setAllergies(data.allergies); // Correctly assign the array
+            } else {
+                console.error('Error fetching allergies:', data.error);
+            }
+        } catch (error) {
+            console.error('Error fetching allergies:', error);
+        }
+    };
+
     // Use useEffect to trigger API calls once on component mount
     useEffect(() => {
         fetchWorkshops();
         fetchEetvoorkeuren();
+        fetchAllergies();
     }, []);
 
     return (
@@ -102,6 +119,33 @@ const Admin = () => {
                             onClick={() => navigate('/create-eetvoorkeur')}
                         >
                             Create Eetvoorkeur
+                        </button>
+                    </div>
+                )}
+
+                {/* Allergies Section */}
+                {isCreator && (
+                    <div className="profile-section">
+                        <h2>Allergies</h2>
+                        <div className="workshop-container">
+                            {allergies.length > 0 ? (
+                                allergies.map((allergy) => (
+                                    <div
+                                        key={allergy.id} // Ensure a unique key
+                                        className="workshop-box"
+                                    >
+                                        <div className="workshop-title">{allergy.allergy_name}</div>
+                                    </div>
+                                ))
+                            ) : (
+                                <p>No allergies created yet.</p>
+                            )}
+                        </div>
+                        <button
+                            className="create-workshop-button"
+                            onClick={() => navigate('/create-allergy')}
+                        >
+                            Create Allergy
                         </button>
                     </div>
                 )}

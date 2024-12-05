@@ -18,11 +18,11 @@ const pool = new Pool({
 
 export default async function handler(req, res) {
     if (req.method === 'GET') {
-        const { email, isAdmin, Eetvoorkeuren } = req.query;
+        const { email, isAdmin, Eetvoorkeuren, Allergies } = req.query;
 
         try {
+            // Fetch all food preferences if Eetvoorkeuren is true
             if (Eetvoorkeuren === 'true') {
-                // Fetch all food preferences
                 const foodQuery = `
                     SELECT id, preference_name
                     FROM eetvoorkeuren
@@ -31,6 +31,17 @@ export default async function handler(req, res) {
                 return res.status(200).json({ food_preferences: foodResult.rows });
             }
 
+            // Fetch all allergies if Allergies is true
+            if (Allergies === 'true') {
+                const allergyQuery = `
+                    SELECT id, allergy_name
+                    FROM allergies
+                `;
+                const allergyResult = await pool.query(allergyQuery);
+                return res.status(200).json({ allergies: allergyResult.rows });
+            }
+
+            // Validate email
             if (!email) {
                 return res.status(400).json({ error: 'Email is required' });
             }
@@ -52,12 +63,12 @@ export default async function handler(req, res) {
 
             const workshopResult = await pool.query(workshopQuery, [userId]);
 
-            res.status(200).json({ workshops: workshopResult.rows });
+            return res.status(200).json({ workshops: workshopResult.rows });
         } catch (error) {
             console.error('Error processing request:', error.message);
-            res.status(500).json({ error: 'Server error' });
+            return res.status(500).json({ error: 'Server error' });
         }
     } else {
-        res.status(405).json({ message: 'Method not allowed' });
+        return res.status(405).json({ message: 'Method not allowed' });
     }
 }
