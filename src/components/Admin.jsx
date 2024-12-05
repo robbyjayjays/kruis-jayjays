@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../assets/css/profile.css';
+import Navbar from './Navbar';
 
 const Admin = () => {
     const navigate = useNavigate();
@@ -26,6 +27,7 @@ const Admin = () => {
 
     return (
         <>
+            <Navbar />
             <div className="profile-container">
                 {/* Created Workshops Section */}
                 {isCreator && (
