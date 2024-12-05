@@ -125,6 +125,12 @@ const Admin = () => {
                                         className="workshop-box"
                                     >
                                         <div className="workshop-title">{eetvoorkeur.preference_name}</div>
+                                        <button
+                                            className="delete-button"
+                                            onClick={() => handleDelete(item.id, 'eetvoorkeur')}
+                                        >
+                                            Delete
+                                        </button>
                                     </div>
                                 ))
                             ) : (
