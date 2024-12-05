@@ -84,6 +84,25 @@ const Workshop = () => {
         }
     };
 
+    const handleDeleteWorkshop = async () => {
+        try {
+            const response = await fetch(`/api/create-workshop?id=${id}&type=workshop`, {
+                method: 'DELETE',
+            });
+
+            if (response.ok) {
+                toast.success('Workshop deleted successfully');
+                navigate('/Profile'); // Redirect to Profile after successful deletion
+            } else {
+                const errorData = await response.json();
+                toast.error(`Failed to delete workshop: ${errorData.error}`);
+            }
+        } catch (error) {
+            console.error('Error deleting workshop:', error);
+            toast.error('An error occurred while deleting the workshop.');
+        }
+    };
+
     return (
         <>
         <Navbar />
@@ -114,12 +133,20 @@ const Workshop = () => {
                             </button>
                         )}
                         {isCreator && (
-                            <button
-                                className="edit-button"
-                                onClick={() => navigate(`/edit-workshop/${id}`)}
-                            >
-                                Edit Workshop
-                            </button>
+                            <>
+                                <button
+                                    className="edit-button"
+                                    onClick={() => navigate(`/edit-workshop/${id}`)}
+                                >
+                                    Edit Workshop
+                                </button>
+                                <button
+                                    className="delete-button"
+                                    onClick={handleDeleteWorkshop}
+                                >
+                                    Delete Workshop
+                                </button>
+                            </>
                         )}
                     </div>
                 </>
