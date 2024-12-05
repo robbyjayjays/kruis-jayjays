@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react';
 import '../assets/css/profile.css';
 
 const Admin = () => {
@@ -19,7 +19,7 @@ const Admin = () => {
     };
 
     fetchWorkshops();
-    
+
     return (
         <>
             {/* Created Workshops Section */}
