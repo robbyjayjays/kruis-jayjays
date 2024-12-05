@@ -580,36 +580,6 @@ const Profile = () => {
                         )}
                     </div>
                 )}
-
-
-                {/* Created Workshops Section */}
-                {isCreator && (
-                    <div className="profile-section">
-                        <h2>Created Workshops</h2>
-                        <div className="workshop-container">
-                            {workshops.length > 0 ? (
-                                workshops.map((workshop) => (
-                                    <div
-                                        key={workshop.id}
-                                        className="workshop-box"
-                                        onClick={() => navigate(`/workshop/${workshop.id}`)}
-                                    >
-                                        <div className="workshop-title">{workshop.title}</div>
-                                        <div className="workshop-description">{workshop.description}</div>
-                                    </div>
-                                ))
-                            ) : (
-                                <p>No workshops created yet.</p>
-                            )}
-                        </div>
-                        <button
-                            className="create-workshop-button"
-                            onClick={() => navigate('/create-workshop')}
-                        >
-                            Create Workshop
-                        </button>
-                    </div>
-                )}
             </div>
         </>
     );
