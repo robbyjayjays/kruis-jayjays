@@ -99,6 +99,35 @@ export default async function handler(req, res) {
             console.error('Error processing request:', error.message);
             res.status(500).json({ error: 'Server error' });
         }
+    } else if (req.method === 'DELETE') {
+        const { id } = req.query; // `id` of the record to delete
+        const { type } = req.query; // Type of record: 'eetvoorkeur', 'allergy', 'carpool'
+
+        if (!id || !type) {
+            return res.status(400).json({ error: 'ID and type are required' });
+        }
+
+        try {
+            let deleteQuery = '';
+
+            // Determine the appropriate table to delete from
+            if (type === 'eetvoorkeur') {
+                deleteQuery = 'DELETE FROM eetvoorkeuren WHERE id = $1';
+            } else if (type === 'allergy') {
+                deleteQuery = 'DELETE FROM allergies WHERE id = $1';
+            } else if (type === 'carpool') {
+                deleteQuery = 'DELETE FROM carpool WHERE id = $1';
+            } else {
+                return res.status(400).json({ error: 'Invalid type for deletion' });
+            }
+
+            // Execute deletion
+            await pool.query(deleteQuery, [id]);
+            res.status(200).json({ message: `${type} deleted successfully` });
+        } catch (error) {
+            console.error('Error deleting item:', error.message);
+            res.status(500).json({ error: 'Server error' });
+        }
     } else {
         res.status(405).json({ message: 'Method not allowed' });
     }

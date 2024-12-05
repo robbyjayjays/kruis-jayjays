@@ -72,6 +72,30 @@ const Admin = () => {
         }
     };
 
+    // Handle Deletion
+    const handleDelete = async (id, type) => {
+        try {
+            const response = await fetch(`/api/create-workshop?id=${id}&type=${type}`, {
+                method: 'DELETE',
+            });
+
+            if (response.ok) {
+                // Update the UI after deletion
+                if (type === 'eetvoorkeur') {
+                    setEetvoorkeuren((prev) => prev.filter((item) => item.id !== id));
+                } else if (type === 'allergy') {
+                    setAllergies((prev) => prev.filter((item) => item.id !== id));
+                } else if (type === 'carpool') {
+                    setCarpoolRoles((prev) => prev.filter((item) => item.id !== id));
+                }
+            } else {
+                console.error(`Failed to delete ${type} with id ${id}`);
+            }
+        } catch (error) {
+            console.error(`Error deleting ${type}:`, error);
+        }
+    };
+
     // Use useEffect to trigger API calls once on component mount
     useEffect(() => {
         fetchWorkshops();
@@ -112,19 +136,16 @@ const Admin = () => {
                         </button>
                     </div>
                 )}
-
+                
                 {/* Eetvoorkeuren Section */}
                 {isCreator && (
                     <div className="profile-section">
                         <h2>Eetvoorkeuren</h2>
                         <div className="workshop-container">
                             {eetvoorkeur.length > 0 ? (
-                                eetvoorkeur.map((eetvoorkeur) => (
-                                    <div
-                                        key={eetvoorkeur.id} // Ensure a unique key
-                                        className="workshop-box"
-                                    >
-                                        <div className="workshop-title">{eetvoorkeur.preference_name}</div>
+                                eetvoorkeur.map((item) => (
+                                    <div key={item.id} className="workshop-box">
+                                        <div className="workshop-title">{item.preference_name}</div>
                                         <button
                                             className="delete-button"
                                             onClick={() => handleDelete(item.id, 'eetvoorkeur')}
@@ -152,12 +173,15 @@ const Admin = () => {
                         <h2>Allergies</h2>
                         <div className="workshop-container">
                             {allergies.length > 0 ? (
-                                allergies.map((allergy) => (
-                                    <div
-                                        key={allergy.id} // Ensure a unique key
-                                        className="workshop-box"
-                                    >
-                                        <div className="workshop-title">{allergy.allergy_name}</div>
+                                allergies.map((item) => (
+                                    <div key={item.id} className="workshop-box">
+                                        <div className="workshop-title">{item.allergy_name}</div>
+                                        <button
+                                            className="delete-button"
+                                            onClick={() => handleDelete(item.id, 'allergy')}
+                                        >
+                                            Delete
+                                        </button>
                                     </div>
                                 ))
                             ) : (
@@ -179,12 +203,15 @@ const Admin = () => {
                         <h2>Carpool Roles</h2>
                         <div className="workshop-container">
                             {carpoolRoles.length > 0 ? (
-                                carpoolRoles.map((carpoolRole) => (
-                                    <div
-                                        key={carpoolRole.id} // Ensure a unique key
-                                        className="workshop-box"
-                                    >
-                                        <div className="workshop-title">{carpoolRole.carpool_role}</div>
+                                carpoolRoles.map((item) => (
+                                    <div key={item.id} className="workshop-box">
+                                        <div className="workshop-title">{item.carpool_role}</div>
+                                        <button
+                                            className="delete-button"
+                                            onClick={() => handleDelete(item.id, 'carpool')}
+                                        >
+                                            Delete
+                                        </button>
                                     </div>
                                 ))
                             ) : (
