@@ -292,6 +292,7 @@ const Profile = () => {
             if (response.ok) {
                 alert('Inschrijving successfully updated!');
                 setShowRkvForm(false); // Close the form after updating
+                setShowOptions(false);
             } else {
                 const errorData = await response.json();
                 alert(`Failed to update inschrijving: ${errorData.error}`);
