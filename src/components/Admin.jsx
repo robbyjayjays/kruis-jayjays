@@ -102,6 +102,8 @@ const Admin = () => {
                     setAllergies((prev) => prev.filter((item) => item.id !== id));
                 } else if (type === 'carpool') {
                     setCarpoolRoles((prev) => prev.filter((item) => item.id !== id));
+                } else if (type === 'provincie') {
+                    setProvincies((prev) => prev.filter((item) => item.id !== id));
                 }
             } else {
                 console.error(`Failed to delete ${type} with id ${id}`);
@@ -254,7 +256,7 @@ const Admin = () => {
                                         <div className="workshop-title">{item.provincie_name}</div>
                                         <button
                                             className="delete-button"
-                                            onClick={() => handleDelete(item.id, 'carpool')}
+                                            onClick={() => handleDelete(item.id, 'provincie')}
                                         >
                                             Delete
                                         </button>

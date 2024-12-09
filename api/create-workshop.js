@@ -133,7 +133,9 @@ export default async function handler(req, res) {
                 deleteQuery = 'DELETE FROM carpool WHERE id = $1';
             } else if (type === 'workshop') {
                 deleteQuery = 'DELETE FROM workshops WHERE id = $1';
-            } else {
+            } else if (type === 'provincie') {
+                deleteQuery = 'DELETE FROM workshops WHERE id = $1';
+            }else {
                 return res.status(400).json({ error: 'Invalid type for deletion' });
             }
 
