@@ -11,6 +11,7 @@ import Admin from './components/Admin';
 import CreateEetvoorkeur from './components/CreateEetvoorkeur';
 import CreateAllergy from './components/CreateAllergy';
 import CreateCarpool from './components/CreateCarpool';
+import CreateProvince from './components/CreateProvince';
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
         <Route path="/create-eetvoorkeur" element= { <CreateEetvoorkeur /> } />
         <Route path="/create-allergy" element= { <CreateAllergy /> } />
         <Route path="/create-carpool" element= { <CreateCarpool /> } />
+        <Route path="/create-provincie" element= { <CreateProvince /> } />
       </Routes>
     </Router>
   );

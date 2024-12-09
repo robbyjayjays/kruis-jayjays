@@ -9,6 +9,7 @@ const Admin = () => {
     const [eetvoorkeur, setEetvoorkeuren] = useState([]);
     const [allergies, setAllergies] = useState([]);
     const [carpoolRoles, setCarpoolRoles] = useState([]);
+    const [provincies, setProvincies] = useState([]);
     const email = localStorage.getItem('email');
     const isCreator = localStorage.getItem('isCreator') === 'true'; // Convert string to boolean
 
@@ -72,6 +73,20 @@ const Admin = () => {
         }
     };
 
+    const fetchProvincies = async () => {
+        try {
+            const response = await fetch(`/api/get-workshops?Province=true`);
+            const data = await response.json();
+            if (response.ok) {
+                setCarpoolRoles(data.provincie_name); // Correctly assign the array
+            } else {
+                console.error('Error fetching carpool roles:', data.error);
+            }
+        } catch (error) {
+            console.error('Error fetching carpool roles:', error);
+        }
+    };
+
     // Handle Deletion
     const handleDelete = async (id, type) => {
         try {
@@ -102,6 +117,7 @@ const Admin = () => {
         fetchEetvoorkeuren();
         fetchAllergies();
         fetchCarpoolRoles();
+        fetchProvincies();
     }, []);
 
     return (
@@ -223,6 +239,36 @@ const Admin = () => {
                             onClick={() => navigate('/create-carpool')}
                         >
                             Create Carpool Role
+                        </button>
+                    </div>
+                )}
+
+                {/* Provincie Section */}
+                {isCreator && (
+                    <div className="profile-section">
+                        <h2>Provincies</h2>
+                        <div className="workshop-container">
+                            {provincies.length > 0 ? (
+                                provincies.map((item) => (
+                                    <div key={item.id} className="workshop-box">
+                                        <div className="workshop-title">{item.provincie_name}</div>
+                                        <button
+                                            className="delete-button"
+                                            onClick={() => handleDelete(item.id, 'carpool')}
+                                        >
+                                            Delete
+                                        </button>
+                                    </div>
+                                ))
+                            ) : (
+                                <p>No provincies created yet.</p>
+                            )}
+                        </div>
+                        <button
+                            className="create-workshop-button"
+                            onClick={() => navigate('/create-provincie')}
+                        >
+                            Create Provincie
                         </button>
                     </div>
                 )}

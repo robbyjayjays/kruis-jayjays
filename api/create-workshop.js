@@ -68,6 +68,20 @@ export default async function handler(req, res) {
                 });
             }
 
+            // Handle carpool role creation
+            if (province === 'true' && province_name) {
+                const insertProvinceQuery = `
+                    INSERT INTO provincies (provincie_name)
+                    VALUES ($1) RETURNING id
+                `;
+                const provinceResult = await pool.query(insertProvinceQuery, [province_name]);
+
+                return res.status(200).json({
+                    message: 'Provincie created successfully',
+                    carpoolId: provinceResult.rows[0].id,
+                });
+            }
+
             // Workshop creation logic
             if (!title || !description || !workshop_date) {
                 return res.status(400).json({
