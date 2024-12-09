@@ -304,7 +304,7 @@ const Admin = () => {
                                         <div className="workshop-title">{item.departement_name}</div>
                                         <button
                                             className="delete-button"
-                                            onClick={() => handleDelete(item.id, 'department')}
+                                            onClick={() => handleDelete(item.id, 'departement')}
                                         >
                                             Delete
                                         </button>
