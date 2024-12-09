@@ -13,6 +13,7 @@ const Profile = () => {
     const [departments, setDepartments] = useState([]);
     const [department, setDepartment] = useState('');
     const [province, setProvince] = useState('');
+    const [provincies, setProvincies] = useState([]);
     const [functions, setFunctions] = useState([]);
     const [isInfoOpen, setIsInfoOpen] = useState(true);
     const [workshops, setWorkshops] = useState([]);
@@ -83,6 +84,22 @@ const Profile = () => {
         };
 
         fetchDepartments();
+
+        const fetchProvincies = async () => {
+            try {
+                const response = await fetch('/api/get-workshops?Province=true');
+                const data = await response.json();
+                if (response.ok) {
+                    setProvincies(data.provincies || []); // Populate options
+                } else {
+                    console.error('Error fetching provincies:', data.error);
+                }
+            } catch (error) {
+                console.error('Error fetching provincies:', error);
+            }
+        };
+
+        fetchProvincies();
 
 
         const fetchInschrijvingen = async () => {
@@ -428,8 +445,11 @@ const Profile = () => {
                             In welke provincie ben je actief?
                             <select value={province} onChange={(e) => setProvince(e.target.value)}>
                                 <option value="">No choice</option>
-                                <option value="vlaams-brabant">Vlaams-Brabant</option>
-                                <option value="waals-brabant">Waals-Brabant</option>
+                                {provinces.map((prov) => (
+                                    <option key={prov.id} value={prov.provincie_name}>
+                                        {prov.provincie_name}
+                                    </option>
+                                ))}
                             </select>
                         </label>
                         <label>Welke functie(s) heb je?</label>
