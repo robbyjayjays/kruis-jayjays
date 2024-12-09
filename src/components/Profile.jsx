@@ -10,6 +10,7 @@ const Profile = () => {
     const [firstname, setFirstname] = useState('');
     const [lastname, setLastname] = useState('');
     const [gebruiker, setGebruiker] = useState('');
+    const [departments, setDepartments] = useState([]);
     const [department, setDepartment] = useState('');
     const [province, setProvince] = useState('');
     const [functions, setFunctions] = useState([]);
@@ -66,6 +67,22 @@ const Profile = () => {
         };
 
         fetchWorkshops();
+
+        const fetchDepartments = async () => {
+            try {
+                const response = await fetch('/api/get-workshops?Departement=true');
+                const data = await response.json();
+                if (response.ok) {
+                    setDepartments(data.departementen || []); // Populate options
+                } else {
+                    console.error('Error fetching departments:', data.error);
+                }
+            } catch (error) {
+                console.error('Error fetching departments:', error);
+            }
+        };
+
+        fetchDepartments();
 
 
         const fetchInschrijvingen = async () => {
@@ -399,10 +416,12 @@ const Profile = () => {
                         <label>
                             In welk departement ben je actief?
                             <select value={department} onChange={(e) => setDepartment(e.target.value)}>
-                                <option value="">Selecteer departement</option>
-                                <option value="IT">IT Department</option>
-                                <option value="Marketing">Marketing Department</option>
-                                <option value="not-active">Ik ben niet actief in een departement</option>
+                            <option value="">Selecteer departement</option>
+                            {departments.map((dept) => (
+                                <option key={dept.id} value={dept.departement_name}>
+                                    {dept.departement_name}
+                                </option>
+                            ))}
                             </select>
                         </label>
                         <label>
