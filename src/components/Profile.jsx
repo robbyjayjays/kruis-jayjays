@@ -29,6 +29,8 @@ const Profile = () => {
     const [hasInschrijving, setHasInschrijving] = useState(false);
     const [showOptions, setShowOptions] = useState(false);
     const [showRkvForm, setShowRkvForm] = useState(false);
+    const [inschrijvingDetails, setInschrijvingDetails] = useState(null);
+
     const email = localStorage.getItem('email');
 
     useEffect(() => {
@@ -132,6 +134,15 @@ const Profile = () => {
                 const data = await response.json();
                 if (response.ok) {
                     if (data.exists) {
+                        setInschrijvingDetails({
+                            department: data.inschrijving.department || 'N/A',
+                            province: data.inschrijving.province || 'N/A',
+                            workshopMorning: data.inschrijving.workshop_morning || 'N/A',
+                            workshopAfternoon: data.inschrijving.workshop_afternoon || 'N/A',
+                            dietaryPreferences: data.inschrijving.food_choice || 'N/A',
+                            allergies: data.inschrijving.allergies || 'N/A',
+                            carpoolPreferences: data.inschrijving.carpool || 'N/A',
+                        });
                         setHasInschrijving(true); // Update state if an inschrijving exists
                     } else {
                         setHasInschrijving(false); // No inschrijving found
@@ -601,6 +612,16 @@ const Profile = () => {
                                 {!showOptions ? (
                                     <>
                                         <p>Als je jouw inschrijving wilt annuleren of aanpassen klik hier:</p>
+                                        <div className="inschrijving-details">
+                                            <h3>Jouw Inschrijving Details</h3>
+                                            <p>Departement: {inschrijvingDetails?.department || 'N/A'}</p>
+                                            <p>Provincie: {inschrijvingDetails?.province || 'N/A'}</p>
+                                            <p>Ochtend Workshop: {inschrijvingDetails?.workshopMorning || 'N/A'}</p>
+                                            <p>Namiddag Workshop: {inschrijvingDetails?.workshopAfternoon || 'N/A'}</p>
+                                            <p>Eetvoorkeur: {inschrijvingDetails?.dietaryPreferences || 'N/A'}</p>
+                                            <p>Allergieën: {inschrijvingDetails?.allergies || 'N/A'}</p>
+                                            <p>Carpool Optie: {inschrijvingDetails?.carpoolPreferences || 'N/A'}</p>
+                                        </div>
                                         <button
                                             className="edit-cancel-button"
                                             onClick={() => {
