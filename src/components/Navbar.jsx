@@ -35,15 +35,15 @@ const Navbar = () => {
                 </Link>
             </div>
             <div className="navbar-links">
-                {email && <span className="navbar-user">Logged in as: {email}</span>}
+                {email && <span className="navbar-user">Huidige gebruiker: {email}</span>}
 
                 {creator && (
                     <button className="navbar-button" onClick={() => navigate('/Admin')}>Admin</button>
                 )}
                 
-                <button className="navbar-button" onClick={() => navigate('/Profile')}>Profile</button>
+                <button className="navbar-button" onClick={() => navigate('/Profile')}>Profiel</button>
 
-                <button className="navbar-button logout" onClick={handleLogout}>Logout</button>
+                <button className="navbar-button logout" onClick={handleLogout}>Uitloggen</button>
             </div>
         </nav>
     );
