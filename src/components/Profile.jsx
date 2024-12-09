@@ -479,7 +479,7 @@ const Profile = () => {
                                         checked={functions.includes(func.function_name)}
                                         onChange={handleFunctionChange}
                                     />
-                                    {func.name}
+                                    {func.function_name}
                                 </label>
                             ))}
                         </div>
