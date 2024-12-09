@@ -65,10 +65,10 @@ const CreateWorkshop = () => {
       <>
         <Navbar />
         <div className="create-workshop-container">
-            <h1>Create New Workshop</h1>
+            <h1>Nieuwe Workshop aanmaken</h1>
             <form onSubmit={handleSubmit} className="create-workshop-form">
                 <label>
-                    Title:
+                    Titel:
                     <input
                         type="text"
                         name="title"
@@ -78,7 +78,7 @@ const CreateWorkshop = () => {
                     />
                 </label>
                 <label>
-                    Description:
+                    Beschrijving:
                     <textarea
                         name="description"
                         value={description}
@@ -87,7 +87,7 @@ const CreateWorkshop = () => {
                     />
                 </label>
                 <label>
-                    Workshop Date:
+                    Workshop Datum:
                     <input
                         type="date"
                         name="workshop_date"
@@ -97,7 +97,7 @@ const CreateWorkshop = () => {
                     />
                 </label>
                 <button type="submit" disabled={loading}>
-                    {loading ? 'Creating...' : 'Create Workshop'}
+                    {loading ? 'Aanmaken...' : 'Workshop aanmaken'}
                 </button>
             </form>
         </div>

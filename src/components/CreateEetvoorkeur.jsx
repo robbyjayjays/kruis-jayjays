@@ -51,7 +51,7 @@ const CreateEetvoorkeur = () => {
       <>
         <Navbar />
         <div className="create-workshop-container">
-            <h1>Create New Food Preference</h1>
+            <h1>Nieuwe eetvoorkeuren aanmaken</h1>
             <form onSubmit={handleSubmitEetvoorkeur} className="create-workshop-form">
                 <label>
                     Eetvoorkeur:
@@ -63,7 +63,7 @@ const CreateEetvoorkeur = () => {
                         required
                     />
                 </label>
-                <button type="submit">Create Eetvoorkeur</button>
+                <button type="submit">Eetvoorkeur aanmaken</button>
             </form>
         </div>
       </>

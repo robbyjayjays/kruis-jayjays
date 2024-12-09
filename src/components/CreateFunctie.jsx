@@ -56,10 +56,10 @@ const CreateDepartement = () => {
         <>
             <Navbar />
             <div className="create-workshop-container">
-                <h1>Create New Functie</h1>
+                <h1>Nieuwe functie aanmaken</h1>
                 <form onSubmit={handleSubmitFunctie} className="create-workshop-form">
                     <label>
-                        Functie Name:
+                        Functie Naam:
                         <input
                             type="text"
                             name="function_name"
@@ -68,7 +68,7 @@ const CreateDepartement = () => {
                             required
                         />
                     </label>
-                    <button type="submit">Create Functie</button>
+                    <button type="submit">Functie aanmaken</button>
                 </form>
             </div>
         </>

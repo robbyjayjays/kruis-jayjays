@@ -54,10 +54,10 @@ const CreateCarpool = () => {
         <>
             <Navbar />
             <div className="create-workshop-container">
-                <h1>Create New Carpool Role</h1>
+                <h1>Nieuwe Carpool Rollen aanmaken</h1>
                 <form onSubmit={handleSubmitCarpool} className="create-workshop-form">
                     <label>
-                        Carpool Role:
+                        Carpool Rol:
                         <input
                             type="text"
                             name="carpool_role"
@@ -66,7 +66,7 @@ const CreateCarpool = () => {
                             required
                         />
                     </label>
-                    <button type="submit">Create Carpool Role</button>
+                    <button type="submit">Carpool Rol aanmaken</button>
                 </form>
             </div>
         </>
