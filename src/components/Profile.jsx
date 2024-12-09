@@ -15,6 +15,7 @@ const Profile = () => {
     const [province, setProvince] = useState('');
     const [provincies, setProvincies] = useState([]);
     const [functions, setFunctions] = useState([]);
+    const [availableFunctions, setAvailableFunctions] = useState([]);
     const [isInfoOpen, setIsInfoOpen] = useState(true);
     const [workshops, setWorkshops] = useState([]);
     const [workshopMorning, setWorkshopMorning] = useState('');
@@ -100,6 +101,22 @@ const Profile = () => {
         };
 
         fetchProvincies();
+
+        const fetchFunctions = async () => {
+            try {
+                const response = await fetch('/api/get-workshops?Functie=true'); // Adjust API endpoint
+                const data = await response.json();
+                if (response.ok) {
+                    setAvailableFunctions(data.functies || []); // Populate available functions
+                } else {
+                    console.error('Error fetching functions:', data.error);
+                }
+            } catch (error) {
+                console.error('Error fetching functions:', error);
+            }
+        };
+
+        fetchFunctions();
 
 
         const fetchInschrijvingen = async () => {
@@ -454,28 +471,15 @@ const Profile = () => {
                         </label>
                         <label>Welke functie(s) heb je?</label>
                         <div className="function-checkboxes">
-                            {[
-                                'Animator Hartveilig',
-                                'Arts-lesgever',
-                                'Hoofdzetel Team Eerste Hulp',
-                                'Initiator JRK',
-                                'Kleuterinitiator',
-                                'Lesgever eerste hulp bij psychische problemen',
-                                'Lesgever eerstehulpverlening',
-                                'Lesgever eerstehulpverlening jeugd',
-                                'Lesgever eerstehulpverlening jeugd begeleider',
-                                'Lesgever reanimeren en defibrilleren',
-                                'Provincieverantwoordelijke Vorming',
-                                'Simulant lesgever',
-                            ].map((func, index) => (
-                                <label key={index}>
+                            {availableFunctions.map((func) => (
+                                <label key={func.id}>
                                     <input
                                         type="checkbox"
-                                        value={func}
-                                        checked={functions.includes(func)}
+                                        value={func.name} // Assuming `name` is the column for function names
+                                        checked={functions.includes(func.name)}
                                         onChange={handleFunctionChange}
                                     />
-                                    {func}
+                                    {func.name}
                                 </label>
                             ))}
                         </div>
