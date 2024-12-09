@@ -18,7 +18,7 @@ const pool = new Pool({
 
 export default async function handler(req, res) {
     if (req.method === 'POST') {
-        const { email, title, description, workshop_date, preference_name, allergy_name, carpool_role } = req.body;
+        const { email, title, description, workshop_date, preference_name, allergy_name, carpool_role, province } = req.body;
         const { eetvoorkeur, allergy, carpool } = req.query; // Query parameters for creating different records
 
         if (!email) {
