@@ -57,8 +57,8 @@ export default async function handler(req, res) {
                     SELECT id, provincie_name
                     FROM provincies
                 `;
-                const carpoolResult = await pool.query(carpoolQuery);
-                return res.status(200).json({ provincies: provincieQuery.rows });
+                const provincieResult = await pool.query(provincieQuery);
+                return res.status(200).json({ provincies: provincieResult.rows });
             }
 
             // Validate email
