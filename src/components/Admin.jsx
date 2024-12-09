@@ -11,6 +11,7 @@ const Admin = () => {
     const [carpoolRoles, setCarpoolRoles] = useState([]);
     const [provincies, setProvincies] = useState([]);
     const [departementen, setDepartementen] = useState([]);
+    const [functies, setFuncties] = useState([]);
     const email = localStorage.getItem('email');
     const isCreator = localStorage.getItem('isCreator') === 'true'; // Convert string to boolean
 
@@ -102,6 +103,20 @@ const Admin = () => {
         }
     };
 
+    const fetchFuncties = async () => {
+        try {
+            const response = await fetch(`/api/get-workshops?Functie=true`);
+            const data = await response.json();
+            if (response.ok) {
+                setDepartementen(data.functies); // Correctly assign the array
+            } else {
+                console.error('Error fetching carpool roles:', data.error);
+            }
+        } catch (error) {
+            console.error('Error fetching carpool roles:', error);
+        }
+    };
+
     // Handle Deletion
     const handleDelete = async (id, type) => {
         try {
@@ -121,6 +136,8 @@ const Admin = () => {
                     setProvincies((prev) => prev.filter((item) => item.id !== id));
                 } else if (type === 'departement') {
                     setDepartementen((prev) => prev.filter((item) => item.id !== id));
+                } else if (type === 'functie') {
+                    setFuncties((prev) => prev.filter((item) => item.id !== id));
                 }
             } else {
                 console.error(`Failed to delete ${type} with id ${id}`);
@@ -138,6 +155,7 @@ const Admin = () => {
         fetchCarpoolRoles();
         fetchProvincies();
         fetchDepartementen();
+        fetchFuncties();
     }, []);
 
     return (
@@ -318,7 +336,37 @@ const Admin = () => {
                             className="create-workshop-button"
                             onClick={() => navigate('/create-departement')}
                         >
-                            Create Provincie
+                            Create Departement
+                        </button>
+                    </div>
+                )}
+
+                {/* functions Section */}
+                {isCreator && (
+                    <div className="profile-section">
+                        <h2>Functies</h2>
+                        <div className="workshop-container">
+                            {functies.length > 0 ? (
+                                functies.map((item) => (
+                                    <div key={item.id} className="workshop-box">
+                                        <div className="workshop-title">{item.function_name}</div>
+                                        <button
+                                            className="delete-button"
+                                            onClick={() => handleDelete(item.id, 'functie')}
+                                        >
+                                            Delete
+                                        </button>
+                                    </div>
+                                ))
+                            ) : (
+                                <p>No functies created yet.</p>
+                            )}
+                        </div>
+                        <button
+                            className="create-workshop-button"
+                            onClick={() => navigate('/create-functie')}
+                        >
+                            Create Functie
                         </button>
                     </div>
                 )}

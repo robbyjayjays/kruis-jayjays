@@ -18,8 +18,8 @@ const pool = new Pool({
 
 export default async function handler(req, res) {
     if (req.method === 'POST') {
-        const { email, title, description, workshop_date, preference_name, allergy_name, carpool_role, provincie_name, departement_name } = req.body;
-        const { eetvoorkeur, allergy, carpool, province, departement } = req.query; // Query parameters for creating different records
+        const { email, title, description, workshop_date, preference_name, allergy_name, carpool_role, provincie_name, departement_name, function_name } = req.body;
+        const { eetvoorkeur, allergy, carpool, province, departement, functie } = req.query; // Query parameters for creating different records
 
         if (!email) {
             return res.status(400).json({ error: 'Email is required' });
@@ -96,6 +96,20 @@ export default async function handler(req, res) {
                 });
             }
 
+            // Handle carpool role creation
+            if (functie === 'true' && function_name) {
+                const insertFunctieQuery = `
+                    INSERT INTO functions (function_name)
+                    VALUES ($1) RETURNING id
+                `;
+                const functieResult = await pool.query(insertFunctieQuery, [function_name]);
+
+                return res.status(200).json({
+                    message: 'Functie created successfully',
+                    carpoolId: functieResult.rows[0].id,
+                });
+            }
+
             // Workshop creation logic
             if (!title || !description || !workshop_date) {
                 return res.status(400).json({
@@ -151,6 +165,8 @@ export default async function handler(req, res) {
                 deleteQuery = 'DELETE FROM provincies WHERE id = $1';
             } else if (type === 'departement') {
                 deleteQuery = 'DELETE FROM departement WHERE id = $1';
+            } else if (type === 'functie') {
+                deleteQuery = 'DELETE FROM functions WHERE id = $1';
             }else {
                 return res.status(400).json({ error: 'Invalid type for deletion' });
             }

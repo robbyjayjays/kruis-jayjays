@@ -13,6 +13,7 @@ import CreateAllergy from './components/CreateAllergy';
 import CreateCarpool from './components/CreateCarpool';
 import CreateProvince from './components/CreateProvince';
 import CreateDepartement from './components/CreateDepartement';
+import CreateFunctie from './components/CreateFunctie';
 
 function App() {
   return (
@@ -30,6 +31,7 @@ function App() {
         <Route path="/create-carpool" element= { <CreateCarpool /> } />
         <Route path="/create-provincie" element= { <CreateProvince /> } />
         <Route path="/create-departement" element= { <CreateDepartement /> } />
+        <Route path="/create-functie" element= { <CreateFunctie /> } />
       </Routes>
     </Router>
   );
