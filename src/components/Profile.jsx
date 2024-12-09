@@ -475,8 +475,8 @@ const Profile = () => {
                                 <label key={func.id}>
                                     <input
                                         type="checkbox"
-                                        value={func.name} // Assuming `name` is the column for function names
-                                        checked={functions.includes(func.name)}
+                                        value={func.function_name} // Assuming `name` is the column for function names
+                                        checked={functions.includes(func.function_name)}
                                         onChange={handleFunctionChange}
                                     />
                                     {func.name}
