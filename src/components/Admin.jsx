@@ -90,7 +90,7 @@ const Admin = () => {
     
     const fetchDepartementen = async () => {
         try {
-            const response = await fetch(`/api/get-workshops?Department=true`);
+            const response = await fetch(`/api/get-workshops?Departement=true`);
             const data = await response.json();
             if (response.ok) {
                 setDepartementen(data.departementen); // Correctly assign the array
