@@ -70,6 +70,7 @@ const Profile = () => {
 
         fetchWorkshops();
 
+
         const fetchDepartments = async () => {
             try {
                 const response = await fetch('/api/get-workshops?Departement=true');
@@ -195,6 +196,16 @@ const Profile = () => {
         fetchCarpoolOptions();
 
     }, [navigate, email]);
+
+    // Filtered workshops for the afternoon based on the morning selection
+    const filteredAfternoonWorkshops = workshops.filter(
+        (workshop) => workshop.title !== workshopMorning
+    );
+
+    // Filtered workshops for the morning based on the afternoon selection
+    const filteredMorningWorkshops = workshops.filter(
+        (workshop) => workshop.title !== workshopAfternoon
+    );
 
     const handleFunctionChange = (e) => {
         const value = e.target.value;
@@ -515,7 +526,7 @@ const Profile = () => {
                             Voormiddag:
                             <select value={workshopMorning} onChange={(e) => setWorkshopMorning(e.target.value)}>
                                 <option value="">Selecteer een workshop</option>
-                                {workshops.map((workshop) => (
+                                {filteredMorningWorkshops.map((workshop) => (
                                     <option key={workshop.id} value={workshop.title}>
                                         {workshop.title}
                                     </option>
@@ -526,7 +537,7 @@ const Profile = () => {
                             Namiddag:
                             <select value={workshopAfternoon} onChange={(e) => setWorkshopAfternoon(e.target.value)}>
                                 <option value="">Selecteer een workshop</option>
-                                {workshops.map((workshop) => (
+                                {filteredAfternoonWorkshops.map((workshop) => (
                                     <option key={workshop.id} value={workshop.title}>
                                         {workshop.title}
                                     </option>
