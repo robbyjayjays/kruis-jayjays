@@ -78,7 +78,7 @@ const Admin = () => {
             const response = await fetch(`/api/get-workshops?Province=true`);
             const data = await response.json();
             if (response.ok) {
-                setProvincies(data.provincie_name); // Correctly assign the array
+                setProvincies(data.provincies); // Correctly assign the array
             } else {
                 console.error('Error fetching carpool roles:', data.error);
             }
