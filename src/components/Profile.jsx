@@ -517,7 +517,6 @@ const Profile = () => {
                                         <div
                                             key={workshop.id}
                                             className="workshop-box"
-                                            onClick={() => navigate(`/workshop/${workshop.id}`)}
                                         >
                                             <div className="workshop-title">{workshop.title}</div>
                                             <div className="workshop-description">{workshop.description}</div>
