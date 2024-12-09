@@ -445,7 +445,7 @@ const Profile = () => {
                             In welke provincie ben je actief?
                             <select value={province} onChange={(e) => setProvince(e.target.value)}>
                                 <option value="">No choice</option>
-                                {provinces.map((prov) => (
+                                {provincies.map((prov) => (
                                     <option key={prov.id} value={prov.provincie_name}>
                                         {prov.provincie_name}
                                     </option>
