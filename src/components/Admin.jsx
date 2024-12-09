@@ -165,7 +165,7 @@ const Admin = () => {
                 {/* Created Workshops Section */}
                 {isCreator && (
                     <div className="profile-section">
-                        <h2>Created Workshops</h2>
+                        <h2>Aangemaakte Workshops</h2>
                         <div className="workshop-container">
                             {workshops.length > 0 ? (
                                 workshops.map((workshop) => (
@@ -179,14 +179,14 @@ const Admin = () => {
                                     </div>
                                 ))
                             ) : (
-                                <p>No workshops created yet.</p>
+                                <p>Er zijn nog geen workshops aangemaakt.</p>
                             )}
                         </div>
                         <button
                             className="create-workshop-button"
                             onClick={() => navigate('/create-workshop')}
                         >
-                            Create Workshop
+                            Workshop aanmaken.
                         </button>
                     </div>
                 )}
@@ -209,14 +209,14 @@ const Admin = () => {
                                     </div>
                                 ))
                             ) : (
-                                <p>No eetvoorkeur created yet.</p>
+                                <p>Nog geen eetvoorkeuren aangemaakt.</p>
                             )}
                         </div>
                         <button
                             className="create-workshop-button"
                             onClick={() => navigate('/create-eetvoorkeur')}
                         >
-                            Create Eetvoorkeur
+                            Eetvoorkeur aanmaken.
                         </button>
                     </div>
                 )}
@@ -224,7 +224,7 @@ const Admin = () => {
                 {/* Allergies Section */}
                 {isCreator && (
                     <div className="profile-section">
-                        <h2>Allergies</h2>
+                        <h2>Allergieën</h2>
                         <div className="workshop-container">
                             {allergies.length > 0 ? (
                                 allergies.map((item) => (
@@ -239,14 +239,14 @@ const Admin = () => {
                                     </div>
                                 ))
                             ) : (
-                                <p>No allergies created yet.</p>
+                                <p>Nog geen allergieën aangemaakt.</p>
                             )}
                         </div>
                         <button
                             className="create-workshop-button"
                             onClick={() => navigate('/create-allergy')}
                         >
-                            Create Allergy
+                            Allergie aanmaken.
                         </button>
                     </div>
                 )}
@@ -254,7 +254,7 @@ const Admin = () => {
                 {/* Carpool Roles Section */}
                 {isCreator && (
                     <div className="profile-section">
-                        <h2>Carpool Roles</h2>
+                        <h2>Carpool Rollen</h2>
                         <div className="workshop-container">
                             {carpoolRoles.length > 0 ? (
                                 carpoolRoles.map((item) => (
@@ -269,14 +269,14 @@ const Admin = () => {
                                     </div>
                                 ))
                             ) : (
-                                <p>No carpool roles created yet.</p>
+                                <p>Nog geen carpool rollen aangemaakt.</p>
                             )}
                         </div>
                         <button
                             className="create-workshop-button"
                             onClick={() => navigate('/create-carpool')}
                         >
-                            Create Carpool Role
+                            Carpool Rol aanmaken.
                         </button>
                     </div>
                 )}
@@ -299,14 +299,14 @@ const Admin = () => {
                                     </div>
                                 ))
                             ) : (
-                                <p>No provincies created yet.</p>
+                                <p>Nog geen provincies aangemaakt.</p>
                             )}
                         </div>
                         <button
                             className="create-workshop-button"
                             onClick={() => navigate('/create-provincie')}
                         >
-                            Create Provincie
+                            Provincie aanmaken.
                         </button>
                     </div>
                 )}
@@ -329,14 +329,14 @@ const Admin = () => {
                                     </div>
                                 ))
                             ) : (
-                                <p>No departementen created yet.</p>
+                                <p>Nog geen departementen aangemaakt.</p>
                             )}
                         </div>
                         <button
                             className="create-workshop-button"
                             onClick={() => navigate('/create-departement')}
                         >
-                            Create Departement
+                            Departement aanmaken.
                         </button>
                     </div>
                 )}
@@ -359,14 +359,14 @@ const Admin = () => {
                                     </div>
                                 ))
                             ) : (
-                                <p>No functies created yet.</p>
+                                <p>Nog geen functies aangemaakt.</p>
                             )}
                         </div>
                         <button
                             className="create-workshop-button"
                             onClick={() => navigate('/create-functie')}
                         >
-                            Create Functie
+                            Functie aanmaken.
                         </button>
                     </div>
                 )}
