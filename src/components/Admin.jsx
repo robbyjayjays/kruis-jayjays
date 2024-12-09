@@ -10,6 +10,7 @@ const Admin = () => {
     const [allergies, setAllergies] = useState([]);
     const [carpoolRoles, setCarpoolRoles] = useState([]);
     const [provincies, setProvincies] = useState([]);
+    const [departementen, setDepartementen] = useState([]);
     const email = localStorage.getItem('email');
     const isCreator = localStorage.getItem('isCreator') === 'true'; // Convert string to boolean
 
@@ -86,6 +87,20 @@ const Admin = () => {
             console.error('Error fetching carpool roles:', error);
         }
     };
+    
+    const fetchDepartementen = async () => {
+        try {
+            const response = await fetch(`/api/get-workshops?Department=true`);
+            const data = await response.json();
+            if (response.ok) {
+                setDepartementen(data.departementen); // Correctly assign the array
+            } else {
+                console.error('Error fetching carpool roles:', data.error);
+            }
+        } catch (error) {
+            console.error('Error fetching carpool roles:', error);
+        }
+    };
 
     // Handle Deletion
     const handleDelete = async (id, type) => {
@@ -104,6 +119,8 @@ const Admin = () => {
                     setCarpoolRoles((prev) => prev.filter((item) => item.id !== id));
                 } else if (type === 'provincie') {
                     setProvincies((prev) => prev.filter((item) => item.id !== id));
+                } else if (type === 'departement') {
+                    setDepartementen((prev) => prev.filter((item) => item.id !== id));
                 }
             } else {
                 console.error(`Failed to delete ${type} with id ${id}`);
@@ -120,6 +137,7 @@ const Admin = () => {
         fetchAllergies();
         fetchCarpoolRoles();
         fetchProvincies();
+        fetchDepartementen();
     }, []);
 
     return (
@@ -269,6 +287,36 @@ const Admin = () => {
                         <button
                             className="create-workshop-button"
                             onClick={() => navigate('/create-provincie')}
+                        >
+                            Create Provincie
+                        </button>
+                    </div>
+                )}
+
+                {/* departement Section */}
+                {isCreator && (
+                    <div className="profile-section">
+                        <h2>Departementen</h2>
+                        <div className="workshop-container">
+                            {departementen.length > 0 ? (
+                                departementen.map((item) => (
+                                    <div key={item.id} className="workshop-box">
+                                        <div className="workshop-title">{item.departement_name}</div>
+                                        <button
+                                            className="delete-button"
+                                            onClick={() => handleDelete(item.id, 'department')}
+                                        >
+                                            Delete
+                                        </button>
+                                    </div>
+                                ))
+                            ) : (
+                                <p>No departementen created yet.</p>
+                            )}
+                        </div>
+                        <button
+                            className="create-workshop-button"
+                            onClick={() => navigate('/create-departement')}
                         >
                             Create Provincie
                         </button>
