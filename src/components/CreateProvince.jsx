@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import Navbar from './Navbar';
+import '../assets/css/createWorkshop.css';
 
 const CreateProvince = () => {
     const [provinceName, setProvinceName] = useState('');
@@ -33,7 +34,7 @@ const CreateProvince = () => {
                 },
                 body: JSON.stringify({
                     email,
-                    province_name: provinceName,
+                    provincie_name: provinceName,
                 }),
             });
 
@@ -54,9 +55,9 @@ const CreateProvince = () => {
     return (
         <>
             <Navbar />
-            <div className="create-province-container">
+            <div className="create-workshop-container">
                 <h1>Create New Province</h1>
-                <form onSubmit={handleSubmitProvince} className="create-province-form">
+                <form onSubmit={handleSubmitProvince} className="create-workshop-form">
                     <label>
                         Province Name:
                         <input
