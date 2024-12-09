@@ -459,7 +459,7 @@ const Profile = () => {
                                     Gebruiker:
                                     <input type="text" value={gebruiker} disabled />
                                 </label>
-                                <button onClick={() => setIsInfoOpen(true)}>Edit Info</button>
+                                <button onClick={() => setIsInfoOpen(true)}>Informatie aanpassen.</button>
                             </div>
                         )}
                     </div>
