@@ -74,7 +74,7 @@ export default async function handler(req, res) {
                     INSERT INTO provincies (provincie_name)
                     VALUES ($1) RETURNING id
                 `;
-                const provinceResult = await pool.query(insertProvinceQuery, [province_name]);
+                const provinceResult = await pool.query(insertProvinceQuery, [provincie_name]);
 
                 return res.status(200).json({
                     message: 'Provincie created successfully',
