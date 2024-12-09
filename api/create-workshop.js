@@ -18,8 +18,8 @@ const pool = new Pool({
 
 export default async function handler(req, res) {
     if (req.method === 'POST') {
-        const { email, title, description, workshop_date, preference_name, allergy_name, carpool_role, province } = req.body;
-        const { eetvoorkeur, allergy, carpool } = req.query; // Query parameters for creating different records
+        const { email, title, description, workshop_date, preference_name, allergy_name, carpool_role, provincie_name } = req.body;
+        const { eetvoorkeur, allergy, carpool, province } = req.query; // Query parameters for creating different records
 
         if (!email) {
             return res.status(400).json({ error: 'Email is required' });
@@ -69,7 +69,7 @@ export default async function handler(req, res) {
             }
 
             // Handle carpool role creation
-            if (province === 'true' && province_name) {
+            if (province === 'true' && provincie_name) {
                 const insertProvinceQuery = `
                     INSERT INTO provincies (provincie_name)
                     VALUES ($1) RETURNING id
