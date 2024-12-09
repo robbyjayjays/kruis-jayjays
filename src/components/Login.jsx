@@ -54,13 +54,13 @@ const Login = () => {
         }
 
   
-        toast.success('Login successfully!');
+        toast.success('Login successvol!');
   
         // Navigate to homepage after successful login
         navigate('/Profile');
       } catch (error) {
         console.error('Login error:', error);
-        toast.error('Invalid credentials.');
+        toast.error('Foutive gegevens.');
       }
     };
     return (
@@ -71,13 +71,13 @@ const Login = () => {
                 <form onSubmit={submitForm}>
                     <input
                         type="text"
-                        placeholder="Username"
+                        placeholder="Geef je email hier."
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                     />
                     <input
                         type="password"
-                        placeholder="Password"
+                        placeholder="Geef je passwoord hier."
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                     />
