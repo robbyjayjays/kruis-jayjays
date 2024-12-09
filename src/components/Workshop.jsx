@@ -112,10 +112,10 @@ const Workshop = () => {
                     <div className="workshop-header">
                         <h1 className="workshop-title">{workshop.title}</h1>
                         <p className="creator-info">
-                            Created by: {workshop.creator_firstname} {workshop.creator_lastname} ({workshop.creator_email})
+                            Aangemaakt door: {workshop.creator_firstname} {workshop.creator_lastname} ({workshop.creator_email})
                         </p>
                         <p className="workshop-date">
-                            <strong>Date of workshop:</strong> {new Date(workshop.workshop_date).toLocaleDateString('en-GB', {
+                            <strong>Datum van workshop:</strong> {new Date(workshop.workshop_date).toLocaleDateString('en-GB', {
                                 day: '2-digit',
                                 month: 'short',
                                 year: 'numeric'
@@ -123,7 +123,7 @@ const Workshop = () => {
                         </p>
                     </div>
                     <div className="workshop-description">
-                        <h3>Description</h3>
+                        <h3>Beschrijving</h3>
                         <p>{workshop.description}</p>
                     </div>
                     <div className="workshop-actions">
@@ -138,20 +138,20 @@ const Workshop = () => {
                                     className="edit-button"
                                     onClick={() => navigate(`/edit-workshop/${id}`)}
                                 >
-                                    Edit Workshop
+                                    Workshop aanpassen
                                 </button>
                                 <button
                                     className="delete-button"
                                     onClick={handleDeleteWorkshop}
                                 >
-                                    Delete Workshop
+                                    Workshop verwijderen
                                 </button>
                             </>
                         )}
                     </div>
                 </>
             ) : (
-                <p>Loading workshop details...</p>
+                <p>Workshop details laden...</p>
             )}
         </div>
         </>

@@ -204,7 +204,7 @@ const Admin = () => {
                                             className="delete-button"
                                             onClick={() => handleDelete(item.id, 'eetvoorkeur')}
                                         >
-                                            Delete
+                                            Verwijderen
                                         </button>
                                     </div>
                                 ))
@@ -234,7 +234,7 @@ const Admin = () => {
                                             className="delete-button"
                                             onClick={() => handleDelete(item.id, 'allergy')}
                                         >
-                                            Delete
+                                            Verwijderen
                                         </button>
                                     </div>
                                 ))
@@ -264,7 +264,7 @@ const Admin = () => {
                                             className="delete-button"
                                             onClick={() => handleDelete(item.id, 'carpool')}
                                         >
-                                            Delete
+                                            Verwijderen
                                         </button>
                                     </div>
                                 ))
@@ -294,7 +294,7 @@ const Admin = () => {
                                             className="delete-button"
                                             onClick={() => handleDelete(item.id, 'provincie')}
                                         >
-                                            Delete
+                                            Verwijderen
                                         </button>
                                     </div>
                                 ))
@@ -324,7 +324,7 @@ const Admin = () => {
                                             className="delete-button"
                                             onClick={() => handleDelete(item.id, 'departement')}
                                         >
-                                            Delete
+                                            Verwijderen
                                         </button>
                                     </div>
                                 ))
@@ -354,7 +354,7 @@ const Admin = () => {
                                             className="delete-button"
                                             onClick={() => handleDelete(item.id, 'functie')}
                                         >
-                                            Delete
+                                            Verwijderen
                                         </button>
                                     </div>
                                 ))

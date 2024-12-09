@@ -54,10 +54,10 @@ const CreateCarpool = () => {
         <>
             <Navbar />
             <div className="create-workshop-container">
-                <h1>Nieuwe Carpool Rollen aanmaken</h1>
+                <h1>Nieuwe carpool rollen aanmaken</h1>
                 <form onSubmit={handleSubmitCarpool} className="create-workshop-form">
                     <label>
-                        Carpool Rol:
+                        Carpool rol:
                         <input
                             type="text"
                             name="carpool_role"

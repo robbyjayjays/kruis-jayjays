@@ -100,10 +100,10 @@ const EditWorkshop = () => {
 
     return (
         <div className="edit-workshop-container">
-            <h1>Edit Workshop</h1>
+            <h1>Workshop aanpassen</h1>
             <form onSubmit={handleSubmit} className="edit-workshop-form">
                 <label>
-                    Title:
+                    Titel:
                     <input
                         type="text"
                         name="title"
@@ -113,7 +113,7 @@ const EditWorkshop = () => {
                     />
                 </label>
                 <label>
-                    Description:
+                    Beschrijving:
                     <textarea
                         name="description"
                         value={workshop.description}
@@ -122,7 +122,7 @@ const EditWorkshop = () => {
                     />
                 </label>
                 <label>
-                    Workshop Date:
+                    Workshop datum:
                     <input
                         type="date"
                         name="workshop_date"
@@ -131,7 +131,7 @@ const EditWorkshop = () => {
                         required
                     />
                 </label>
-                <button type="submit">Update Workshop</button>
+                <button type="submit">Pas workshop aan.</button>
             </form>
         </div>
     );

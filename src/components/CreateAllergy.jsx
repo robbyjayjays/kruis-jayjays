@@ -49,7 +49,7 @@ const CreateAllergy = () => {
         <>
             <Navbar />
             <div className="create-workshop-container">
-                <h1>Nieuwe Allergieën aanmaken</h1>
+                <h1>Nieuwe allergieën aanmaken</h1>
                 <form onSubmit={handleSubmitAllergy} className="create-workshop-form">
                     <label>
                         Allergie:

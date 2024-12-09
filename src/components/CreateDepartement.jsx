@@ -56,10 +56,10 @@ const CreateDepartement = () => {
         <>
             <Navbar />
             <div className="create-workshop-container">
-                <h1>Nieuwe Departementen aanmaken</h1>
+                <h1>Nieuwe departementen aanmaken</h1>
                 <form onSubmit={handleSubmitDepartement} className="create-workshop-form">
                     <label>
-                        Departement Naam:
+                        Departement naam:
                         <input
                             type="text"
                             name="departement_name"

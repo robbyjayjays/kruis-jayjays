@@ -59,7 +59,7 @@ const CreateDepartement = () => {
                 <h1>Nieuwe functie aanmaken</h1>
                 <form onSubmit={handleSubmitFunctie} className="create-workshop-form">
                     <label>
-                        Functie Naam:
+                        Functie naam:
                         <input
                             type="text"
                             name="function_name"

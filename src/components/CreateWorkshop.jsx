@@ -65,7 +65,7 @@ const CreateWorkshop = () => {
       <>
         <Navbar />
         <div className="create-workshop-container">
-            <h1>Nieuwe Workshop aanmaken</h1>
+            <h1>Nieuwe workshop aanmaken</h1>
             <form onSubmit={handleSubmit} className="create-workshop-form">
                 <label>
                     Titel:
@@ -87,7 +87,7 @@ const CreateWorkshop = () => {
                     />
                 </label>
                 <label>
-                    Workshop Datum:
+                    Workshop datum:
                     <input
                         type="date"
                         name="workshop_date"

@@ -56,10 +56,10 @@ const CreateProvince = () => {
         <>
             <Navbar />
             <div className="create-workshop-container">
-                <h1>Nieuwe Provincie aanmaken</h1>
+                <h1>Nieuwe provincie aanmaken</h1>
                 <form onSubmit={handleSubmitProvince} className="create-workshop-form">
                     <label>
-                        Provincie Naam:
+                        Provincie naam:
                         <input
                             type="text"
                             name="province_name"
