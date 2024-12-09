@@ -108,7 +108,7 @@ const Admin = () => {
             const response = await fetch(`/api/get-workshops?Functie=true`);
             const data = await response.json();
             if (response.ok) {
-                setDepartementen(data.functies); // Correctly assign the array
+                setFuncties(data.functies); // Correctly assign the array
             } else {
                 console.error('Error fetching carpool roles:', data.error);
             }
